@@ -8,22 +8,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#6366f1',
+        primary: 'var(--primary)',
+        'primary-dark': 'var(--primary-dark)',
         secondary: '#8b5cf6',
         accent: '#f59e0b',
         background: {
-          dark: '#0f0c29',
+          DEFAULT: 'var(--background)',
+          dark: '#0a0a0a',
           light: '#ffffff',
         },
         surface: {
-          dark: '#1a1a2e',
-          accent: '#16213e',
+          DEFAULT: 'var(--surface)',
+          dark: '#1a1a1a',
+          accent: 'var(--surface-accent)',
         },
         border: {
-          dark: '#2a2a3e',
+          DEFAULT: 'var(--border)',
+          dark: '#333333',
         },
         text: {
-          main: '#e2e8f0',
+          main: 'var(--text-main)',
+          muted: 'var(--text-muted)',
           secondary: '#94a3b8',
         },
       },

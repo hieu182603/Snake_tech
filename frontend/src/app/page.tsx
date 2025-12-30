@@ -1,172 +1,450 @@
 "use client";
 
-import Image from "next/image";
-import { HeavyComponent } from "@/components/HeavyComponent";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import ProductCard from '@/components/store/ProductCard';
+import Button from '@/components/ui/Button';
+import { productService } from '@/services/productService';
+import type { Product } from '@/types/product';
+import { useTranslation } from '@/hooks/useTranslation';
+
+interface ProductDisplay {
+  id: string;
+  name: string;
+  price: string;
+  oldPrice?: string;
+  tag?: string;
+  imageUrl?: string;
+}
+
+// Helper function to get product ID (handle both id and _id)
+const getProductId = (product: Product): string => {
+  return product.id || (product as any)._id || '';
+};
 
 export default function Home() {
+  const router = useRouter();
+  const { t } = useTranslation();
+  const [timeLeft, setTimeLeft] = useState(12 * 60 * 60 + 45 * 60); // Mock countdown
+  const [activeTab, setActiveTab] = useState<'new' | 'best'>('new');
+
+  // Product states
+  const [flashSaleProducts, setFlashSaleProducts] = useState<ProductDisplay[]>([]);
+  const [newProducts, setNewProducts] = useState<ProductDisplay[]>([]);
+  const [laptopProducts, setLaptopProducts] = useState<ProductDisplay[]>([]);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  // Transform Product to ProductDisplay format
+  const transformProduct = (product: Product): ProductDisplay => {
+    const price = product.price.toLocaleString('vi-VN') + '₫';
+    let oldPrice: string | undefined;
+    let tag: string | undefined;
+
+    return {
+      id: getProductId(product),
+      name: product.name,
+      price,
+      oldPrice,
+      tag: product.stock === 0 ? t('product.outOfStock') : tag,
+      imageUrl: product.images?.[0]?.url
+    };
+  };
+
+  // Load products on mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+
+        // Load flash sale (top selling) products
+        const topSelling = await productService.getTopSellingProducts(5);
+        setFlashSaleProducts(topSelling.map(transformProduct));
+
+        // Load new products
+        const newProductsData = await productService.getNewProducts(12);
+        // Combine laptops, pcs, accessories
+        const allNew = [
+          ...(newProductsData.laptops || []),
+          ...(newProductsData.pcs || []),
+          ...(newProductsData.accessories || [])
+        ].slice(0, 5);
+        setNewProducts(allNew.map(transformProduct));
+
+        // Load laptop products with fallbacks by category name
+        const laptopCategoryNames = [
+          'Laptop',
+          'Laptop Gaming',
+          'Laptop Gaming & Đồ họa',
+          'laptop',
+        ];
+
+        let laptops: Product[] = [];
+        for (const name of laptopCategoryNames) {
+          const res = await productService.getProductsByCategoryName(name, 12);
+          if (res.length > 0) {
+            laptops = res;
+            break;
+          }
+        }
+        // Fallback: reuse newProducts laptops if category lookup empty
+        if (laptops.length === 0) {
+          laptops = newProductsData.laptops || [];
+        }
+        // Final fallback: use top selling
+        if (laptops.length === 0) {
+          laptops = await productService.getTopSellingProducts(12);
+        }
+        setLaptopProducts(laptops.slice(0, 10).map(transformProduct));
+
+        // Load total product count for CTA button
+        const allProducts = await productService.getAllProducts();
+        setTotalProducts(allProducts.length);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return (
+      <div className="flex items-center gap-2 text-red-500 font-mono text-xl font-bold">
+        <span className="bg-[#1a0505] border border-red-900/50 px-2 py-1 rounded">{h.toString().padStart(2, '0')}</span>
+        <span>:</span>
+        <span className="bg-[#1a0505] border border-red-900/50 px-2 py-1 rounded">{m.toString().padStart(2, '0')}</span>
+        <span>:</span>
+        <span className="bg-[#1a0505] border border-red-900/50 px-2 py-1 rounded">{s.toString().padStart(2, '0')}</span>
+      </div>
+    );
+  };
+
+  const categories = [
+    { nameKey: 'home.categories.gamingLaptop', icon: 'laptop_chromebook' },
+    { nameKey: 'home.categories.macbook', icon: 'laptop_mac' },
+    { nameKey: 'home.categories.graphicsPC', icon: 'desktop_windows' },
+    { nameKey: 'home.categories.monitor', icon: 'monitor' },
+    { nameKey: 'home.categories.keyboard', icon: 'keyboard' },
+    { nameKey: 'home.categories.mouse', icon: 'mouse' },
+    { nameKey: 'home.categories.headset', icon: 'headphones' },
+    { nameKey: 'home.categories.components', icon: 'memory' },
+  ];
+
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black font-sans">
+    <div className="flex flex-col bg-background min-h-screen">
 
-      {/* Hero Section */}
-      <main className="flex min-h-screen w-full max-w-4xl mx-auto flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert mb-8"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={150}
-          height={30}
-          priority
-        />
-
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left mb-12">
-          <h1 className="max-w-lg text-4xl font-bold leading-12 tracking-tight text-black dark:text-zinc-50">
-            Snake Tech Demo
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Showcase of Tailwind CSS and Path Aliases in Next.js
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row mb-16">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-black px-5 text-white transition-colors hover:bg-gray-800 md:w-[180px] dark:bg-white dark:text-black dark:hover:bg-gray-200"
-            href="#demo"
-          >
-            View Demo ↓
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[180px]"
-            href="https://nextjs.org/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Next.js Docs
-          </a>
-        </div>
-      </main>
-
-      {/* Demo Section */}
-      <section id="demo" className="py-20 px-8 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-            🚀 Features Demo
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Image Demo */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                🖼️ Image Display
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-                Images load immediately with Next.js Image component
-              </p>
-              <div className="space-y-4">
-                <Image
-                  src="https://picsum.photos/400/300?random=1"
-                  alt="Image 1"
-                  width={400}
-                  height={300}
-                  className="rounded-lg w-full h-48 object-cover"
-                />
-                <Image
-                  src="https://picsum.photos/400/300?random=2"
-                  alt="Image 2"
-                  width={400}
-                  height={300}
-                  className="rounded-lg w-full h-48 object-cover"
-                />
-                <Image
-                  src="https://picsum.photos/400/300?random=3"
-                  alt="Image 3"
-                  width={400}
-                  height={300}
-                  className="rounded-lg w-full h-48 object-cover"
-                />
+      {/* 1. Hero Section */}
+      <section className="pt-6 pb-12 px-4">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-auto lg:h-[480px]">
+            {/* Main Banner Slider */}
+            <div
+              onClick={() => router.push('/catalog')}
+              className="lg:col-span-8 relative rounded-2xl overflow-hidden group border border-border-dark cursor-pointer h-[400px] lg:h-full shadow-2xl"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&q=80&w=1600"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-90"
+                alt="Main Banner"
+              />
+              {/* Gradient: Black to Transparent */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 sm:p-12">
+                <span className="inline-block px-3 py-1 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded-lg w-fit mb-3 shadow-lg shadow-red-600/30">
+                  {t('home.hero.flagship')}
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-black text-text-main mb-4 leading-tight">
+                  {t('home.hero.title')}
+                </h2>
+                <p className="text-text-muted text-lg mb-6 max-w-lg hidden sm:block">
+                  {t('home.hero.subtitle')}
+                </p>
+                <Button
+                  size="lg"
+                  className="w-fit bg-white !text-black border-none hover:bg-red-600 hover:!text-white transition-all shadow-xl"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push('/catalog');
+                  }}
+                >
+                  {t('home.hero.explore')}
+                </Button>
               </div>
             </div>
 
-            {/* Heavy Component Demo */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                ⚡ Heavy Component
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-                Heavy component loads immediately with loading state
-              </p>
-              <HeavyComponent />
-            </div>
-
-            {/* Alias Demo */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-                🎯 Path Aliases
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-                Clean imports using @/ alias instead of relative paths
-              </p>
-              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded font-mono text-sm">
-                <div className="text-blue-600 dark:text-blue-400">import</div>
-                <div className="text-green-600 dark:text-green-400">{"{ LazyImage }"}</div>
-                <div className="text-blue-600 dark:text-blue-400">from</div>
-                <div className="text-orange-600 dark:text-orange-400">&apos;@/components/LazyImage&apos;</div>
+            {/* Side Banners */}
+            <div className="lg:col-span-4 flex flex-col gap-4 h-full">
+              <div
+                onClick={() => router.push('/catalog')}
+                className="flex-1 relative rounded-2xl overflow-hidden group border border-border-dark cursor-pointer min-h-[200px]"
+              >
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt="Sub Banner 1" />
+                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/80 p-6 flex flex-col justify-center">
+                  <h3 className="text-2xl font-black text-text-main uppercase italic">{t('home.sideBanner.esport')}</h3>
+                  <p className="text-sm text-red-500 font-bold">{t('home.sideBanner.esportSub')}</p>
+                </div>
               </div>
-              <div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-                All components and utilities use @/ alias for clean imports
-              </div>
-            </div>
-          </div>
-
-          {/* Tailwind CSS Demo */}
-          <div className="mt-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-              🎨 Tailwind CSS Features
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-white text-center">
-                <div className="text-2xl mb-2">🎯</div>
-                <div className="font-semibold">Responsive</div>
-                <div className="text-sm opacity-90">Mobile-first design</div>
-              </div>
-              <div className="p-4 bg-gradient-to-r from-green-500 to-teal-600 rounded-lg text-white text-center">
-                <div className="text-2xl mb-2">⚡</div>
-                <div className="font-semibold">Utility-first</div>
-                <div className="text-sm opacity-90">Rapid prototyping</div>
-              </div>
-              <div className="p-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg text-white text-center">
-                <div className="text-2xl mb-2">🌙</div>
-                <div className="font-semibold">Dark Mode</div>
-                <div className="text-sm opacity-90">Built-in support</div>
-              </div>
-              <div className="p-4 bg-gradient-to-r from-pink-500 to-rose-600 rounded-lg text-white text-center">
-                <div className="text-2xl mb-2">🔧</div>
-                <div className="font-semibold">Customizable</div>
-                <div className="text-sm opacity-90">Easy configuration</div>
+              <div
+                onClick={() => router.push('/quote')}
+                className="flex-1 relative rounded-2xl overflow-hidden group border border-border-dark cursor-pointer min-h-[200px]"
+              >
+                <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt="Sub Banner 2" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/80 p-6 flex flex-col justify-center text-right items-end">
+                  <h3 className="text-2xl font-black text-text-main uppercase italic">{t('home.sideBanner.build')}</h3>
+                  <p className="text-sm text-red-500 font-bold">{t('home.sideBanner.buildSub')}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-8 bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
-        <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-            Ready to build something amazing? 🚀
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            All features are set up and ready to use in your Snake Tech project
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors dark:bg-white dark:text-black dark:hover:bg-gray-200">
-              Start Building
-            </button>
-            <button className="px-6 py-3 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors dark:border-gray-700 dark:hover:bg-gray-800">
-              View Documentation
-            </button>
+      {/* 2. USP Bar */}
+      <section className="pb-12 px-4 mt-16 lg:mt-20">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { icon: 'local_shipping', titleKey: 'home.features.freeShipping.title', subKey: 'home.features.freeShipping.subtitle' },
+              { icon: 'verified_user', titleKey: 'home.features.warranty.title', subKey: 'home.features.warranty.subtitle' },
+              { icon: 'assignment_return', titleKey: 'home.features.return.title', subKey: 'home.features.return.subtitle' },
+              { icon: 'support_agent', titleKey: 'home.features.support.title', subKey: 'home.features.support.subtitle' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 bg-surface border border-border p-4 rounded-xl hover:border-red-500/50 hover:bg-surface-accent transition-all group">
+                <span className="material-symbols-outlined text-3xl text-text-main group-hover:text-red-500 transition-colors">{item.icon}</span>
+                <div>
+                  <h4 className="font-bold text-sm text-text-main">{t(item.titleKey)}</h4>
+                  <p className="text-xs text-text-muted">{t(item.subKey)}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* 4. Flash Sale Section - Red Dark Aesthetic */}
+      <section className="pb-12 px-4">
+        <div className="mx-auto max-w-[1440px]">
+          {/* Main Container - Dark Red Gradient */}
+          <div className="bg-[#2a0a0a] border border-red-900/40 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+
+            {/* Header Area */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 relative z-10">
+              <div className="flex flex-wrap items-center gap-6">
+                <h2 className="text-4xl font-black text-text-main italic tracking-tighter flex items-center gap-3 drop-shadow-md">
+                  <span className="material-symbols-outlined text-red-500 text-4xl animate-pulse">local_fire_department</span>
+                  {t('home.flashSale.title')}
+                </h2>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-widest pt-1">{t('home.flashSale.endsIn')}</span>
+                  {formatTime(timeLeft)}
+                </div>
+              </div>
+              {/* UPDATED: Link points to filtered catalog */}
+              <Link href="/catalog?filter=flash-sale" className="text-sm font-bold text-text-main hover:text-red-500 flex items-center gap-1 transition-colors group">
+                {t('home.flashSale.viewAll')} <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </Link>
+            </div>
+
+            {/* Products Row - using the new Card Style */}
+            {loading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 relative z-10">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="h-64 bg-surface-dark border border-border-dark rounded-2xl animate-pulse" />
+                ))}
+              </div>
+            ) : flashSaleProducts.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 relative z-10">
+                {flashSaleProducts.map((p, index) => (
+                  <div key={`flash-${p.id}-${index}`} className="h-full">
+                    <ProductCard
+                      id={p.id}
+                      name={p.name}
+                      price={p.price}
+                      oldPrice={p.oldPrice}
+                      tag={p.tag}
+                      imageUrl={p.imageUrl}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-slate-500">
+                <span className="material-symbols-outlined text-4xl mb-2 block">inventory_2</span>
+                <p>{t('home.flashSale.noProducts')}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Categories Grid */}
+      <section className="py-12 px-4 bg-[#0a0a0a] border-y border-white/5 mb-12 relative overflow-hidden">
+        <div className="mx-auto max-w-[1440px] relative z-10">
+          <h3 className="text-lg font-bold text-text-main mb-6 uppercase tracking-wider flex items-center gap-2">
+            <span className="material-symbols-outlined text-red-500">category</span> {t('home.categories.title')}
+          </h3>
+          <div className="grid grid-cols-4 md:grid-cols-8 gap-4">
+            {categories.map((cat, i) => (
+              <Link href="/catalog" key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
+                <div className="size-20 rounded-2xl bg-surface border border-border flex items-center justify-center group-hover:bg-red-600 group-hover:border-red-600 transition-all shadow-lg">
+                  <span className="material-symbols-outlined text-3xl text-text-muted group-hover:text-white transition-colors">{cat.icon}</span>
+                </div>
+                <span className="text-xs font-bold text-text-muted group-hover:text-white text-center transition-colors uppercase">{t(cat.nameKey)}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. New Arrivals */}
+      <section className="px-4 pb-12">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="flex items-center justify-between mb-6 border-b border-border-dark pb-4">
+            <h3 className="text-2xl font-black text-text-main uppercase tracking-tight flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary">new_releases</span>
+              {t('home.newArrivals.title')}
+            </h3>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setActiveTab('new')}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold shadow-lg transition-all ${activeTab === 'new'
+                    ? 'bg-red-600 text-white shadow-red-600/30'
+                    : 'bg-surface-dark border border-border-dark text-slate-400 hover:text-white hover:border-white'
+                  }`}
+              >
+                {t('home.newArrivals.latest')}
+              </button>
+              <button
+                onClick={() => setActiveTab('best')}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold shadow-lg transition-all ${activeTab === 'best'
+                    ? 'bg-red-600 text-white shadow-red-600/30'
+                    : 'bg-surface-dark border border-border-dark text-slate-400 hover:text-white hover:border-white'
+                  }`}
+              >
+                {t('home.newArrivals.bestSelling')}
+              </button>
+            </div>
+          </div>
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 gap-x-4 sm:gap-6">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-64 bg-surface-dark border border-border-dark rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : newProducts.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 gap-x-4 sm:gap-6">
+              {newProducts.map((p, index) => (
+                <ProductCard
+                  key={`new-${p.id}-${index}`}
+                  id={p.id}
+                  name={p.name}
+                  price={p.price}
+                  tag={p.tag}
+                  imageUrl={p.imageUrl}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-slate-500">
+              <span className="material-symbols-outlined text-4xl mb-2 block">new_releases</span>
+              <p>{t('home.newArrivals.noProducts')}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 5. Banner Strip - UPDATED */}
+      <section className="px-4 pb-12">
+        <div className="mx-auto max-w-[1440px]">
+          <div
+            onClick={() => router.push('/catalog')}
+            className="relative h-64 rounded-[32px] overflow-hidden bg-black border border-white/10 group cursor-pointer shadow-2xl flex flex-col items-center justify-center text-center"
+          >
+
+            {/* Promo Label */}
+            <div className="absolute top-6 left-8 flex items-center gap-2 opacity-70">
+              <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" className="w-5 h-5 invert dark:invert-0" alt="Promo" />
+              <span className="text-white font-bold text-xs tracking-widest uppercase">{t('home.banner.promo')}</span>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 px-4">
+              <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 uppercase tracking-tighter">{t('home.banner.title')}</h3>
+              <p className="text-text-muted font-medium mb-8 text-sm sm:text-base">{t('home.banner.subtitle')}</p>
+              <button className="px-12 py-3.5 rounded-2xl border border-white text-white font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
+                {t('home.banner.viewCombo')}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Category Specific Section (e.g., Laptops) */}
+      <section className="px-4 pb-20">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="flex items-center justify-between mb-6 border-b border-border-dark pb-4">
+            <h3 className="text-2xl font-black text-text-main uppercase tracking-tight flex items-center gap-2">
+              <span className="material-symbols-outlined text-red-400">laptop_chromebook</span>
+              {t('home.laptops.title')}
+            </h3>
+            <Link href="/catalog" className="text-xs font-bold text-text-muted hover:text-text-main uppercase tracking-widest">{t('home.laptops.viewAll')}</Link>
+          </div>
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 gap-x-4 sm:gap-6">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-64 bg-surface-dark border border-border-dark rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : laptopProducts.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 gap-x-4 sm:gap-6">
+              {laptopProducts.map((p, index) => (
+                <ProductCard
+                  key={`laptop-${p.id}-${index}`}
+                  id={p.id}
+                  name={p.name}
+                  price={p.price}
+                  oldPrice={p.oldPrice}
+                  tag={p.tag}
+                  imageUrl={p.imageUrl}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-slate-500">
+              <span className="material-symbols-outlined text-4xl mb-2 block">laptop_chromebook</span>
+              <p>Chưa có sản phẩm laptop</p>
+            </div>
+          )}
+
+          <div className="mt-12 text-center">
+            <Link href="/catalog">
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto px-16 border-border text-text-muted hover:text-text-main hover:border-white hover:bg-white/5"
+              >
+                {totalProducts > 0
+                  ? t('home.laptops.viewMore', { count: Math.max(totalProducts - laptopProducts.length, 0) })
+                  : t('home.laptops.viewAll')}
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

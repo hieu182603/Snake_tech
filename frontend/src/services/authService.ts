@@ -81,7 +81,7 @@ export const authService = {
       const response = await mockApiCall('/auth/verify-register', verifyData);
 
       // Store token
-      if (response.data?.accessToken) {
+      if (response.data?.accessToken && typeof globalThis.window !== 'undefined') {
         localStorage.setItem('sa_token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify({
           username: verifyData.username,
@@ -111,7 +111,7 @@ export const authService = {
       const response = await mockApiCall('/auth/login', credentials);
 
       // Store token
-      if (response.data?.accessToken) {
+      if (response.data?.accessToken && typeof globalThis.window !== 'undefined') {
         localStorage.setItem('sa_token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify({
           username: credentials.identifier,
@@ -152,25 +152,45 @@ export const authService = {
   // User management
   async getUserProfile() {
     // Mock user profile
+    if (typeof globalThis.window === 'undefined') {
+      return null;
+    }
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   },
 
   logout() {
-    localStorage.removeItem('sa_token');
-    localStorage.removeItem('user');
+    if (typeof globalThis.window !== 'undefined') {
+      localStorage.removeItem('sa_token');
+      localStorage.removeItem('user');
+    }
   },
 
   isAuthenticated() {
+    if (typeof globalThis.window === 'undefined') {
+      return false;
+    }
     return !!localStorage.getItem('sa_token');
   },
 
   getToken() {
+    if (globalThis.window === undefined) {
+      return null;
+    }
     return localStorage.getItem('sa_token');
   },
 
   getUser() {
-    const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
+    if (globalThis.window === undefined || localStorage === undefined) {
+      return null;
+    }
+    try {
+      const userStr = localStorage.getItem('user');
+      return userStr ? JSON.parse(userStr) : null;
+    } catch (error) {
+      console.error('Error parsing user data from localStorage:', error);
+      localStorage.removeItem('user');
+      return null;
+    }
   }
 };
