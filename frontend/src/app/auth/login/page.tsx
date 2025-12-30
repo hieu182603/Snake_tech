@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
@@ -39,7 +39,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialSignUp = false }) => {
   const hasLength = password.length >= 8;
   const hasLower = /[a-z]/.test(password);
   const hasUpper = /[A-Z]/.test(password);
-  const hasNumber = /[0-9]/.test(password);
+  const hasNumber = /\d/.test(password);
 
   // Calculate Strength Score (0 to 4)
   const strengthScore = [hasLength, hasLower, hasUpper, hasNumber].filter(Boolean).length;
@@ -224,7 +224,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialSignUp = false }) => {
 
             <div className="w-full space-y-2">
               <AuthInput
-                icon="person"
+                icon="account_circle"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -305,16 +305,19 @@ const AuthPage: React.FC<AuthPageProps> = ({ initialSignUp = false }) => {
         <div className={`absolute top-0 h-full transition-all duration-700 ease-in-out left-0 w-1/2 z-20 ${isSignUp ? 'translate-x-[100%] opacity-0' : 'translate-x-0 opacity-100'}`}>
           <form onSubmit={handleSignInSubmit} className="bg-[#151525] flex flex-col items-center justify-center h-full px-10 text-center">
 
-            <div className="mb-5 size-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
-              <span className="material-symbols-outlined text-white text-2xl">bolt</span>
-            </div>
+              <div className="mb-5 size-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+                <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <title>Snake</title>
+                  <path d="M3 12c1.5-4 6-6 9-6 2 0 3.5.8 4.5 2 .6.8.6 1.8 0 2.6-.5.6-1.4.8-2 .3-.7-.6-1.6-1-2.8-1-2.2 0-4.5 1.6-6 4-1 1.5-1 3 .5 3.8.6.4 1.4.3 2-.2.6-.5 1-1 2-1 1.2 0 2 .6 3 1 .6.3 1 .5 1.6.5 1.8 0 3-1 4-2 1.5-1.5 3.5-1 4.5 0" />
+                </svg>
+              </div>
 
             <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Welcome Back</h1>
             <p className="text-slate-400 text-xs mb-8">Sign in to your Snake Tech account</p>
 
             <div className="w-full space-y-3">
               <AuthInput
-                icon="person"
+                icon="account_circle"
                 placeholder="Email or Username"
                 value={loginIdentifier}
                 onChange={(e) => setLoginIdentifier(e.target.value)}

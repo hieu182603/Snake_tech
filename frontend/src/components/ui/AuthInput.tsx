@@ -29,6 +29,8 @@ const AuthInput = ({ icon, type = "text", placeholder, showEye = false, value, o
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
+          aria-pressed={showPassword}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-purple-600 cursor-pointer transition-colors"
         >
           <span className="material-symbols-outlined text-[18px]">{showPassword ? 'visibility' : 'visibility_off'}</span>

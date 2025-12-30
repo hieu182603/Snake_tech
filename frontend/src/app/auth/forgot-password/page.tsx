@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
-import OTPModal from '@/components/ui/OTPModal';
 import { authService } from '@/services/authService';
 import { useToast } from '@/contexts/ToastContext';
 
@@ -25,7 +24,7 @@ const PasswordResetOTPModal = ({ isOpen, onClose, onVerify, email }: {
   }, [isOpen]);
 
   const handleChange = (index: number, value: string) => {
-    if (isNaN(Number(value))) return;
+    if (Number.isNaN(Number(value))) return;
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -77,9 +76,11 @@ const PasswordResetOTPModal = ({ isOpen, onClose, onVerify, email }: {
 
 const ForgotPassword: React.FC = () => {
   const router = useRouter();
-  const { showSuccess } = useToast();
+  const { showSuccess, showError } = useToast();
   const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
   const [email, setEmail] = useState('');
+  const [formError, setFormError] = useState('');
+  const [verifiedOtp, setVerifiedOtp] = useState('');
 
   // Reset Password State
   const [newPassword, setNewPassword] = useState('');
@@ -102,8 +103,8 @@ const ForgotPassword: React.FC = () => {
       setStep('OTP');
       showSuccess('OTP sent to your email');
     } catch (error: any) {
-      // For demo, just proceed to OTP step
-      setStep('OTP');
+      console.error('Failed to send reset email:', error);
+      showError(error.message || 'Failed to send reset email');
     }
   };
 
@@ -111,36 +112,39 @@ const ForgotPassword: React.FC = () => {
     if (otp.length !== 4) {
       throw new Error('Please enter complete OTP');
     }
+    setVerifiedOtp(otp);
     setStep('RESET');
   };
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError('');
 
     if (!newPassword || !confirmPassword) {
+      setFormError('Please fill in all fields');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      throw new Error('Passwords do not match');
+      setFormError('Passwords do not match');
+      return;
     }
 
     if (!hasLength || !hasLower || !hasUpper || !hasNumber) {
-      throw new Error('Password does not meet requirements');
+      setFormError('Password does not meet requirements');
+      return;
     }
 
     try {
       await authService.verifyResetPassword({
         email,
-        otp: '1234', // Mock OTP for demo
+        otp: verifiedOtp,
         newPassword
       });
       showSuccess('Password reset successfully');
       router.push('/auth/login');
     } catch (error: any) {
-      // For demo, just show success
-      showSuccess('Password reset successfully');
-      router.push('/auth/login');
+      showError(error.message || 'Failed to reset password');
     }
   };
 
@@ -198,12 +202,20 @@ const ForgotPassword: React.FC = () => {
             </div>
 
             <form onSubmit={handleResetPassword} className="space-y-4">
+              {formError && (
+                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs">
+                  {formError}
+                </div>
+              )}
               <AuthInput
                 icon="lock"
                 placeholder="New password"
                 showEye={true}
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  if (formError) setFormError('');
+                }}
               />
 
               {/* Password Strength Visual */}
@@ -234,7 +246,10 @@ const ForgotPassword: React.FC = () => {
                 placeholder="Confirm password"
                 showEye={true}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (formError) setFormError('');
+                }}
               />
 
               <button className="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-xs rounded-xl uppercase tracking-widest shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-[1.02] transition-all active:scale-95">

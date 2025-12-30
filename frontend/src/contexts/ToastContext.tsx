@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect, useMemo, ReactNode } from 'react';
 
 interface Toast {
   id: string;
@@ -33,6 +33,19 @@ interface ToastProviderProps {
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timeoutRefs = useRef<Map<string, number>>(new Map());
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach(timeoutId => clearTimeout(timeoutId));
+      timeoutRefs.current.clear();
+    };
+  }, []);
+
+  const filterOutToast = useCallback((toastList: Toast[], toastId: string) => {
+    return toastList.filter(t => t.id !== toastId);
+  }, []);
 
   const addToast = useCallback((type: Toast['type'], message: string) => {
     const id = Date.now().toString();
@@ -40,10 +53,12 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     setToasts(prev => [...prev, toast]);
 
     // Auto remove after 5 seconds
-    setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
-    }, 5000);
-  }, []);
+    const timeoutId = setTimeout(() => {
+      setToasts(prev => filterOutToast(prev, id));
+      timeoutRefs.current.delete(id);
+    }, 5000) as unknown as number;
+    timeoutRefs.current.set(id, timeoutId);
+  }, [filterOutToast]);
 
   const showSuccess = useCallback((message: string) => addToast('success', message), [addToast]);
   const showError = useCallback((message: string) => addToast('error', message), [addToast]);
@@ -51,18 +66,25 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
   const showInfo = useCallback((message: string) => addToast('info', message), [addToast]);
 
   const removeToast = useCallback((id: string) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
-  }, []);
+    const timeoutId = timeoutRefs.current.get(id);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutRefs.current.delete(id);
+    }
+    setToasts(prev => filterOutToast(prev, id));
+  }, [filterOutToast]);
+
+  const contextValue = useMemo(() => ({
+    toasts,
+    showSuccess,
+    showError,
+    showWarning,
+    showInfo,
+    removeToast
+  }), [toasts, showSuccess, showError, showWarning, showInfo, removeToast]);
 
   return (
-    <ToastContext.Provider value={{
-      toasts,
-      showSuccess,
-      showError,
-      showWarning,
-      showInfo,
-      removeToast
-    }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </ToastContext.Provider>
