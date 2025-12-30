@@ -1,0 +1,22 @@
+{
+  "name": "snake_tech",
+  "version": "1.0.0",
+  "description": "1. Tạo file .env ở từng folder backend và frontend.\r 2. Copy paste nội dung của file `.env.example` vào.\r     - Lưu ý: nếu có thêm key ở .env nhớ paste vào `.env.example`.\r 3. Thêm các value vào key tương ứng (tuỳ chọn)\r 4. `yarn concurrent` ở folder tổng để chạy cả backend và frontend cùng lúc.\r 5. `cd` vào từng folder và lặp lại bước 4 để chạy backend/frontend riêng lẻ.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "start": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\"",
+    "lint": "npm run lint --prefix backend && npm run lint --prefix frontend",
+    "lint:fix": "npm run lint:fix --prefix backend && npm run lint:fix --prefix frontend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
