@@ -595,6 +595,55 @@
         "status": "Status",
         "actions": "Actions"
       }
-    }
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "Manage orders",
+      "table": {
+        "orderId": "Order ID",
+        "customer": "Customer",
+        "total": "Total",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+      }
+    },
+    "customers": {
+      "title": "Customers",
+      "subtitle": "Manage customers"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Data analysis and reports"
+    },
+    "reports": {
+      "title": "Reports",
+      "subtitle": "System reports and exports"
+    },
+    "banners": {
+      "title": "Banners",
+      "subtitle": "Manage promotional banners"
+    },
+    "accounts": {
+      "title": "Accounts",
+      "subtitle": "Manage user accounts"
+    },
+    "shippers": {
+      "title": "Shippers",
+      "subtitle": "Manage delivery personnel"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "subtitle": "Customer reviews and feedback"
+    },
+    "exportReport": "Export Report",
+    "refresh": "Refresh",
+    "viewAll": "View All",
+    "search": "Search",
+    "filter": "Filter",
+    "today": "Today",
+    "week": "Last 7 days",
+    "month": "This month",
+    "allTime": "All time"
   }
 }

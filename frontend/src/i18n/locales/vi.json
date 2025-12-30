@@ -595,6 +595,55 @@
         "status": "Trạng thái",
         "actions": "Thao tác"
       }
-    }
+    },
+    "orders": {
+      "title": "Đơn hàng",
+      "subtitle": "Quản lý đơn hàng",
+      "table": {
+        "orderId": "Mã đơn",
+        "customer": "Khách hàng",
+        "total": "Tổng tiền",
+        "status": "Trạng thái",
+        "date": "Ngày đặt",
+        "actions": "Thao tác"
+      }
+    },
+    "customers": {
+      "title": "Khách hàng",
+      "subtitle": "Quản lý khách hàng"
+    },
+    "analytics": {
+      "title": "Phân tích",
+      "subtitle": "Phân tích dữ liệu và báo cáo"
+    },
+    "reports": {
+      "title": "Báo cáo",
+      "subtitle": "Báo cáo hệ thống và xuất dữ liệu"
+    },
+    "banners": {
+      "title": "Banner",
+      "subtitle": "Quản lý banner quảng cáo"
+    },
+    "accounts": {
+      "title": "Tài khoản",
+      "subtitle": "Quản lý tài khoản người dùng"
+    },
+    "shippers": {
+      "title": "Shipper",
+      "subtitle": "Quản lý đội ngũ giao hàng"
+    },
+    "feedback": {
+      "title": "Phản hồi",
+      "subtitle": "Đánh giá và phản hồi khách hàng"
+    },
+    "exportReport": "Xuất báo cáo",
+    "refresh": "Làm mới",
+    "viewAll": "Xem tất cả",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "today": "Hôm nay",
+    "week": "7 ngày qua",
+    "month": "Tháng này",
+    "allTime": "Tất cả"
   }
 }

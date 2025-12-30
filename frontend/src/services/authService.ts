@@ -1,196 +1,87 @@
-// Auth service for Next.js Snake Tech project
-// Simplified version based on EXE101 auth service
-
-export interface LoginCredentials {
-  identifier: string; // Can be email or username
-  password: string;
-}
-
-export interface RegisterData {
-  username: string;
-  email: string;
-  password: string;
-  role?: string;
-}
-
-export interface VerifyRegisterData {
-  username: string;
-  password: string;
-  email: string;
-  role: string;
-  otp: string;
-}
-
-export interface ApiResponse {
-  success: boolean;
-  message: string;
-  data?: unknown;
-}
-
-// Mock API calls - replace with actual API calls later
-const mockApiCall = async (endpoint: string, data: any): Promise<any> => {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-
-  // Mock responses based on endpoint
-  if (endpoint === '/auth/register') {
-    return { success: true, message: 'OTP sent to email' };
-  }
-
-  if (endpoint === '/auth/verify-register') {
-    return { success: true, data: { accessToken: 'mock-jwt-token' } };
-  }
-
-  if (endpoint === '/auth/login') {
-    return { success: true, data: { accessToken: 'mock-jwt-token' } };
-  }
-
-  if (endpoint === '/auth/resend-otp') {
-    return { success: true, message: 'OTP resent' };
-  }
-
-  if (endpoint === '/auth/forgot-password') {
-    return { success: true, message: 'OTP sent for password reset' };
-  }
-
-  if (endpoint === '/auth/verify-reset-password') {
-    return { success: true, message: 'Password reset successfully' };
-  }
-
-  throw new Error('Endpoint not implemented');
-};
-
+// Mock auth service for Snake_tech
 export const authService = {
-  // Registration flow
-  async register(userData: RegisterData): Promise<ApiResponse> {
-    try {
-      const response = await mockApiCall('/auth/register', {
-        username: userData.username.trim(),
-        email: userData.email.trim(),
-        password: userData.password,
-        role: userData.role || 'CUSTOMER'
-      });
-      return response;
-    } catch (error: any) {
-      throw new Error(error.message || 'Registration failed');
-    }
-  },
-
-  async verifyRegister(verifyData: VerifyRegisterData): Promise<any> {
-    try {
-      const response = await mockApiCall('/auth/verify-register', verifyData);
-
-      // Store token
-      if (response.data?.accessToken && typeof globalThis.window !== 'undefined') {
-        localStorage.setItem('sa_token', response.data.accessToken);
-        localStorage.setItem('user', JSON.stringify({
-          username: verifyData.username,
-          email: verifyData.email,
-          role: 'customer'
-        }));
+  login: async (email: string, password: string) => {
+    // Mock login - in real app, this would call API
+    if (email === 'admin@techstore.vn' && password === 'admin123') {
+      const user = {
+        id: '1',
+        username: 'admin',
+        name: 'Administrator',
+        email: 'admin@techstore.vn',
+        role: 'ADMIN' as const,
+        isVerified: true
+      };
+      const token = 'mock-jwt-token-' + Date.now();
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
       }
-
-      return response;
-    } catch (error: any) {
-      throw new Error(error.message || 'OTP verification failed');
+      return { user, token };
     }
-  },
 
-  async resendOTP({ identifier }: { identifier?: string }): Promise<ApiResponse> {
-    try {
-      const response = await mockApiCall('/auth/resend-otp', { identifier });
-      return response;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to resend OTP');
-    }
-  },
-
-  // Login flow
-  async login(credentials: LoginCredentials): Promise<string> {
-    try {
-      const response = await mockApiCall('/auth/login', credentials);
-
-      // Store token
-      if (response.data?.accessToken && typeof globalThis.window !== 'undefined') {
-        localStorage.setItem('sa_token', response.data.accessToken);
-        localStorage.setItem('user', JSON.stringify({
-          username: credentials.identifier,
-          email: credentials.identifier.includes('@') ? credentials.identifier : undefined,
-          role: 'customer'
-        }));
+    if (email === 'user@techstore.vn' && password === 'user123') {
+      const user = {
+        id: '2',
+        username: 'user',
+        name: 'Test User',
+        email: 'user@techstore.vn',
+        role: 'CUSTOMER' as const,
+        isVerified: true
+      };
+      const token = 'mock-jwt-token-' + Date.now();
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
       }
+      return { user, token };
+    }
 
-      return response.data.accessToken;
-    } catch (error: any) {
-      throw new Error(error.message || 'Login failed');
+    throw new Error('Invalid credentials');
+  },
+
+  register: async (userData: any) => {
+    // Mock registration
+    const user = {
+      id: Date.now().toString(),
+      username: userData.username,
+      name: userData.name || userData.username,
+      email: userData.email,
+      role: 'CUSTOMER' as const,
+      isVerified: false
+    };
+    const token = 'mock-jwt-token-' + Date.now();
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+    }
+    return { user, token };
+  },
+
+  logout: () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
     }
   },
 
-  // Password reset
-  async requestPasswordReset(email: string): Promise<ApiResponse> {
-    try {
-      const response = await mockApiCall('/auth/forgot-password', { email });
-      return response;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to send reset email');
-    }
-  },
-
-  async verifyResetPassword({ email, otp, newPassword }: { email: string, otp: string, newPassword: string }): Promise<ApiResponse> {
-    try {
-      const response = await mockApiCall('/auth/verify-reset-password', {
-        email,
-        otp,
-        newPassword
-      });
-      return response;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to reset password');
-    }
-  },
-
-  // User management
-  async getUserProfile() {
-    // Mock user profile
-    if (typeof globalThis.window === 'undefined') {
-      return null;
-    }
+  getUser: () => {
+    if (typeof window === 'undefined') return null;
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   },
 
-  logout() {
-    if (typeof globalThis.window !== 'undefined') {
-      localStorage.removeItem('sa_token');
-      localStorage.removeItem('user');
-    }
+  getToken: () => {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem('token');
   },
 
-  isAuthenticated() {
-    if (typeof globalThis.window === 'undefined') {
-      return false;
-    }
-    return !!localStorage.getItem('sa_token');
+  isAuthenticated: () => {
+    if (typeof window === 'undefined') return false;
+    return !!localStorage.getItem('token') && !!localStorage.getItem('user');
   },
 
-  getToken() {
-    if (globalThis.window === undefined) {
-      return null;
-    }
-    return localStorage.getItem('sa_token');
-  },
-
-  getUser() {
-    if (globalThis.window === undefined || localStorage === undefined) {
-      return null;
-    }
-    try {
-      const userStr = localStorage.getItem('user');
-      return userStr ? JSON.parse(userStr) : null;
-    } catch (error) {
-      console.error('Error parsing user data from localStorage:', error);
-      localStorage.removeItem('user');
-      return null;
-    }
+  getUserProfile: async () => {
+    const user = authService.getUser();
+    return { data: user };
   }
 };
