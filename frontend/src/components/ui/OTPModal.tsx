@@ -1,6 +1,7 @@
-'use client';
+ 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface OTPModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ const OTPModal = ({
   email,
   onResend
 }: OTPModalProps) => {
+  const { t } = useTranslation();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +57,7 @@ const OTPModal = ({
   const handleVerify = async () => {
     const otpCode = otp.join('');
     if (otpCode.length !== 6) {
-      setError('Please enter complete OTP');
+      setError(t('auth.otp.enterOtp', { defaultValue: 'Please enter complete OTP' }));
       return;
     }
 
@@ -64,7 +66,7 @@ const OTPModal = ({
     try {
       await onVerify(otpCode);
     } catch (err: any) {
-      setError(err.message || 'Invalid OTP');
+      setError(err.message || t('auth.otp.invalidOtp', { defaultValue: 'Invalid OTP' }));
       // Clear OTP on error
       setOtp(['', '', '', '', '', '']);
       setTimeout(() => inputRefs.current[0]?.focus(), 100);
@@ -82,7 +84,7 @@ const OTPModal = ({
       setOtp(['', '', '', '', '', '']);
       setTimeout(() => inputRefs.current[0]?.focus(), 100);
     } catch (err: any) {
-      setError(err.message || 'Failed to resend OTP');
+      setError(err.message || t('auth.otp.resendFailed', { defaultValue: 'Failed to resend OTP' }));
     } finally {
       setIsResending(false);
     }
@@ -97,9 +99,9 @@ const OTPModal = ({
         <div className="size-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-4 text-purple-400">
           <span className="material-symbols-outlined text-3xl">lock_open</span>
         </div>
-        <h2 className="text-2xl font-black text-white mb-2">Verify OTP</h2>
+        <h2 className="text-2xl font-black text-white mb-2">{t('auth.otp.title')}</h2>
         <p className="text-slate-400 text-xs mb-8">
-          Enter the 6-digit code sent to {email || 'your email'}
+          {t('auth.otp.subtitle', { email: email || '' })}
         </p>
 
         <div className="flex justify-center gap-3 mb-4">
@@ -127,18 +129,18 @@ const OTPModal = ({
           disabled={otp.some(d => !d) || isVerifying}
           className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-black text-xs rounded-xl uppercase tracking-widest shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isVerifying ? 'Verifying...' : 'Verify'}
+          {isVerifying ? t('auth.otp.verifying', { defaultValue: 'Verifying...' }) : t('auth.otp.verify', { defaultValue: 'Verify' })}
         </button>
 
         {onResend && (
           <p className="mt-6 text-[10px] text-slate-500">
-            Didn&apos;t receive code?
+            {t('auth.otp.noCodeQuestion', { defaultValue: "Didn't receive code?" })}
             <button
               onClick={handleResend}
               disabled={isResending}
               className="text-purple-400 font-bold hover:underline disabled:opacity-50"
             >
-              {isResending ? 'Resending...' : 'Resend'}
+              {isResending ? t('auth.otp.resending', { defaultValue: 'Resending...' }) : t('auth.otp.resend', { defaultValue: 'Resend' })}
             </button>
           </p>
         )}

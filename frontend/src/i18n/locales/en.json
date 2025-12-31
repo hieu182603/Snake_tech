@@ -42,6 +42,9 @@
   "nav": {
     "home": "Home",
     "products": "Products",
+    "hotline": "Hotline: 1900 1234",
+    "supportEmail": "Email: support@techstore.vn",
+    "sellerChannel": "Seller Channel",
     "catalog": "Catalog",
     "quote": "Quote",
     "tracking": "Tracking",
@@ -109,6 +112,17 @@
       "resendSuccess": "OTP resent successfully",
       "resendFailed": "Failed to resend OTP"
     },
+    "forgot": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a reset code.",
+      "sendRequest": "Send Reset Code",
+      "resetTitle": "Reset Password",
+      "resetSubtitle": "Enter your new password.",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "confirmReset": "Confirm Reset",
+      "backToLogin": "Back to Login"
+    },
     "validation": {
       "required": "This field is required",
       "invalidEmail": "Invalid email address",
@@ -162,10 +176,12 @@
       "keyboard": "Keyboard",
       "mouse": "Mouse",
       "headset": "Headset",
-      "components": "Components"
+      "components": "Components",
+      "accessories": "Gaming Accessories"
     },
     "flashSale": {
       "title": "FLASH SALE",
+      "subtitle": "Limited time offers on premium gaming gear",
       "endsIn": "Ends in",
       "viewAll": "View all",
       "noProducts": "No flash sale products yet"
@@ -202,13 +218,33 @@
     "noReviews": "No reviews yet",
     "writeReview": "Write a review",
     "rating": "Rating",
-    "review": "Review",
+    "review": {
+      "stats": "{{count}} reviews | 1.2k sold",
+      "basedOn": "Based on {{count}} reviews",
+      "writeTitle": "Write your review"
+    },
+    "loadingImage": "Loading image...",
+    "loadingProduct": "Loading product...",
+    "hoverToZoom": "Hover to zoom",
+    "badge": {
+      "flagship": "Flagship",
+      "inStock": "In Stock"
+    },
+    "features": {
+      "title": "Key Features",
+      "genuine": "100% Genuine",
+      "performance": "Superior Performance",
+      "freeShipping": "Free Shipping",
+      "support": "24/7 Support"
+    },
+    "noRelated": "No related products yet.",
     "submit": "Submit",
     "cancel": "Cancel"
   },
   "wishlist": {
     "title": "Favorite Products",
     "subtitle": "You have saved {{count}} favorite products.",
+    "loading": "Loading wishlist...",
     "empty": {
       "title": "List is empty",
       "description": "Add hearts to your favorite tech products to view them here.",
@@ -222,18 +258,24 @@
     },
     "outOfStock": "Out of stock"
   },
-  "profile": {
+    "profile": {
+    "sections": {
+      "personalInfo": "PERSONAL INFORMATION",
+      "membership": "MEMBERSHIP",
+      "addressBook": "ADDRESS BOOK",
+      "recentOrders": "RECENT ORDERS"
+    },
     "title": "Personal Profile",
     "personalInfo": "Contact Information",
     "membership": "Membership Rank",
     "addresses": "Address Book",
     "recentOrders": "Recent Orders",
-    "memberSince": "Member since",
+    "memberSince": "Member since {{date}} • ID: {{id}}",
     "memberId": "Member ID",
     "labels": {
       "displayName": "Display Name",
       "email": "Email",
-      "phone": "Primary Phone Number",
+      "phone": "Phone Number",
       "rank": "Gold Rank",
       "points": "pts",
       "pointsNeeded": "{{points}} points left to Diamond Rank",
@@ -257,10 +299,19 @@
       "setAsDefault": "Set as Default",
       "viewAllOrders": "View All"
     },
+    "buttons": {
+      "edit": "Edit",
+      "changePassword": "Change Password",
+      "saveChanges": "Save Changes",
+      "viewAll": "View all",
+      "update": "Update"
+    },
     "modals": {
       "addAddress": "Add New Address",
       "editAddress": "Update Address",
-      "changePassword": "Change Password",
+      "changePassword": {
+        "title": "Change Password"
+      },
       "saveAddress": "Save Address",
       "updatePassword": "Update Password"
     },
@@ -291,7 +342,39 @@
       "logout": "Logout"
     },
     "membership": {
+      "level": "Membership Level",
+      "points": "1,500 / 2,000 points",
+      "pointsNeeded": "Need 500 more points",
       "default": "Default"
+    },
+    "address": {
+      "default": "Default",
+      "setAsDefault": "Set as default",
+      "setAsDefaultAddress": "Set as default address",
+      "labels": {
+        "label": "Label",
+        "phone": "Phone",
+        "recipientName": "Recipient Name",
+        "detail": "Address Detail"
+      },
+      "placeholders": {
+        "label": "Home, Office...",
+        "detail": "Street number, street, ward/district, city/province"
+      }
+    },
+    "password": {
+      "currentLabel": "Current Password",
+      "currentPlaceholder": "Enter current password",
+      "newLabel": "New Password",
+      "newPlaceholder": "Enter new password",
+      "confirmLabel": "Confirm Password",
+      "confirmPlaceholder": "Re-enter new password",
+      "validation": {
+        "minLength": "At least 8 characters",
+        "lowercase": "Lowercase",
+        "uppercase": "Uppercase",
+        "number": "Number"
+      }
     }
   },
   "cart": {
@@ -367,14 +450,41 @@
   "checkout": {
     "title": "Checkout",
     "shipping": "Shipping Information",
-    "payment": "Payment",
+    "payment": {
+      "title": "Choose payment method",
+      "vnPayWallet": "VNPay Wallet",
+      "vnPayWalletDesc": "Fast payment through VNPay app",
+      "cardPayment": "ATM/Visa/Master Card",
+      "cardPaymentDesc": "Payment through VNPay gateway"
+    },
     "review": "Review Order",
     "placeOrder": "Place Order",
     "backToCart": "Back to Cart",
     "orderSuccess": "Order placed successfully!",
+    "successMessage": "Thank you for your order. Please complete the payment.",
+    "orderInfo": "Order Information",
+    "backToHome": "Back to Home",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total": "Total",
+    "manageAddresses": "Manage Addresses",
+    "enterOtherAddress": "Enter other address",
+    "form": {
+      "name": "Full Name",
+      "phone": "Phone Number",
+      "address": "Address",
+      "note": "Note (Optional)"
+    },
+    "termsAgree": "By placing an order, you agree to TechStore's Terms and Conditions.",
     "orderFailed": "Order failed",
     "paymentSuccess": "Payment successful",
     "paymentFailed": "Payment failed"
+  },
+  "payment": {
+    "vnPayWallet": "VNPay Wallet",
+    "cardPayment": "ATM Card",
+    "cod": "Cash on Delivery"
   },
   "order": {
     "status": {
@@ -399,6 +509,7 @@
     "history": {
       "title": "Order History",
       "loading": "Loading orders...",
+      "customerName": "Alex User",
       "empty": {
         "title": "No orders yet",
         "description": "You haven't purchased any products at TechStore."
@@ -473,11 +584,52 @@
       "appleAccessories": "Apple Accessories"
     },
     "policies": {
-      "title": "Policies",
-      "warranty": "Warranty Policy",
-      "shipping": "Shipping & Delivery",
-      "payment": "Payment Policy",
-      "privacy": "Privacy Policy"
+      "title": "Policies & Terms",
+      "description": "Our commitment to customers",
+      "warranty": {
+        "title": "Warranty Policy",
+        "shortDesc": "All products come with official warranty ranging from 12-36 months. Warranty covers technical errors and components.",
+        "detailTitle": "Detailed Warranty Policy",
+        "detail1": "Products are officially warranted according to manufacturer regulations",
+        "detail2": "Warranty period: 12 months for components, 24-36 months for laptops/PCs",
+        "detail3": "Warranty includes: Technical errors, faulty components, non-functional items",
+        "detail4": "Not covered: Damage from external impact, misuse, natural disasters",
+        "detail5": "Warranty process: Contact hotline or bring to store"
+      },
+      "return": {
+        "title": "Return Policy",
+        "shortDesc": "Free exchange within the first 15 days for products with intact seals. Applies to manufacturer defects and incorrect descriptions.",
+        "detailTitle": "Detailed Return Policy",
+        "detail1": "Return period: 15 days from date of receipt",
+        "detail2": "Conditions: Product still has intact seal, labels, complete accessories",
+        "detail3": "Applies to: Manufacturer defects, wrong delivery, incorrect description",
+        "detail4": "Not returnable: Used products, customer-caused damage",
+        "detail5": "Shipping fees: Free return, customer pays return shipping"
+      },
+      "shipping": {
+        "title": "Shipping & Delivery",
+        "shortDesc": "Free shipping for orders over 2,000,000 VND. Delivery within 24h in provinces and 2-3 days for remote areas.",
+        "detailTitle": "Shipping Policy",
+        "detail1": "Free shipping for orders over 2,000,000 VND",
+        "detail2": "Shipping fee: 30,000 VND for orders under 2 million, applies to urban areas",
+        "detail3": "Delivery time: 1-2 days for urban areas, 2-5 days for provinces",
+        "detail4": "Shipping providers: Giao Hang Nhanh, Viettel Post, Grab",
+        "detail5": "Track orders: Provide tracking code for lookup"
+      },
+      "payment": {
+        "title": "Payment Policy",
+        "shortDesc": "Accept COD, bank transfer, credit cards and e-wallets. Secure payment through VNPay gateway.",
+        "detailTitle": "Payment Policy",
+        "detail1": "Payment methods: COD, bank transfer, credit cards, e-wallets",
+        "detail2": "Secure payment through VNPay gateway - PCI DSS certified",
+        "detail3": "Payment confirmation: Email and SMS notification immediately after payment",
+        "detail4": "Refunds: Within 3-5 business days for order cancellations",
+        "detail5": "Security: Payment information is encrypted and absolutely protected"
+      },
+      "contact": {
+        "title": "Need more support?",
+        "description": "Contact us for detailed consultation"
+      }
     },
     "newsletter": {
       "title": "Newsletter",
@@ -533,6 +685,17 @@
       "submitMessage": "Quote request sent successfully!\n\nTotal value: {{total}}₫\nNumber of components: {{count}}\n\nWe will contact {{name}} ({{phone}}) as soon as possible."
     }
   },
+  "tracking": {
+    "loading": "Loading...",
+    "title": "Track Order",
+    "orderCodeLabel": "Order code:",
+    "notFoundTitle": "Order not found",
+    "notFoundMessage": "The order you are looking for does not exist.",
+    "backToHistory": "Back to Order History",
+    "noShipper": "No shipper information yet",
+    "callNow": "Call now",
+    "chat": "Chat"
+  },
   "validation": {
     "required": "This field is required",
     "minLength": "Must be at least {{count}} characters",
@@ -572,6 +735,9 @@
     "fullWarranty": "100% Warranty",
     "levelUp": "Level Up",
     "premiumGear": "Premium Gear"
+  },
+  "brand": {
+    "tagline": "Premium Gear"
   },
   "admin": {
     "products": {

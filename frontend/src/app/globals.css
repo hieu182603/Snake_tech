@@ -51,5 +51,18 @@
   overflow: hidden;
 }
 
+/* Additional CSS variables for better theme control */
+:root {
+  --surface-dark: #ffffff;
+  --border-dark: #dcdcdc;
+  --text-secondary: #475569;
+}
+
+.dark {
+  --surface-dark: #111111;
+  --border-dark: #2b2b2b;
+  --text-secondary: #94a3b8;
+}
+
 
 

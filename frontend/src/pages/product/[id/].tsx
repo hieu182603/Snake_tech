@@ -170,7 +170,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product: initialProduct, 
               <div className="flex text-yellow-400">
                 {[1, 2, 3, 4, 5].map(s => <span key={s} className="material-symbols-outlined text-[18px] fill">star</span>)}
               </div>
-              <span className="text-sm text-text-muted font-medium">{reviews.length} đánh giá | 1.2k đã bán</span>
+              <span className="text-sm text-text-muted font-medium">{t('product.review.stats', { defaultValue: '{{count}} đánh giá | 1.2k đã bán', count: reviews.length })}</span>
             </div>
           </div>
 
@@ -270,7 +270,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product: initialProduct, 
                   <div className="flex justify-center text-yellow-400 mb-2">
                     {[1, 2, 3, 4, 5].map(s => <span key={s} className="material-symbols-outlined fill text-sm">star</span>)}
                   </div>
-                  <div className="text-xs text-text-muted font-bold uppercase tracking-widest">Dựa trên {reviews.length} đánh giá</div>
+                  <div className="text-xs text-text-muted font-bold uppercase tracking-widest">{t('product.review.basedOn', { defaultValue: 'Dựa trên {{count}} đánh giá', count: reviews.length })}</div>
                 </div>
                 <div className="flex-1 space-y-2 w-full">
                   {[5, 4, 3, 2, 1].map(star => (

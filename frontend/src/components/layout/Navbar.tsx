@@ -20,15 +20,16 @@ const Navbar: React.FC = () => {
 
   // States for features
   const [isDark, setIsDark] = useState(true);
-  const [lang, setLang] = useState<'vi' | 'en'>('vi');
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const { changeLanguage, getCurrentLanguage, t } = useTranslation();
+  const currentLang = getCurrentLanguage();
 
   const navLinks = [
-    { name: lang === 'vi' ? 'Trang chủ' : 'Home', path: '/' },
-    { name: lang === 'vi' ? 'Sản phẩm' : 'Products', path: '/catalog' },
-    { name: lang === 'vi' ? 'Báo giá' : 'Quote', path: '/quote' },
-    { name: lang === 'vi' ? 'Tra cứu' : 'Tracking', path: '/history' },
+    { name: currentLang === 'vi' ? 'Trang chủ' : 'Home', path: '/' },
+    { name: currentLang === 'vi' ? 'Sản phẩm' : 'Products', path: '/catalog' },
+    { name: currentLang === 'vi' ? 'Báo giá' : 'Quote', path: '/quote-request' },
+    { name: currentLang === 'vi' ? 'Tra cứu' : 'Tracking', path: '/tracking' },
   ];
 
   // Calculate cart items count (simplified - would need cart context)
@@ -57,7 +58,8 @@ const Navbar: React.FC = () => {
   };
 
   const toggleLang = () => {
-    setLang(prev => prev === 'vi' ? 'en' : 'vi');
+    // fallback - will be overridden below where getCurrentLanguage is available
+    changeLanguage(getCurrentLanguage() === 'vi' ? 'en' : 'vi');
   };
 
   const handleLogout = () => {
@@ -74,7 +76,7 @@ const Navbar: React.FC = () => {
     }
   };
 
-  const { t } = useTranslation();
+  // `t` already obtained earlier via useTranslation
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -96,10 +98,10 @@ const Navbar: React.FC = () => {
     <div className="sticky top-0 z-50 w-full flex flex-col">
       {/* 1. Top Bar (Premium Look) */}
       <div className="bg-primary text-white text-[10px] sm:text-xs font-bold py-1.5 px-4 relative z-50">
-        <div className="mx-auto max-w-[1440px] flex justify-between items-center">
+          <div className="mx-auto max-w-[1440px] flex justify-between items-center">
           <div className="flex gap-4">
-            <span className="hidden sm:inline opacity-90">Hotline: 1900 1234</span>
-            <span className="opacity-90">Email: support@techstore.vn</span>
+            <span className="hidden sm:inline opacity-90">{t('nav.hotline', { defaultValue: 'Hotline: 1900 1234' })}</span>
+            <span className="opacity-90">{t('nav.supportEmail', { defaultValue: 'Email: support@techstore.vn' })}</span>
           </div>
           <div className="flex gap-4 items-center">
             {isAuthenticated && user && (() => {
@@ -107,7 +109,7 @@ const Navbar: React.FC = () => {
               const isAdmin = userRole === 'ADMIN' || userRole === 'MANAGER' || userRole === 'STAFF';
 
               return isAdmin && (
-                <Link href="/admin" className="hover:underline opacity-90">Kênh người bán</Link>
+                <Link href="/admin" className="hover:underline opacity-90">{t('nav.sellerChannel', { defaultValue: 'Seller Channel' })}</Link>
               );
             })()}
           </div>
@@ -124,20 +126,21 @@ const Navbar: React.FC = () => {
               <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-105 transition-transform">
                 <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <title>Snake</title>
-                  <path d="M3 12c1.5-4 6-6 9-6 2 0 3.5.8 4.5 2 .6.8.6 1.8 0 2.6-.5.6-1.4.8-2 .3-.7-.6-1.6-1-2.8-1-2.2 0-4.5 1.6-6 4-1 1.5-1 3 .5 3.8.6.4 1.4.3 2-.2.6-.5 1-1 2-1 1.2 0 2 .6 3 1 .6.3 1 .5 1.6.5 1.8 0 3-1 4-2 1.5-1.5 3.5-1 4.5 0" />
+                  {/* stylized snake icon */}
+                  <path d="M2 12c0-4.418 4.477-8 10-8s10 3.582 10 8c0 3.866-3.582 7-8 7-1.8 0-3.4-.6-4.6-1.6-.9.9-2.2 1.6-3.6 1.6C4.477 18 2 15.866 2 12zM14.25 9.25c0 .689-.561 1.25-1.25 1.25s-1.25-.561-1.25-1.25.561-1.25 1.25-1.25 1.25.561 1.25 1.25z" />
                 </svg>
               </div>
               <div className="hidden lg:flex flex-col">
                 <h1 className="text-xl font-black tracking-tighter text-text-main uppercase font-display leading-none">Snake Tech</h1>
-                <span className="text-[9px] font-bold text-text-muted tracking-[0.3em] uppercase">Premium Gear</span>
+                <span className="text-[9px] font-bold text-text-muted tracking-[0.3em] uppercase">{t('brand.tagline', { defaultValue: 'Premium Gear' })}</span>
               </div>
             </Link>
 
             <nav className="hidden lg:flex items-center bg-surface-dark/50 p-1 rounded-full border border-border-dark">
               <Link href="/" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.home')}</Link>
               <Link href="/catalog" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/catalog' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.products')}</Link>
-              <Link href="/quote" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/quote' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.quote')}</Link>
-              <Link href="/history" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/history' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.tracking')}</Link>
+              <Link href="/quote-request" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/quote-request' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.quote')}</Link>
+              <Link href="/tracking" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/tracking' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.tracking')}</Link>
             </nav>
           </div>
 
@@ -161,9 +164,9 @@ const Navbar: React.FC = () => {
             <button
               onClick={toggleLang}
               className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all font-black text-[10px]"
-              title={lang === 'vi' ? 'Language' : 'Ngôn ngữ'}
+              title={currentLang === 'vi' ? 'Ngôn ngữ' : 'Language'}
             >
-              {lang === 'vi' ? 'VN' : 'EN'}
+              {currentLang === 'vi' ? 'VN' : 'EN'}
             </button>
 
             {/* Theme Toggle */}
@@ -172,7 +175,10 @@ const Navbar: React.FC = () => {
               className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
               title={isDark ? 'Light mode' : 'Dark mode'}
             >
-              <span className="material-symbols-outlined text-[20px] transition-transform duration-500 rotate-0 dark:-rotate-180">
+              <span
+                className={`material-symbols-outlined text-[20px] transition-transform duration-300 ${isDark ? '' : 'rotate-120'}`}
+                aria-hidden="true"
+              >
                 {isDark ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
@@ -206,8 +212,8 @@ const Navbar: React.FC = () => {
                     <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
                       {/* TODO: Add notifications list */}
                       <div className="py-10 text-center">
-                        <span className="material-symbols-outlined text-4xl text-text-muted/30 mb-2">notifications_off</span>
-                        <p className="text-xs text-text-muted">Chưa có thông báo nào</p>
+                      <span className="material-symbols-outlined text-4xl text-text-muted/30 mb-2">notifications_off</span>
+                        <p className="text-xs text-text-muted">{t('nav.noNotifications', { defaultValue: 'No notifications yet' })}</p>
                       </div>
                     </div>
                     <div className="p-2 border-t border-border-dark bg-background-dark/30 text-center">
@@ -216,7 +222,7 @@ const Navbar: React.FC = () => {
                         onClick={() => setShowNotifications(false)}
                         className="block w-full py-1.5 text-[11px] font-bold text-text-muted hover:text-text-main hover:bg-surface-accent rounded-lg transition-all"
                       >
-                        Xem tất cả thông báo
+                        {t('nav.viewAll', { defaultValue: 'View all' })}
                       </Link>
                     </div>
                   </div>
@@ -269,13 +275,13 @@ const Navbar: React.FC = () => {
                       <p className="text-sm font-bold text-text-main">{user.username || 'User'}</p>
                       <p className="text-xs text-text-muted truncate">{user.username || user.email || ''}</p>
                     </div>
-                    <Link
+                <Link
                       href="/profile"
                       className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-muted hover:bg-background-dark hover:text-text-main transition-all"
                       onClick={() => setShowProfileMenu(false)}
                     >
                       <span className="material-symbols-outlined text-[20px]">person</span>
-                      Profile
+                      {t('profile.menu.profile')}
                     </Link>
                     <Link
                       href="/history"
@@ -283,7 +289,7 @@ const Navbar: React.FC = () => {
                       onClick={() => setShowProfileMenu(false)}
                     >
                       <span className="material-symbols-outlined text-[20px]">receipt_long</span>
-                      Orders
+                      {t('profile.menu.orders')}
                     </Link>
                     <Link
                       href="/wishlist"
@@ -291,7 +297,7 @@ const Navbar: React.FC = () => {
                       onClick={() => setShowProfileMenu(false)}
                     >
                       <span className="material-symbols-outlined text-[20px]">favorite</span>
-                      Wishlist
+                      {t('profile.menu.wishlist')}
                     </Link>
                     <div className="h-px bg-border-dark my-2"></div>
                     <button
@@ -299,7 +305,7 @@ const Navbar: React.FC = () => {
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-500/10 transition-all"
                     >
                       <span className="material-symbols-outlined text-[20px]">logout</span>
-                      Logout
+                      {t('profile.menu.logout')}
                     </button>
                   </div>
                 )}
@@ -310,7 +316,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center gap-2 px-4 py-2 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 transition-all text-sm font-bold"
               >
                 <span className="material-symbols-outlined text-[18px]">login</span>
-                <span className="hidden sm:inline">Đăng nhập</span>
+                <span className="hidden sm:inline">{t('nav.login')}</span>
               </Link>
             )}
           </div>

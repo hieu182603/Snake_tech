@@ -175,9 +175,9 @@ const CheckoutPage: React.FC = () => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { id: 'vnpay', name: 'Ví VNPay', icon: 'qr_code_2' },
-                { id: 'card', name: 'Thẻ ATM', icon: 'credit_card' },
-                { id: 'cod', name: 'COD', icon: 'handshake' }
+                { id: 'vnpay', name: t('payment.vnPayWallet', { defaultValue: 'Ví VNPay' }), icon: 'qr_code_2' },
+                { id: 'card', name: t('payment.cardPayment', { defaultValue: 'Thẻ ATM' }), icon: 'credit_card' },
+                { id: 'cod', name: t('payment.cod', { defaultValue: 'COD' }), icon: 'handshake' }
               ].map(p => (
                 <div
                   key={p.id}
@@ -226,7 +226,7 @@ const CheckoutPage: React.FC = () => {
           >
             {t('checkout.placeOrder')}
           </button>
-            <p className="text-[10px] text-text-muted text-center mt-4">{t('checkout.termsAgree', { defaultValue: 'Bằng việc đặt hàng, bạn đồng ý với Điều khoản của TechStore.' })}</p>
+            <p className="text-[10px] text-text-muted text-center mt-4">{t('checkout.termsAgree')}</p>
           </div>
         </div>
       </div>

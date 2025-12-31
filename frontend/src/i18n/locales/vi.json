@@ -42,6 +42,9 @@
   "nav": {
     "home": "Trang chủ",
     "products": "Sản phẩm",
+    "hotline": "Hotline: 1900 1234",
+    "supportEmail": "Email: support@techstore.vn",
+    "sellerChannel": "Kênh người bán",
     "catalog": "Danh mục",
     "quote": "Báo giá",
     "tracking": "Tra cứu",
@@ -109,6 +112,17 @@
       "resendSuccess": "OTP đã được gửi lại",
       "resendFailed": "Không thể gửi lại OTP"
     },
+    "forgot": {
+      "title": "Quên mật khẩu?",
+      "subtitle": "Nhập email của bạn để nhận mã xác thực.",
+      "sendRequest": "Gửi yêu cầu",
+      "resetTitle": "Đặt lại mật khẩu",
+      "resetSubtitle": "Nhập mật khẩu mới của bạn.",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "confirmReset": "Xác nhận đổi",
+      "backToLogin": "Quay lại đăng nhập"
+    },
     "validation": {
       "required": "Trường này là bắt buộc",
       "invalidEmail": "Email không hợp lệ",
@@ -162,13 +176,18 @@
       "keyboard": "Bàn phím",
       "mouse": "Chuột",
       "headset": "Tai nghe",
-      "components": "Linh kiện"
+      "components": "Linh kiện",
+      "accessories": "Phụ kiện Gaming"
     },
     "flashSale": {
       "title": "FLASH SALE",
+      "subtitle": "Ưu đãi có thời hạn trên các sản phẩm gaming cao cấp",
       "endsIn": "Kết thúc sau",
       "viewAll": "Xem tất cả",
       "noProducts": "Chưa có sản phẩm flash sale"
+    },
+    "brand": {
+      "tagline": "Thiết bị cao cấp"
     },
     "newArrivals": {
       "title": "Sản phẩm mới về",
@@ -202,13 +221,33 @@
     "noReviews": "Chưa có đánh giá nào",
     "writeReview": "Viết đánh giá",
     "rating": "Đánh giá",
-    "review": "Đánh giá",
+    "review": {
+      "stats": "{{count}} đánh giá | 1.2k đã bán",
+      "basedOn": "Dựa trên {{count}} đánh giá",
+      "writeTitle": "Viết đánh giá của bạn"
+    },
+    "loadingImage": "Đang tải ảnh...",
+    "loadingProduct": "Đang tải sản phẩm...",
+    "hoverToZoom": "Hover để zoom",
+    "badge": {
+      "flagship": "Flagship",
+      "inStock": "Sẵn hàng"
+    },
+    "features": {
+      "title": "Tính năng nổi bật",
+      "genuine": "Hàng chính hãng 100%",
+      "performance": "Hiệu năng vượt trội",
+      "freeShipping": "Miễn phí vận chuyển",
+      "support": "Hỗ trợ kỹ thuật 24/7"
+    },
+    "noRelated": "Chưa có sản phẩm liên quan.",
     "submit": "Gửi",
     "cancel": "Hủy"
   },
   "wishlist": {
     "title": "Sản phẩm yêu thích",
     "subtitle": "Bạn đang lưu {{count}} sản phẩm quan tâm.",
+    "loading": "Đang tải danh sách yêu thích...",
     "empty": {
       "title": "Danh sách trống",
       "description": "Hãy thả tim các món đồ công nghệ bạn thích để xem lại tại đây.",
@@ -222,13 +261,19 @@
     },
     "outOfStock": "Hết hàng"
   },
-  "profile": {
+    "profile": {
+    "sections": {
+      "personalInfo": "THÔNG TIN CÁ NHÂN",
+      "membership": "THÀNH VIÊN",
+      "addressBook": "SỔ ĐỊA CHỈ",
+      "recentOrders": "ĐƠN HÀNG GẦN ĐÂY"
+    },
     "title": "Hồ sơ cá nhân",
     "personalInfo": "Thông tin liên hệ",
     "membership": "Hạng thành viên",
     "addresses": "Sổ địa chỉ",
     "recentOrders": "Đơn hàng gần đây",
-    "memberSince": "Thành viên từ",
+    "memberSince": "Thành viên từ {{date}} • ID: {{id}}",
     "memberId": "Member ID",
     "labels": {
       "displayName": "Tên hiển thị",
@@ -257,10 +302,19 @@
       "setAsDefault": "Đặt làm mặc định",
       "viewAllOrders": "Xem tất cả"
     },
+    "buttons": {
+      "edit": "Chỉnh sửa",
+      "changePassword": "Đổi mật khẩu",
+      "saveChanges": "Lưu thay đổi",
+      "viewAll": "Xem tất cả",
+      "update": "Cập nhật"
+    },
     "modals": {
       "addAddress": "Thêm địa chỉ mới",
       "editAddress": "Cập nhật địa chỉ",
-      "changePassword": "Đổi Mật Khẩu",
+      "changePassword": {
+        "title": "Đổi mật khẩu"
+      },
       "saveAddress": "Lưu địa chỉ",
       "updatePassword": "Cập nhật mật khẩu"
     },
@@ -291,7 +345,39 @@
       "logout": "Đăng xuất"
     },
     "membership": {
+      "level": "Hạng thành viên",
+      "points": "1,500 / 2,000 điểm",
+      "pointsNeeded": "Cần 500 điểm nữa",
       "default": "Mặc định"
+    },
+    "address": {
+      "default": "Mặc định",
+      "setAsDefault": "Mặc định",
+      "setAsDefaultAddress": "Đặt làm địa chỉ mặc định",
+      "labels": {
+        "label": "Nhãn",
+        "phone": "Số điện thoại",
+        "recipientName": "Tên người nhận",
+        "detail": "Địa chỉ chi tiết"
+      },
+      "placeholders": {
+        "label": "Nhà riêng, Công ty...",
+        "detail": "Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"
+      }
+    },
+    "password": {
+      "currentLabel": "Mật khẩu hiện tại",
+      "currentPlaceholder": "Nhập mật khẩu hiện tại",
+      "newLabel": "Mật khẩu mới",
+      "newPlaceholder": "Nhập mật khẩu mới",
+      "confirmLabel": "Xác nhận mật khẩu",
+      "confirmPlaceholder": "Nhập lại mật khẩu mới",
+      "validation": {
+        "minLength": "Tối thiểu 8 ký tự",
+        "lowercase": "Chữ thường",
+        "uppercase": "Chữ hoa",
+        "number": "Số"
+      }
     }
   },
   "cart": {
@@ -367,14 +453,41 @@
   "checkout": {
     "title": "Thanh toán",
     "shipping": "Thông tin giao hàng",
-    "payment": "Thanh toán",
+    "payment": {
+      "title": "Chọn phương thức thanh toán",
+      "vnPayWallet": "Ví VNPay",
+      "vnPayWalletDesc": "Thanh toán nhanh qua ứng dụng VNPay",
+      "cardPayment": "Thẻ ATM/Visa/Master",
+      "cardPaymentDesc": "Thanh toán qua cổng VNPay"
+    },
     "review": "Xem lại đơn hàng",
     "placeOrder": "Đặt hàng",
     "backToCart": "Quay lại giỏ hàng",
     "orderSuccess": "Đặt hàng thành công!",
+    "successMessage": "Cảm ơn bạn đã đặt hàng. Vui lòng hoàn tất thanh toán.",
+    "orderInfo": "Thông tin đơn hàng",
+    "backToHome": "Về trang chủ",
+    "subtotal": "Tạm tính",
+    "shipping": "Phí vận chuyển",
+    "free": "Miễn phí",
+    "total": "Tổng cộng",
+    "manageAddresses": "Quản lý địa chỉ",
+    "enterOtherAddress": "Nhập địa chỉ khác",
+    "form": {
+      "name": "Họ tên",
+      "phone": "Số điện thoại",
+      "address": "Địa chỉ",
+      "note": "Ghi chú (Tùy chọn)"
+    },
+    "termsAgree": "Bằng việc đặt hàng, bạn đồng ý với Điều khoản của TechStore.",
     "orderFailed": "Đặt hàng thất bại",
     "paymentSuccess": "Thanh toán thành công",
     "paymentFailed": "Thanh toán thất bại"
+  },
+  "payment": {
+    "vnPayWallet": "Ví VNPay",
+    "cardPayment": "Thẻ ATM",
+    "cod": "COD"
   },
   "order": {
     "status": {
@@ -399,6 +512,7 @@
     "history": {
       "title": "Lịch sử đơn hàng",
       "loading": "Đang tải đơn hàng...",
+      "customerName": "Alex User",
       "empty": {
         "title": "Chưa có đơn hàng nào",
         "description": "Bạn chưa mua sắm sản phẩm nào tại TechStore."
@@ -473,11 +587,52 @@
       "appleAccessories": "Phụ kiện Apple"
     },
     "policies": {
-      "title": "Chính sách",
-      "warranty": "Chính sách bảo hành",
-      "shipping": "Vận chuyển & Giao nhận",
-      "payment": "Chính sách thanh toán",
-      "privacy": "Bảo mật thông tin"
+      "title": "Chính sách & Điều khoản",
+      "description": "Cam kết của chúng tôi với khách hàng",
+      "warranty": {
+        "title": "Chính sách bảo hành",
+        "shortDesc": "Tất cả sản phẩm đều được bảo hành chính hãng với thời hạn từ 12-36 tháng. Bảo hành bao gồm lỗi kỹ thuật và linh kiện.",
+        "detailTitle": "Chi tiết chính sách bảo hành",
+        "detail1": "Sản phẩm được bảo hành chính hãng theo quy định của nhà sản xuất",
+        "detail2": "Thời hạn bảo hành: 12 tháng cho linh kiện, 24-36 tháng cho laptop/PC",
+        "detail3": "Bảo hành bao gồm: Lỗi kỹ thuật, linh kiện hỏng, không hoạt động",
+        "detail4": "Không bảo hành: Hư hỏng do tác động bên ngoài, sử dụng sai cách, thiên tai",
+        "detail5": "Quy trình bảo hành: Liên hệ hotline hoặc mang đến cửa hàng"
+      },
+      "return": {
+        "title": "Chính sách đổi trả",
+        "shortDesc": "Đổi trả miễn phí trong 15 ngày đầu tiên với sản phẩm còn nguyên seal. Áp dụng cho lỗi nhà sản xuất và không đúng mô tả.",
+        "detailTitle": "Chi tiết chính sách đổi trả",
+        "detail1": "Thời hạn đổi trả: 15 ngày kể từ ngày nhận hàng",
+        "detail2": "Điều kiện: Sản phẩm còn nguyên seal, tem mác, phụ kiện đầy đủ",
+        "detail3": "Áp dụng cho: Lỗi nhà sản xuất, giao sai sản phẩm, không đúng mô tả",
+        "detail4": "Không đổi trả: Sản phẩm đã qua sử dụng, hư hỏng do khách hàng",
+        "detail5": "Phí vận chuyển: Miễn phí đổi trả, khách hàng chịu phí gửi về"
+      },
+      "shipping": {
+        "title": "Vận chuyển & giao nhận",
+        "shortDesc": "Miễn phí vận chuyển cho đơn hàng từ 2.000.000đ. Giao hàng trong 24h tại các tỉnh thành và 2-3 ngày cho vùng xa.",
+        "detailTitle": "Chính sách vận chuyển",
+        "detail1": "Miễn phí vận chuyển cho đơn hàng từ 2.000.000đ",
+        "detail2": "Phí vận chuyển: 30.000đ cho đơn dưới 2 triệu, áp dụng cho khu vực nội thành",
+        "detail3": "Thời gian giao hàng: 1-2 ngày cho nội thành, 2-5 ngày cho ngoại tỉnh",
+        "detail4": "Đơn vị vận chuyển: Giao Hàng Nhanh, Viettel Post, Grab",
+        "detail5": "Theo dõi đơn hàng: Cung cấp mã vận đơn để tra cứu"
+      },
+      "payment": {
+        "title": "Chính sách thanh toán",
+        "shortDesc": "Chấp nhận thanh toán COD, chuyển khoản, thẻ tín dụng và các ví điện tử. Thanh toán an toàn qua cổng VNPay.",
+        "detailTitle": "Chính sách thanh toán",
+        "detail1": "Phương thức thanh toán: COD, chuyển khoản, thẻ tín dụng, ví điện tử",
+        "detail2": "Thanh toán an toàn qua cổng VNPay - chứng nhận PCI DSS",
+        "detail3": "Xác nhận thanh toán: Email và SMS thông báo ngay sau khi thanh toán",
+        "detail4": "Hoàn tiền: Trong vòng 3-5 ngày làm việc cho trường hợp hủy đơn",
+        "detail5": "Bảo mật: Thông tin thanh toán được mã hóa và bảo vệ tuyệt đối"
+      },
+      "contact": {
+        "title": "Cần hỗ trợ thêm?",
+        "description": "Liên hệ với chúng tôi để được tư vấn chi tiết"
+      }
     },
     "newsletter": {
       "title": "Đăng ký nhận tin",
@@ -532,6 +687,17 @@
     "success": {
       "submitMessage": "Đã gửi yêu cầu báo giá thành công!\n\nTổng giá trị: {{total}}₫\nSố linh kiện: {{count}}\n\nChúng tôi sẽ liên hệ {{name}} ({{phone}}) sớm nhất."
     }
+  },
+  "tracking": {
+    "loading": "Đang tải...",
+    "title": "Theo dõi đơn hàng",
+    "orderCodeLabel": "Mã đơn hàng:",
+    "notFoundTitle": "Không tìm thấy đơn hàng",
+    "notFoundMessage": "Đơn hàng bạn đang tìm không tồn tại.",
+    "backToHistory": "Quay lại lịch sử đơn hàng",
+    "noShipper": "Chưa có thông tin shipper",
+    "callNow": "Gọi ngay",
+    "chat": "Chat"
   },
   "validation": {
     "required": "Trường này là bắt buộc",

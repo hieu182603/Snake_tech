@@ -84,7 +84,7 @@ const Wishlist: React.FC = () => {
         {loading ? (
           <div className="text-center py-20">
             <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-text-muted">Loading wishlist...</p>
+            <p className="text-text-muted">{t('wishlist.loading', { defaultValue: 'Loading wishlist...' })}</p>
           </div>
         ) : wishlistItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

@@ -19,17 +19,17 @@ export default {
         },
         surface: {
           DEFAULT: 'var(--surface)',
-          dark: '#1a1a1a',
+          dark: 'var(--surface-dark)',
           accent: 'var(--surface-accent)',
         },
         border: {
           DEFAULT: 'var(--border)',
-          dark: '#333333',
+          dark: 'var(--border-dark)',
         },
         text: {
           main: 'var(--text-main)',
           muted: 'var(--text-muted)',
-          secondary: '#94a3b8',
+          secondary: 'var(--text-secondary)',
         },
       },
       fontFamily: {

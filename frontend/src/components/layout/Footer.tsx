@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
               <span className="text-2xl font-black tracking-tighter text-text-main uppercase font-display">Snake Tech</span>
             </div>
             <p className="text-sm text-text-muted leading-relaxed">
-              {t('footer.brand.description') || 'Thiết bị gaming và công nghệ cao cấp cho mọi nhu cầu của bạn.'}
+              {t('footer.brand.description', { defaultValue: 'Thiết bị gaming và công nghệ cao cấp cho mọi nhu cầu của bạn.' })}
             </p>
             <div className="flex gap-4">
                {/* Facebook */}
@@ -67,33 +67,33 @@ const Footer: React.FC = () => {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="mb-6 font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.products.title') || 'SẢN PHẨM'}</h4>
+            <h4 className="mb-6 font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.products.title', { defaultValue: 'SẢN PHẨM' })}</h4>
             <ul className="space-y-4 text-sm text-text-muted">
-              <li><Link href="/catalog?category=Laptops" className="hover:text-primary transition-colors">{t('footer.products.gamingLaptops') || 'Laptop Gaming'}</Link></li>
-              <li><Link href="/catalog?category=Laptops" className="hover:text-primary transition-colors">{t('footer.products.workstations') || 'Máy trạm'}</Link></li>
-              <li><Link href="/catalog?category=components" className="hover:text-primary transition-colors">{t('footer.products.components') || 'Linh kiện'}</Link></li>
-              <li><Link href="/catalog?category=accessories" className="hover:text-primary transition-colors">{t('footer.products.gamingGear') || 'Gaming Gear'}</Link></li>
-              <li><Link href="/catalog?brand=Apple" className="hover:text-primary transition-colors">{t('footer.products.appleAccessories') || 'Phụ kiện Apple'}</Link></li>
+              <li><Link href="/catalog?category=Laptops" className="hover:text-primary transition-colors">{t('footer.products.gamingLaptops', { defaultValue: 'Laptop Gaming' })}</Link></li>
+              <li><Link href="/catalog?category=Laptops" className="hover:text-primary transition-colors">{t('footer.products.workstations', { defaultValue: 'Máy trạm' })}</Link></li>
+              <li><Link href="/catalog?category=components" className="hover:text-primary transition-colors">{t('footer.products.components', { defaultValue: 'Linh kiện' })}</Link></li>
+              <li><Link href="/catalog?category=accessories" className="hover:text-primary transition-colors">{t('footer.products.gamingGear', { defaultValue: 'Gaming Gear' })}</Link></li>
+              <li><Link href="/catalog?brand=Apple" className="hover:text-primary transition-colors">{t('footer.products.appleAccessories', { defaultValue: 'Phụ kiện Apple' })}</Link></li>
             </ul>
           </div>
 
           {/* Column 3: Policy */}
           <div>
-            <h4 className="mb-6 font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.policies.title') || 'CHÍNH SÁCH'}</h4>
+            <h4 className="mb-6 font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.policies.title', { defaultValue: 'CHÍNH SÁCH' })}</h4>
             <ul className="space-y-4 text-sm text-text-muted">
-              <li><Link href="/policy?warranty" className="hover:text-primary transition-colors">{t('footer.policies.warranty') || 'Bảo hành'}</Link></li>
-              <li><Link href="/policy?shipping" className="hover:text-primary transition-colors">{t('footer.policies.shipping') || 'Vận chuyển'}</Link></li>
-              <li><Link href="/policy?payment" className="hover:text-primary transition-colors">{t('footer.policies.payment') || 'Thanh toán'}</Link></li>
-              <li><Link href="/policy?privacy" className="hover:text-primary transition-colors">{t('footer.policies.privacy') || 'Bảo mật'}</Link></li>
+              <li><Link href="/policy?warranty" className="hover:text-primary transition-colors">{t('footer.policies.warranty.title', { defaultValue: 'Bảo hành' })}</Link></li>
+              <li><Link href="/policy?shipping" className="hover:text-primary transition-colors">{t('footer.policies.shipping.title', { defaultValue: 'Vận chuyển' })}</Link></li>
+              <li><Link href="/policy?payment" className="hover:text-primary transition-colors">{t('footer.policies.payment.title', { defaultValue: 'Thanh toán' })}</Link></li>
+              <li><Link href="/policy?privacy" className="hover:text-primary transition-colors">{t('footer.policies.privacy', { defaultValue: 'Bảo mật' })}</Link></li>
             </ul>
           </div>
 
           {/* Column 4: Newsletter */}
           <div className="space-y-6">
-            <h4 className="font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.newsletter.title') || 'NEWSLETTER'}</h4>
-            <p className="text-sm text-text-muted">{t('footer.newsletter.description') || 'Đăng ký nhận tin tức và ưu đãi mới nhất'}</p>
-            <form className="relative" onSubmit={(e) => { e.preventDefault(); showSuccess('Cảm ơn bạn đã đăng ký!'); }}>
-               <input type="email" placeholder={t('footer.newsletter.placeholder') || 'Email của bạn'} className="w-full h-12 rounded-xl border border-border-dark bg-background-dark pl-4 pr-12 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary outline-none" required />
+            <h4 className="font-black text-text-main uppercase text-xs tracking-[0.2em]">{t('footer.newsletter.title', { defaultValue: 'NEWSLETTER' })}</h4>
+            <p className="text-sm text-text-muted">{t('footer.newsletter.description', { defaultValue: 'Đăng ký nhận tin tức và ưu đãi mới nhất' })}</p>
+            <form className="relative" onSubmit={(e) => { e.preventDefault(); showSuccess(t('footer.newsletter.thankYou', { defaultValue: 'Thank you for subscribing!' })); }}>
+               <input type="email" placeholder={t('footer.newsletter.placeholder', { defaultValue: 'Email của bạn' })} className="w-full h-12 rounded-xl border border-border-dark bg-background-dark pl-4 pr-12 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary outline-none" required />
                <button type="submit" className="absolute right-2 top-2 size-8 rounded-lg bg-primary text-white flex items-center justify-center hover:opacity-90">
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
                </button>
@@ -110,11 +110,11 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-border-dark py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-           <p className="text-xs text-text-muted font-medium">{t('footer.copyright') || '© 2024 Snake Tech. Tất cả quyền được bảo lưu.'}</p>
+           <p className="text-xs text-text-muted font-medium">{t('footer.copyright', { defaultValue: '© 2024 Snake Tech. Tất cả quyền được bảo lưu.' })}</p>
            <div className="flex gap-6 text-xs text-text-muted font-bold uppercase tracking-wider">
-              <Link href="/policy?terms" className="hover:text-text-main">{t('footer.terms') || 'Điều khoản'}</Link>
-              <Link href="/policy?privacy" className="hover:text-text-main">{t('footer.privacy') || 'Bảo mật'}</Link>
-              <Link href="/policy?cookies" className="hover:text-text-main">{t('footer.cookies') || 'Cookies'}</Link>
+              <Link href="/policy?terms" className="hover:text-text-main">{t('footer.terms', { defaultValue: 'Điều khoản' })}</Link>
+              <Link href="/policy?privacy" className="hover:text-text-main">{t('footer.privacy', { defaultValue: 'Bảo mật' })}</Link>
+              <Link href="/policy?cookies" className="hover:text-text-main">{t('footer.cookies', { defaultValue: 'Cookies' })}</Link>
            </div>
         </div>
       </div>

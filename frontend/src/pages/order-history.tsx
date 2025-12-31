@@ -229,7 +229,7 @@ const OrderHistory: React.FC = () => {
                 <div className="mt-6 flex flex-col items-center gap-2">
                    <div className="w-full max-w-xs h-1.5 bg-background rounded-full overflow-hidden">
                       <div
-                        className={`h-full rounded-full ${selectedOrder.status === 'ĐÃ HỦY' ? 'bg-red-500' : 'bg-emerald-500'}`}
+                        className={`h-full rounded-full ${selectedOrder.status === t('order.history.status.CANCELLED') ? 'bg-red-500' : 'bg-emerald-500'}`}
                         style={{ width: getStatusTimelineWidth(selectedOrder.status) }}
                       ></div>
                    </div>
@@ -247,7 +247,7 @@ const OrderHistory: React.FC = () => {
                         <span className="text-[10px] font-black uppercase tracking-widest">{t('order.history.shippedTo')}</span>
                     </div>
                     <div>
-                        <p className="text-sm font-bold text-text-main">Alex User</p>
+                        <p className="text-sm font-bold text-text-main">{t('order.history.customerName', { defaultValue: 'Alex User' })}</p>
                         <p className="text-xs text-text-muted leading-relaxed mt-1">{selectedOrder.shippingAddress}</p>
                     </div>
                 </div>
