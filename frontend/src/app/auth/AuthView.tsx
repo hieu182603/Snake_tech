@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
 import OTPModal from '@/components/ui/OTPModal';
 import { authService } from '@/services/authService';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface AuthViewProps {
   initialSignUp?: boolean;
@@ -15,8 +16,10 @@ interface AuthViewProps {
 
 const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const toast = useToast();
   const { t } = useTranslation();
+  const { isAuthenticated, isLoading, login } = useAuth();
   const [isSignUp, setIsSignUp] = useState(initialSignUp);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -53,11 +56,11 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
 
   // Handle redirection after successful login based on user role
   useEffect(() => {
-    if (authService.isAuthenticated()) {
-      // Redirect to home page for now
+    // Wait for auth context to finish loading and only redirect if authenticated
+    if (!isLoading && isAuthenticated() && pathname.startsWith('/auth')) {
       router.push('/');
     }
-  }, []);
+  }, [isAuthenticated, isLoading, pathname, router]);
 
   const handleToggle = () => {
     if (isAnimating) return;
@@ -70,7 +73,8 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      await authService.login({ identifier: loginIdentifier, password: loginPassword });
+      const { user, token } = await authService.login({ identifier: loginIdentifier, password: loginPassword });
+      login(user, token);
       toast.showSuccess(t('auth.login.success', { defaultValue: 'Đăng nhập thành công' }));
       router.push('/');
     } catch (error: any) {
@@ -155,13 +159,16 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
 
     try {
       setIsSubmitting(true);
-      await authService.verifyRegister({
+      const { user, token } = await authService.verifyRegister({
         username: registrationData.username,
         password: registrationData.password,
         email: registrationData.email,
         role: 'CUSTOMER',
         otp: otp
       });
+
+      // Update AuthContext
+      login(user, token);
 
       // Registration successful
       setShowOTP(false);

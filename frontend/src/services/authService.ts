@@ -1,8 +1,8 @@
 // Mock auth service for Snake_tech
 export const authService = {
-  login: async (email: string, password: string) => {
+  login: async (credentials: { identifier: string; password: string }) => {
     // Mock login - in real app, this would call API
-    if (email === 'admin@techstore.vn' && password === 'admin123') {
+    if (credentials.identifier === 'admin@techstore.vn' && credentials.password === 'admin123') {
       const user = {
         id: '1',
         username: 'admin',
@@ -19,7 +19,7 @@ export const authService = {
       return { user, token };
     }
 
-    if (email === 'user@techstore.vn' && password === 'user123') {
+    if (credentials.identifier === 'user@techstore.vn' && credentials.password === 'user123') {
       const user = {
         id: '2',
         username: 'user',
@@ -48,6 +48,25 @@ export const authService = {
       email: userData.email,
       role: 'CUSTOMER' as const,
       isVerified: false
+    };
+    const token = 'mock-jwt-token-' + Date.now();
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+    }
+    return { user, token };
+  },
+
+  verifyRegister: async (verifyData: { username: string; password: string; email: string; role: string; otp: string }) => {
+    // Mock verify register - in real app, this would call API with OTP verification
+    // For mock purposes, we'll just create the user account
+    const user = {
+      id: Date.now().toString(),
+      username: verifyData.username,
+      name: verifyData.username,
+      email: verifyData.email,
+      role: verifyData.role as 'CUSTOMER' | 'ADMIN',
+      isVerified: true
     };
     const token = 'mock-jwt-token-' + Date.now();
     if (typeof window !== 'undefined') {
