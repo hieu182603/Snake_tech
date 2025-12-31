@@ -1,4 +1,4 @@
-import CatalogPage from '@/pages/catalog';
+import CatalogPage from './CatalogPage';
 
 export default function Catalog() {
   return <CatalogPage />;

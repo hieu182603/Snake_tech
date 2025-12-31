@@ -1,11 +1,12 @@
-import ProductDetailPage from '@/pages/product/[id]';
+import ProductDetailPage from '../ProductDetailPage';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ProductDetail({ params }: PageProps) {
-  return <ProductDetailPage id={params.id} />;
+export default async function ProductDetail({ params }: PageProps) {
+  const resolvedParams = await params;
+  return <ProductDetailPage id={resolvedParams.id} />;
 }

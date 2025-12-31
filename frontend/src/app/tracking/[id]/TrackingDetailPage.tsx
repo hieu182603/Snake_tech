@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function TrackingDetailPage() {
+  const { t } = useTranslation();
   const params = useParams() as { id?: string };
   const id = params?.id || '';
   const [loading, setLoading] = useState(true);
