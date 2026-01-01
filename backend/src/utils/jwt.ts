@@ -83,36 +83,32 @@ export const verifyRefreshToken = (token: string) => {
  * Rotate Refresh Token
  */
 export const rotateRefreshToken = async (oldRefreshToken: string, account: any) => {
-    try {
-        // Verify the old refresh token
-        const decoded = verifyRefreshToken(oldRefreshToken);
+    // Verify the old refresh token
+    const decoded = verifyRefreshToken(oldRefreshToken);
 
-        // Find the refresh token in database
-        const refreshTokenDoc = await RefreshToken.findOne({
-            accountId: decoded.userId,
-            revokedAt: null,
-            expiresAt: { $gt: new Date() }
-        });
+    // Find the refresh token in database
+    const refreshTokenDoc = await RefreshToken.findOne({
+        accountId: decoded.userId,
+        revokedAt: null,
+        expiresAt: { $gt: new Date() }
+    });
 
-        if (!refreshTokenDoc) {
-            throw new Error('Refresh token not found');
-        }
-
-        // Verify the token hash matches
-        const isValidToken = await comparePassword(oldRefreshToken, refreshTokenDoc.tokenHash);
-        if (!isValidToken) {
-            throw new Error('Invalid refresh token');
-        }
-
-        // Revoke old token
-        refreshTokenDoc.revokedAt = new Date();
-        await refreshTokenDoc.save();
-
-        // Generate new token pair
-        return await generateTokenPair(account);
-    } catch (error) {
-        throw new Error('Refresh token rotation failed');
+    if (!refreshTokenDoc) {
+        throw new Error('Refresh token not found');
     }
+
+    // Verify the token hash matches
+    const isValidToken = await comparePassword(oldRefreshToken, refreshTokenDoc.tokenHash);
+    if (!isValidToken) {
+        throw new Error('Invalid refresh token');
+    }
+
+    // Revoke old token
+    refreshTokenDoc.revokedAt = new Date();
+    await refreshTokenDoc.save();
+
+    // Generate new token pair
+    return await generateTokenPair(account);
 };
 
 /**
@@ -142,7 +138,7 @@ export const isRefreshTokenValid = async (token: string): Promise<boolean> => {
         }
 
         return await comparePassword(token, refreshTokenDoc.tokenHash);
-    } catch (error) {
+    } catch {
         return false;
     }
 };
@@ -151,7 +147,7 @@ export const isRefreshTokenValid = async (token: string): Promise<boolean> => {
  * Extract token from Authorization header
  */
 export const extractTokenFromHeader = (authHeader: string | undefined): string | null => {
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!authHeader?.startsWith("Bearer ")) {
         return null;
     }
     return authHeader.split(" ")[1];

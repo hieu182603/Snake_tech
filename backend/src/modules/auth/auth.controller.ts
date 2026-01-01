@@ -7,8 +7,13 @@ import { JWT_CONFIG } from '../../utils/jwt.js';
 export const registerSchema = z.object({
     email: z.string().email('Invalid email'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
-    fullName: z.string().min(2, 'Full name must be at least 2 characters'),
+    // Accept either fullName or username; require at least one
+    fullName: z.string().min(2, 'Full name must be at least 2 characters').optional(),
+    username: z.string().min(1, 'Username must be at least 1 character').optional(),
     phone: z.string().optional(),
+}).refine(data => !!data.fullName || !!data.username, {
+    message: 'Either fullName or username is required',
+    path: ['fullName'],
 });
 
 export const loginSchema = z.object({
@@ -45,8 +50,14 @@ export class AuthController {
                     errors: parse.error.flatten()
                 });
             }
+            // Allow client to send `username` instead of `fullName`.
+            // If `fullName` is missing but `username` exists, use `username` as `fullName`.
+            const input = { ...parse.data } as any;
+            if (!input.fullName && input.username) {
+                input.fullName = input.username;
+            }
 
-            const result = await AuthService.register(parse.data);
+            const result = await AuthService.register(input);
             return res.status(201).json(result);
         } catch (error: any) {
             if (error.message === 'Email already registered') {

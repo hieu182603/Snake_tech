@@ -17,7 +17,7 @@ interface CartContextType {
   totalAmount: number;
   loading: boolean;
   activeOperations: Set<string>;
-  addToCart: (productId: string, quantity: number) => Promise<void>;
+  addToCart: (productId: string, quantity: number) => Promise<boolean>;
   increaseQuantity: (productId: string, amount?: number) => Promise<void>;
   decreaseQuantity: (productId: string, amount?: number) => Promise<void>;
   removeItem: (productId: string) => Promise<void>;
@@ -68,7 +68,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   }, [items]);
 
-  const addToCart = async (productId: string, quantity: number) => {
+  const addToCart = async (productId: string, quantity: number): Promise<boolean> => {
     const operationId = `add-${productId}`;
     setActiveOperations(prev => new Set(prev).add(operationId));
 
@@ -78,7 +78,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       // Fetch real product data from API
       const product = await productService.getProductById(productId);
       if (!product) {
-        throw new Error('Product not found');
+        // Product not found on server - don't crash, log and exit gracefully
+        console.error(`Product not found for id ${productId}`);
+        return false;
       }
 
       setItems(prev => {
@@ -100,8 +102,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           }];
         }
       });
+      return true;
     } catch (error) {
       console.error('Error adding to cart:', error);
+      return false;
     } finally {
       setActiveOperations(prev => {
         const newSet = new Set(prev);

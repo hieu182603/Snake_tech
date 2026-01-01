@@ -5,14 +5,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Variables for Light Theme (default) */
+/* CSS Variables for default theme (set to Home page dark aesthetic as baseline) */
 :root {
-  --background: #ffffff;
-  --surface: #f8f9fa;
-  --surface-accent: #e9ecef;
-  --border: #dee2e6;
-  --text-main: #212529;
-  --text-muted: #6c757d;
+  /* Background / surfaces */
+  --background: #0a0a0a;
+  --surface: #1a1a1a;
+  --surface-accent: #2a0a0a;
+  --border: #333333;
+
+  /* Text */
+  --text-main: #ffffff;
+  --text-muted: #a3a3a3;
+  --text-secondary: #b8c4c2;
+  --text-tertiary: #7a7d7d;
+  --text-inverse: #0a0a0a;
+  --text-inverse-muted: #2a2a2a;
+  --text-on-primary: #ffffff;
+  --text-on-surface: #ffffff;
+  --text-accent: #ff6b6b;
+  --text-success: #51cf66;
+  --text-warning: #ffd43b;
+  --text-error: #ff8787;
+  --text-info: #74c0fc;
+  --text-strong: #ffffff;
+
+  /* Brand */
   --primary: #dc2626;
   --primary-dark: #b91c1c;
 }
@@ -25,6 +42,18 @@
   --border: #333333;
   --text-main: #ffffff;
   --text-muted: #a3a3a3;
+  --text-secondary: #b8c4c2;
+  --text-tertiary: #7a7d7d;
+  --text-inverse: #0a0a0a;
+  --text-inverse-muted: #2a2a2a;
+  --text-on-primary: #ffffff;
+  --text-on-surface: #ffffff;
+  --text-accent: #ff6b6b;
+  --text-success: #51cf66;
+  --text-warning: #ffd43b;
+  --text-error: #ff8787;
+  --text-info: #74c0fc;
+  --text-strong: #ffffff;
   --primary: #dc2626;
   --primary-dark: #b91c1c;
 }

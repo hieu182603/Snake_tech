@@ -1,9 +1,10 @@
 import { Account, IAccount } from './models/account.model.js';
-import { OTP } from './models/otp.model.js';
+import { Otp as OTP } from './models/otp.model.js';
 import { sendMail } from '../../utils/mailer.js';
 import { generateTokenPair, rotateRefreshToken, revokeRefreshToken } from '../../utils/jwt.js';
 import { comparePassword, hashPassword } from '../../utils/hash.js';
 import { generateOTP, hashOTP, compareOTP } from '../../utils/otp.js';
+import { registrationOtpTemplate, resetPasswordTemplate } from '../../utils/emailTemplates.js';
 
 export class AuthService {
     // Register new account
@@ -37,6 +38,45 @@ export class AuthService {
             isActive: true,
             isVerified: false,
         });
+
+        // Generate and save OTP for email verification (REGISTER)
+        try {
+            const otp = generateOTP();
+            const otpHash = await hashOTP(otp);
+
+            // Remove any previous REGISTER OTPs for this email
+            await OTP.deleteMany({
+                target: normalizedEmail,
+                purpose: 'REGISTER'
+            });
+
+            await OTP.create({
+                target: normalizedEmail,
+                purpose: 'REGISTER',
+                otpHash: otpHash,
+                expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+            });
+
+            // Send OTP via email (best-effort) using template
+            try {
+                const tpl = registrationOtpTemplate(account.fullName, otp);
+                await sendMail({
+                    to: account.email,
+                    subject: tpl.subject,
+                    text: tpl.text,
+                    html: tpl.html
+                });
+            } catch (e) {
+                console.error('Failed to send registration OTP email:', e);
+            }
+
+            // Log OTP in non-production only (debug)
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(`Registration OTP for ${account.email}: ${otp}`);
+            }
+        } catch (e) {
+            console.error('Failed to generate/save OTP during register:', e);
+        }
 
         return {
             message: 'Account created successfully',
@@ -330,19 +370,22 @@ export class AuthService {
             expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
         });
 
-        // Send OTP via email (best-effort)
+        // Send OTP via email (best-effort) using template
         try {
+            const tpl = resetPasswordTemplate(account.fullName, otp);
             await sendMail({
                 to: account.email,
-                subject: 'Password reset code',
-                text: `Your password reset code is: ${otp}`,
-                html: `<p>Your password reset code is: <strong>${otp}</strong></p><p>It will expire in 10 minutes.</p>`
+                subject: tpl.subject,
+                text: tpl.text,
+                html: tpl.html
             });
         } catch (e) {
             console.error('Failed to send password reset email:', e);
         }
 
-        console.log(`Password reset OTP for ${account.email}: ${otp}`);
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(`Password reset OTP for ${account.email}: ${otp}`);
+        }
 
         return { message: 'Password reset OTP sent successfully' };
     }

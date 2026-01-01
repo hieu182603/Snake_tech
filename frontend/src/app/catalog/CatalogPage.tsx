@@ -313,12 +313,12 @@ export default function CatalogPage() {
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border-dark mb-4">
               <h3 className="font-bold text-white uppercase text-xs tracking-widest flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-[20px]">filter_list</span>
+                <span className="material-symbols-outlined text-red-500 text-[20px]">filter_list</span>
                 {t('catalog.filters.title')}
               </h3>
               <button
                 onClick={clearAllFilters}
-                className="text-[10px] font-black text-primary uppercase hover:underline"
+                className="text-[10px] font-black text-red-500 uppercase hover:underline"
               >
                 {t('catalog.filters.clearAll')}
               </button>

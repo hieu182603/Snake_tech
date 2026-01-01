@@ -144,10 +144,10 @@ export default function QuoteRequestPage() {
 
   return (
     <div className="flex flex-col bg-background-dark min-h-screen">
-      <div className="bg-surface-dark border-b border-border-dark py-10 px-4 rounded-b-[32px] shadow-lg shadow-black/40 mb-10">
+      <div className="bg-surface-dark border-b border-border-dark py-10 px-4 rounded-b-[32px] shadow-lg shadow-black/40 mb-10 mt-16 lg:mt-20">
         <div className="mx-auto max-w-[1200px]">
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">{t('quote.title')}</h1>
-          <p className="text-slate-400 max-w-2xl">{t('quote.subtitle')}</p>
+          <h1 className="text-3xl md:text-4xl font-black text-text-main tracking-tight mb-2">{t('quote.title')}</h1>
+          <p className="text-text-strong max-w-2xl">{t('quote.subtitle')}</p>
         </div>
       </div>
 
@@ -156,7 +156,7 @@ export default function QuoteRequestPage() {
           <div className="lg:col-span-8 flex flex-col gap-6">
             <div className="flex overflow-x-auto gap-2 pb-2">
               {CATEGORIES.map(cat => (
-                <button key={cat.id} onClick={() => setActiveCategory(cat.id as CategoryKey)} className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm whitespace-nowrap ${activeCategory === cat.id ? 'bg-primary text-white' : 'bg-surface-dark text-slate-400'}`}>
+                <button key={cat.id} onClick={() => setActiveCategory(cat.id as CategoryKey)} className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm whitespace-nowrap ${activeCategory === cat.id ? 'bg-primary text-white' : 'bg-surface-dark text-text-strong'}`}>
                   <span className="material-symbols-outlined text-[18px]">{cat.icon}</span>
                   {cat.label}
                 </button>
@@ -165,7 +165,7 @@ export default function QuoteRequestPage() {
 
             <div className="bg-surface-dark border border-border-dark rounded-3xl p-6 min-h-[300px]">
               <div className="mb-6">
-                <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder={t('quote.searchPlaceholder', { category: CATEGORIES.find(c => c.id === activeCategory)?.label })} className="w-full p-3 rounded-xl bg-background-dark border border-border-dark text-sm text-white" />
+                <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder={t('quote.searchPlaceholder', { category: CATEGORIES.find(c => c.id === activeCategory)?.label })} className="w-full p-3 rounded-xl bg-background-dark border border-border-dark text-sm text-text-main" />
               </div>
               {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -173,15 +173,15 @@ export default function QuoteRequestPage() {
                 </div>
               ) : filteredProducts.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {filteredProducts.map(p => (
-                    <div key={`${p.category}-${p.id}`} className="group flex gap-4 p-4 rounded-2xl border border-border-dark bg-background-dark/50">
+                  {filteredProducts.map((p, index) => (
+                    <div key={`${p.category}-${p.id || 'no-id'}-${index}`} className="group flex gap-4 p-4 rounded-2xl border border-border-dark bg-background-dark/50">
                       <div className="w-20 h-20 rounded-lg overflow-hidden">
                         <img src={p.image} alt={p.name || 'product'} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-white text-sm">{p.name}</h4>
+                        <h4 className="font-bold text-text-main text-sm">{p.name}</h4>
                         <div className="flex items-center justify-between mt-4">
-                          <span className="font-bold text-white">{p.price.toLocaleString()}đ</span>
+                          <span className="font-bold text-text-main">{p.price.toLocaleString()}đ</span>
                           <Button size="sm" variant="secondary" icon="add" onClick={() => addToQuote(p)}>{t('quote.addButton')}</Button>
                         </div>
                       </div>
@@ -189,7 +189,7 @@ export default function QuoteRequestPage() {
                   ))}
                 </div>
               ) : (
-                <div className="py-20 text-center text-slate-500">
+                <div className="py-20 text-center text-text-strong">
                   <p>{t('quote.noProducts')}</p>
                 </div>
               )}
@@ -200,7 +200,7 @@ export default function QuoteRequestPage() {
             <div className="sticky top-24 space-y-6">
               <div className="bg-surface-dark border border-border-dark rounded-3xl p-5">
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-bold text-white">{t('quote.selectedTitle')}</h3>
+                  <h3 className="font-bold text-text-main">{t('quote.selectedTitle')}</h3>
                   <span className="text-sm text-slate-400">{t('quote.selectedCount', { count: quoteItems.length })}</span>
                 </div>
                 <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -211,7 +211,7 @@ export default function QuoteRequestPage() {
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between">
-                          <p className="text-xs font-bold text-white">{item.name}</p>
+                          <p className="text-xs font-bold text-text-main">{item.name}</p>
                           <button onClick={() => removeFromQuote(item.id)} className="text-slate-400">✕</button>
                         </div>
                         <div className="flex items-center gap-2 mt-2">
@@ -225,12 +225,12 @@ export default function QuoteRequestPage() {
                 </div>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-sm text-slate-400">{t('quote.totalLabel')}</span>
-                  <span className="text-xl font-black text-white">{totalPrice.toLocaleString()}đ</span>
+                  <span className="text-xl font-black text-text-main">{totalPrice.toLocaleString()}đ</span>
                 </div>
               </div>
 
               <div className="bg-surface-dark border border-border-dark rounded-3xl p-6">
-                <h4 className="text-sm font-black text-white mb-3">{t('quote.form.title')}</h4>
+                <h4 className="text-sm font-black text-text-main mb-3">{t('quote.form.title')}</h4>
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <input placeholder={t('quote.form.namePlaceholder')} value={customer.name} onChange={(e) => setCustomer({ ...customer, name: e.target.value })} className="w-full p-3 rounded-xl bg-background-dark border border-border-dark text-sm" />
                   <div className="grid grid-cols-2 gap-3">

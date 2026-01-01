@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
@@ -21,6 +22,8 @@ const Navbar: React.FC = () => {
 
   // States for features
   const [isDark, setIsDark] = useState(true);
+  // Temporary lock to disable theme switching (user requested)
+  const THEME_LOCKED = true;
 
   const menuRef = useRef<HTMLDivElement>(null);
   const { changeLanguage, getCurrentLanguage, t } = useTranslation();
@@ -48,6 +51,10 @@ const Navbar: React.FC = () => {
   }, []);
 
   const toggleTheme = () => {
+    if (THEME_LOCKED) {
+      // theme switching temporarily disabled
+      return;
+    }
     const html = document.documentElement;
     if (isDark) {
       html.classList.remove('dark');
@@ -119,24 +126,17 @@ const Navbar: React.FC = () => {
           {/* Logo & Links */}
           <div className="flex items-center gap-8 md:gap-12">
             <Link href="/" className="flex items-center gap-2 text-primary group">
-              <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-105 transition-transform">
-                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <title>Snake</title>
-                  {/* stylized snake icon */}
-                  <path d="M2 12c0-4.418 4.477-8 10-8s10 3.582 10 8c0 3.866-3.582 7-8 7-1.8 0-3.4-.6-4.6-1.6-.9.9-2.2 1.6-3.6 1.6C4.477 18 2 15.866 2 12zM14.25 9.25c0 .689-.561 1.25-1.25 1.25s-1.25-.561-1.25-1.25.561-1.25 1.25-1.25 1.25.561 1.25 1.25z" />
-                </svg>
+              <div className="w-16 sm:w-20 md:w-24 lg:w-28 xl:w-36 2xl:w-44 rounded-xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Image src="/image/logo3.png" alt="Snake Tech" width={320} height={320} className="object-contain" />
               </div>
-              <div className="hidden lg:flex flex-col">
-                <h1 className="text-xl font-black tracking-tighter text-text-main uppercase font-display leading-none">Snake Tech</h1>
-                <span className="text-[9px] font-bold text-text-muted tracking-[0.3em] uppercase">{t('brand.tagline', { defaultValue: 'Premium Gear' })}</span>
-              </div>
+              
             </Link>
 
             <nav className="hidden lg:flex items-center bg-surface-dark/50 p-1 rounded-full border border-border-dark">
-              <Link href="/" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.home')}</Link>
-              <Link href="/catalog" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/catalog' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.products')}</Link>
-              <Link href="/quote-request" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/quote-request' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.quote')}</Link>
-              <Link href="/tracking" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/tracking' ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main hover:bg-white/10'}`}>{t('nav.tracking')}</Link>
+              <Link href="/" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/' ? 'bg-primary text-white shadow-md' : 'text-text-strong hover:text-text-main hover:bg-white/10'}`}>{t('nav.home')}</Link>
+              <Link href="/catalog" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/catalog' ? 'bg-primary text-white shadow-md' : 'text-text-strong hover:text-text-main hover:bg-white/10'}`}>{t('nav.products')}</Link>
+              <Link href="/quote-request" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/quote-request' ? 'bg-primary text-white shadow-md' : 'text-text-strong hover:text-text-main hover:bg-white/10'}`}>{t('nav.quote')}</Link>
+              <Link href="/tracking" className={`px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${pathname === '/tracking' ? 'bg-primary text-white shadow-md' : 'text-text-strong hover:text-text-main hover:bg-white/10'}`}>{t('nav.tracking')}</Link>
             </nav>
           </div>
 
@@ -168,8 +168,8 @@ const Navbar: React.FC = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
-              title={isDark ? 'Light mode' : 'Dark mode'}
+              className={`size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all ${THEME_LOCKED ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title={THEME_LOCKED ? 'Theme switching disabled' : (isDark ? 'Light mode' : 'Dark mode')}
             >
               <span
                 className={`material-symbols-outlined text-[20px] transition-transform duration-300 ${isDark ? '' : 'rotate-120'}`}

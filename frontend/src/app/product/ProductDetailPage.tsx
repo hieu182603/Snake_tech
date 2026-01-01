@@ -51,8 +51,12 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
     setAddingToCart(true);
     try {
-      await addToCart(product.id!, quantity);
-      toast.success('Đã thêm vào giỏ hàng!');
+      const ok = await addToCart(product.id!, quantity);
+      if (ok) {
+        toast.success('Đã thêm vào giỏ hàng!');
+      } else {
+        toast.error('Không thể thêm vào giỏ hàng');
+      }
     } catch (error) {
       console.error('Error adding to cart:', error);
       toast.error('Không thể thêm vào giỏ hàng');
@@ -61,10 +65,26 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     }
   };
 
+  const handleBuyNow = async () => {
+    if (!product || !user) return;
+
+    try {
+      const ok = await addToCart(product.id!, quantity);
+      if (ok) {
+        router.push('/checkout');
+      } else {
+        toast.error('Không thể mua ngay');
+      }
+    } catch (error) {
+      console.error('Error buying now:', error);
+      toast.error('Không thể mua ngay');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
       </div>
     );
   }
@@ -91,9 +111,9 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
       <div className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-primary">Trang chủ</Link>
+            <Link href="/" className="hover:text-red-500">Trang chủ</Link>
             <span>/</span>
-            <Link href="/catalog" className="hover:text-primary">Danh mục</Link>
+            <Link href="/catalog" className="hover:text-red-500">Danh mục</Link>
             <span>/</span>
             <span className="text-foreground">{product.name}</span>
           </div>
@@ -118,7 +138,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                      selectedImage === index ? 'border-primary' : 'border-muted'
+                      selectedImage === index ? 'border-red-500' : 'border-muted'
                     }`}
                   >
                     <img
@@ -137,7 +157,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">{product.name}</h1>
               <div className="flex items-center gap-4 mb-4">
-                <div className="text-2xl font-bold text-primary">
+                <div className="text-2xl font-bold text-red-500">
                   {product.price.toLocaleString('vi-VN')}₫
                 </div>
                 {product.stock > 0 ? (
@@ -170,19 +190,30 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                 </div>
               </div>
 
-              {/* Add to Cart Button */}
-              <Button
-                onClick={handleAddToCart}
-                disabled={!user || product.stock === 0 || addingToCart}
-                className="w-full"
-                size="lg"
-              >
-                {addingToCart ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
-              </Button>
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={!user || product.stock === 0 || addingToCart}
+                  className="flex-1"
+                  size="lg"
+                  variant="outline"
+                >
+                  {addingToCart ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
+                </Button>
+                <Button
+                  onClick={handleBuyNow}
+                  disabled={!user || product.stock === 0}
+                  className="flex-1 bg-red-500 hover:bg-red-600"
+                  size="lg"
+                >
+                  Mua ngay
+                </Button>
+              </div>
 
               {!user && (
                 <p className="text-sm text-muted-foreground text-center">
-                  Vui lòng <Link href="/auth/login" className="text-primary hover:underline">đăng nhập</Link> để mua hàng
+                  Vui lòng <Link href="/auth/login" className="text-red-500 hover:underline">đăng nhập</Link> để mua hàng
                 </p>
               )}
             </div>
@@ -203,6 +234,12 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
                   <span className="text-muted-foreground">Trạng thái:</span>
                   <span className="text-foreground">{product.isActive ? 'Đang bán' : 'Ngừng bán'}</span>
                 </div>
+                {product.brand && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Thương hiệu:</span>
+                    <span className="text-foreground">{product.brand}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

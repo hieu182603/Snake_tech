@@ -169,7 +169,7 @@ export default function HomePage() {
                 <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
                   {t('home.hero.title')}
                 </h2>
-                <p className="text-slate-300 text-lg mb-6 max-w-lg hidden sm:block">
+                <p className="text-text-muted text-lg mb-6 max-w-lg hidden sm:block">
                   {t('home.hero.subtitle')}
                 </p>
                 <Button
@@ -222,11 +222,11 @@ export default function HomePage() {
               { icon: 'assignment_return', titleKey: 'home.features.return.title', subKey: 'home.features.return.subtitle' },
               { icon: 'support_agent', titleKey: 'home.features.support.title', subKey: 'home.features.support.subtitle' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 bg-surface-dark border border-border-dark p-4 rounded-xl hover:border-red-500/50 hover:bg-surface-accent transition-all group">
-                <span className="material-symbols-outlined text-3xl text-white group-hover:text-red-500 transition-colors">{item.icon}</span>
+              <div key={i} className="flex items-center gap-3 bg-black border border-border-dark p-4 rounded-xl hover:border-red-500/50 hover:bg-surface-accent transition-all group">
+                <span className="material-symbols-outlined text-3xl text-text-main group-hover:text-red-500 transition-colors">{item.icon}</span>
                 <div>
-                  <h4 className="font-bold text-sm text-white">{t(item.titleKey)}</h4>
-                  <p className="text-xs text-slate-500">{t(item.subKey)}</p>
+                  <h4 className="font-bold text-sm text-text-main">{t(item.titleKey)}</h4>
+                  <p className="text-xs text-text-muted">{t(item.subKey)}</p>
                 </div>
               </div>
             ))}
@@ -248,12 +248,12 @@ export default function HomePage() {
                   {t('home.flashSale.title')}
                 </h2>
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest pt-1">{t('home.flashSale.endsIn')}</span>
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-widest pt-1">{t('home.flashSale.endsIn')}</span>
                   {formatTime(timeLeft)}
                 </div>
               </div>
               {/* UPDATED: Link points to filtered catalog */}
-              <Link href="/catalog?filter=flash-sale" className="text-sm font-bold text-white hover:text-red-500 flex items-center gap-1 transition-colors group">
+              <Link href="/catalog?filter=flash-sale" className="text-sm font-bold text-text-main hover:text-red-500 flex items-center gap-1 transition-colors group">
                 {t('home.flashSale.viewAll')} <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
               </Link>
             </div>
@@ -281,7 +281,7 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 text-slate-500">
+              <div className="text-center py-12 text-text-muted">
                 <span className="material-symbols-outlined text-4xl mb-2 block">inventory_2</span>
                 <p>{t('home.flashSale.noProducts')}</p>
               </div>
@@ -300,9 +300,9 @@ export default function HomePage() {
             {categories.map((cat, i) => (
               <Link href="/catalog" key={i} className="flex flex-col items-center gap-3 group cursor-pointer">
                 <div className="size-20 rounded-2xl bg-[#151515] border border-white/10 flex items-center justify-center group-hover:bg-red-600 group-hover:border-red-600 transition-all shadow-lg">
-                  <span className="material-symbols-outlined text-3xl text-zinc-500 group-hover:text-white transition-colors">{cat.icon}</span>
+                  <span className="material-symbols-outlined text-3xl text-white group-hover:text-white transition-colors">{cat.icon}</span>
                 </div>
-                <span className="text-xs font-bold text-zinc-500 group-hover:text-white text-center transition-colors uppercase">{t(cat.nameKey)}</span>
+                <span className="text-xs font-bold text-white group-hover:text-white text-center transition-colors uppercase">{t(cat.nameKey)}</span>
               </Link>
             ))}
           </div>
@@ -313,7 +313,7 @@ export default function HomePage() {
       <section className="px-4 pb-12">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex items-center justify-between mb-6 border-b border-border-dark pb-4">
-            <h3 className="text-2xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <h3 className="text-2xl font-black text-text-main uppercase tracking-tight flex items-center gap-2">
               <span className="material-symbols-outlined text-primary">new_releases</span>
               {t('home.newArrivals.title')}
             </h3>
@@ -322,7 +322,7 @@ export default function HomePage() {
                 onClick={() => setActiveTab('new')}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold shadow-lg transition-all ${activeTab === 'new'
                     ? 'bg-red-600 text-white shadow-red-600/30'
-                    : 'bg-surface-dark border border-border-dark text-slate-400 hover:text-white hover:border-white'
+                    : 'bg-surface-dark border border-border-dark text-text-strong hover:text-text-main hover:border-white'
                   }`}
               >
                 {t('home.newArrivals.latest')}
@@ -331,7 +331,7 @@ export default function HomePage() {
                 onClick={() => setActiveTab('best')}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold shadow-lg transition-all ${activeTab === 'best'
                     ? 'bg-red-600 text-white shadow-red-600/30'
-                    : 'bg-surface-dark border border-border-dark text-slate-400 hover:text-white hover:border-white'
+                    : 'bg-surface-dark border border-border-dark text-text-strong hover:text-text-main hover:border-white'
                   }`}
               >
                 {t('home.newArrivals.bestSelling')}
@@ -358,7 +358,7 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-slate-500">
+            <div className="text-center py-12 text-text-muted">
               <span className="material-symbols-outlined text-4xl mb-2 block">new_releases</span>
               <p>{t('home.newArrivals.noProducts')}</p>
             </div>
@@ -383,7 +383,7 @@ export default function HomePage() {
             {/* Content */}
             <div className="relative z-10 px-4">
               <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 uppercase tracking-tighter">{t('home.banner.title')}</h3>
-              <p className="text-slate-400 font-medium mb-8 text-sm sm:text-base">{t('home.banner.subtitle')}</p>
+              <p className="text-text-muted font-medium mb-8 text-sm sm:text-base">{t('home.banner.subtitle')}</p>
               <button className="px-12 py-3.5 rounded-2xl border border-white text-white font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all">
                 {t('home.banner.viewCombo')}
               </button>
@@ -396,11 +396,11 @@ export default function HomePage() {
       <section className="px-4 pb-20">
         <div className="mx-auto max-w-[1440px]">
           <div className="flex items-center justify-between mb-6 border-b border-border-dark pb-4">
-            <h3 className="text-2xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <h3 className="text-2xl font-black text-text-main uppercase tracking-tight flex items-center gap-2">
               <span className="material-symbols-outlined text-red-400">laptop_chromebook</span>
               {t('home.laptops.title')}
             </h3>
-            <Link href="/catalog" className="text-xs font-bold text-slate-500 hover:text-white uppercase tracking-widest">{t('home.laptops.viewAll')}</Link>
+            <Link href="/catalog" className="text-xs font-bold text-text-strong hover:text-text-main uppercase tracking-widest">{t('home.laptops.viewAll')}</Link>
           </div>
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-8 gap-x-4 sm:gap-6">
@@ -423,7 +423,7 @@ export default function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-slate-500">
+            <div className="text-center py-12 text-text-muted">
               <span className="material-symbols-outlined text-4xl mb-2 block">laptop_chromebook</span>
               <p>Chưa có sản phẩm laptop</p>
             </div>
@@ -434,9 +434,9 @@ export default function HomePage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto px-16 border-border-dark text-slate-400 hover:text-white hover:border-white hover:bg-white/5"
+                className="w-full sm:w-auto px-16 border-border-dark text-text-strong hover:text-text-main hover:border-white hover:bg-white/5"
               >
-                {totalProducts > 0
+                {totalProducts > laptopProducts.length
                   ? t('home.laptops.viewMore', { count: Math.max(totalProducts - laptopProducts.length, 0) })
                   : t('home.laptops.viewAll')}
               </Button>

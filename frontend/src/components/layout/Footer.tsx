@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -10,20 +11,18 @@ const Footer: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="border-t border-border-dark bg-surface-dark pt-16 mt-auto transition-colors duration-300">
+    <footer className="border-t border-border-dark bg-black pt-16 mt-auto transition-colors duration-300">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
           {/* Column 1: Brand */}
           <div className="space-y-6">
-            <div className="flex items-center gap-2 text-primary">
-              <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
-                 <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                   <title>Snake</title>
-                   <path d="M3 12c1.5-4 6-6 9-6 2 0 3.5.8 4.5 2 .6.8.6 1.8 0 2.6-.5.6-1.4.8-2 .3-.7-.6-1.6-1-2.8-1-2.2 0-4.5 1.6-6 4-1 1.5-1 3 .5 3.8.6.4 1.4.3 2-.2.6-.5 1-1 2-1 1.2 0 2 .6 3 1 .6.3 1 .5 1.6.5 1.8 0 3-1 4-2 1.5-1.5 3.5-1 4.5 0" />
-                 </svg>
-              </div>
-              <span className="text-2xl font-black tracking-tighter text-text-main uppercase font-display">Snake Tech</span>
+            <div className="flex items-center gap-2">
+              <Link href="/" className="flex items-center gap-1">
+                <div className="w-20 sm:w-24 md:w-28 lg:w-32 xl:w-36 2xl:w-40 h-auto rounded-xl overflow-hidden flex items-center justify-center">
+                  <Image src="/image/logo4.png" alt="Snake Tech" width={600} height={600} className="object-contain" />
+                </div>
+              </Link>
             </div>
             <p className="text-sm text-text-muted leading-relaxed">
               {t('footer.brand.description', { defaultValue: 'Thiết bị gaming và công nghệ cao cấp cho mọi nhu cầu của bạn.' })}

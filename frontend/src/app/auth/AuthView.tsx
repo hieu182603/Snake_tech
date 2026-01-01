@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
 import OTPModal from '@/components/ui/OTPModal';
 import { useToast } from '@/contexts/ToastContext';
@@ -21,17 +21,18 @@ const getRoleBasePath = (role: AccountRole): string => {
     case AccountRole.STAFF:
       return '/staff';
     case AccountRole.CUSTOMER:
-      return '/customer';
+      return '/'; // Redirect customers to home page after login
     case AccountRole.SHIPPER:
       return '/shipper';
     default:
-      return '/customer';
+      return '/'; // Default to home page
   }
 };
 
 const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = use(useSearchParams());
   const toast = useToast();
   const { t } = useTranslation();
   const { isAuthenticated, isLoading, login, user, register, verifyRegister, resendOTP } = useAuth();
@@ -73,6 +74,14 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
       setIsSignUp(initialSignUp);
     }
   }, [initialSignUp, pathname]);
+
+  // Pre-fill email from URL params when coming from registration
+  useEffect(() => {
+    const emailParam = searchParams.get('email');
+    if (emailParam && pathname === '/auth/login') {
+      setLoginIdentifier(emailParam);
+    }
+  }, [searchParams, pathname]);
 
   // Handle redirection after successful login based on user role
   useEffect(() => {
@@ -190,7 +199,9 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
       // Registration successful
       setShowOTP(false);
       toast.showSuccess(t('auth.register.success', { defaultValue: 'Đăng ký thành công' }));
-      // Redirect will be handled by useEffect based on user role
+
+      // Redirect to login page with email pre-filled
+      router.push(`/auth/login?email=${encodeURIComponent(registrationData.email)}`);
     } catch (error: any) {
       throw error;
     } finally {

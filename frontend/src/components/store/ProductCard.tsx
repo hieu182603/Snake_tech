@@ -1,5 +1,10 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@contexts/ToastContext';
+import { useCart } from '@contexts/CartContext';
+import { useTranslation } from '../../hooks/useTranslation';
 import Image from 'next/image';
 
 interface ProductCardProps {
@@ -24,8 +29,59 @@ const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
 }) => {
   const router = useRouter();
+  const [isAdded, setIsAdded] = useState(false);
+  const toast = useToast();
+  const { addToCart, activeOperations } = useCart();
+  const { t } = useTranslation();
 
-  const handleViewDetails = () => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isAdded || activeOperations.has(`add-${id}`)) return;
+
+    try {
+      const ok = await addToCart(id.toString(), 1);
+      if (ok) {
+        setIsAdded(true);
+        setTimeout(() => {
+          setIsAdded(false);
+        }, 2000);
+      } else {
+        toast?.error?.('Không thể thêm sản phẩm vào giỏ');
+      }
+    } catch (error) {
+      // Error is handled by CartContext and toast is shown there
+      console.error('Failed to add product to cart:', error);
+    }
+  };
+
+  const handleBuyNow = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      // Add to cart first
+      const ok = await addToCart(id.toString(), 1);
+      if (ok) {
+        // Navigate to checkout
+        router.push('/checkout');
+      } else {
+        toast?.error?.('Không thể thực hiện mua ngay - sản phẩm không tìm thấy');
+      }
+    } catch (error) {
+      console.error('Failed to buy now:', error);
+      try {
+        toast.error?.('Không thể mua ngay — vui lòng thử lại');
+      } catch (e) {
+        // ignore
+      }
+    }
+  };
+
+  const handleViewDetails = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     router.push(`/product/${id}`);
   };
 
@@ -80,7 +136,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span
               key={i}
               className={`material-symbols-outlined text-[14px] ${
-                i < rating ? 'text-yellow-400 fill' : 'text-zinc-700'
+                i < rating ? 'text-yellow-400 fill' : 'text-text-tertiary'
               }`}
             >
               star
@@ -89,7 +145,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Product Name */}
-        <h3 className="text-text-main font-bold text-sm leading-snug mb-4 line-clamp-2 min-h-[2.5em] group-hover:text-red-500 transition-colors">
+        <h3 className="text-black font-bold text-sm leading-snug mb-4 line-clamp-2 min-h-[2.5em] transition-colors group-hover:text-red-500">
           {name}
         </h3>
 
@@ -106,29 +162,35 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
 
-          {/* Action Buttons Row */}
+          {/* Action Buttons Row - small icon add + main buy button */}
           <div className="flex gap-2 pt-1">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                // Handle add to cart
-              }}
-              className="h-10 w-12 flex items-center justify-center rounded-lg transition-all active:scale-95 border bg-surface-accent border-transparent text-text-main hover:border-red-500 hover:text-red-500 hover:bg-white"
-              title="Thêm vào giỏ"
+              onClick={handleAddToCart}
+              disabled={activeOperations.has(`add-${id}`)}
+              className={`h-10 w-12 flex items-center justify-center rounded-lg transition-all active:scale-95 border ${
+                isAdded
+                  ? 'bg-green-600 border-green-600 text-white shadow-md'
+                  : activeOperations.has(`add-${id}`)
+                  ? 'bg-gray-500 border-gray-500 text-white cursor-not-allowed'
+                  : 'bg-surface-accent border-transparent text-text-main hover:border-red-500 hover:text-red-500 hover:bg-white'
+              }`}
+              title={t('product.addToCartTitle', { defaultValue: 'Thêm vào giỏ' })}
             >
+              {activeOperations.has(`add-${id}`) ? (
+                <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+              ) : (
               <span className="material-symbols-outlined text-[20px] fill">
-                add_shopping_cart
+                {isAdded ? 'check' : 'add_shopping_cart'}
               </span>
+              )}
             </button>
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                // Handle buy now
-              }}
-              className="flex-1 h-10 rounded-lg bg-red-500 text-white font-bold text-xs uppercase tracking-wider hover:bg-red-600 shadow-lg shadow-red-500/20 transition-all active:scale-95 flex items-center justify-center"
+              onClick={handleBuyNow}
+              className="flex-1 h-10 rounded-lg bg-red-500 text-white font-bold text-xs uppercase tracking-wider hover:bg-red-600 shadow-lg shadow-red-500/20 transition-all active:scale-95 flex items-center justify-center gap-1"
             >
-              Mua ngay
+              <span className="material-symbols-outlined">bolt</span>
+              {t('product.buyNow', { defaultValue: 'Mua ngay' })}
             </button>
           </div>
         </div>
