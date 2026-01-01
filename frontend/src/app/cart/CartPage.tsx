@@ -4,68 +4,26 @@ import React from 'react';
 import Link from 'next/link';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
-
-// Mock cart data for demonstration
-const mockCartItems = [
-    {
-        id: '1',
-        product: {
-            id: '1',
-            name: 'Gaming Laptop Pro',
-            price: 1299999,
-            images: [{ url: '/api/placeholder/300/300' }],
-            color: 'Black'
-        },
-        quantity: 1
-    },
-    {
-        id: '2',
-        product: {
-            id: '2',
-            name: 'Mechanical Keyboard RGB',
-            price: 149999,
-            images: [{ url: '/api/placeholder/300/300' }],
-            color: 'White'
-        },
-        quantity: 2
-    }
-];
+import { useCart } from '@/contexts/CartContext';
 
 const CartPage: React.FC = () => {
     const { showSuccess, showError } = useToast();
     const { t } = useTranslation();
 
-    // Mock cart state - in real app this would come from cart context
-    const [items, setItems] = React.useState(mockCartItems);
-    const [isLoading, setIsLoading] = React.useState(false);
+    // Use real cart context
+    const { items, increaseQuantity, decreaseQuantity, removeItem, getItemQuantity, loading } = useCart();
 
-    const subtotal = items.reduce((acc, curr) => acc + (curr.product?.price || 0) * curr.quantity, 0);
+    const subtotal = items.reduce((acc, curr) => acc + (curr.price || 0) * curr.quantity, 0);
 
-    // Mock cart functions
-    const increaseQuantity = (productId: string) => {
-        setItems(prev => prev.map(item =>
-            item.product.id === productId
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-        ));
+    const handleRemoveItem = async (productId: string) => {
+        try {
+            await removeItem(productId);
+            showSuccess(t('cart.item_removed', { defaultValue: 'Sản phẩm đã được xóa khỏi giỏ hàng' }));
+        } catch (error) {
+            showError(t('cart.remove_failed', { defaultValue: 'Không thể xóa sản phẩm' }));
+        }
     };
 
-    const decreaseQuantity = (productId: string) => {
-        setItems(prev => prev.map(item =>
-            item.product.id === productId && item.quantity > 1
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-        ));
-    };
-
-    const removeItem = (productId: string) => {
-        setItems(prev => prev.filter(item => item.product.id !== productId));
-        showSuccess(t('cart.item_removed', { defaultValue: 'Sản phẩm đã được xóa khỏi giỏ hàng' }));
-    };
-
-    const getItemQuantity = (productId: string) => {
-        return items.find(item => item.product.id === productId)?.quantity || 0;
-    };
 
     if (items.length === 0) {
         return (
@@ -97,28 +55,23 @@ const CartPage: React.FC = () => {
             <div className="flex flex-col lg:flex-row gap-8">
                 <div className="flex-1 space-y-4">
                     {items.map((item) => {
-                        const product = item.product || (item as any);
                         const qty = item.quantity;
-                        const name = product.name || product.productName || 'Sản phẩm';
-                        const price = product.price || 0;
-                        const color = (product as any).color || 'N/A';
+                        const name = item.name || 'Sản phẩm';
+                        const price = item.price || 0;
                         return (
                             <div key={item.id} className="bg-surface-dark rounded-3xl border border-border-dark p-4 md:p-6 flex flex-col md:flex-row gap-6 items-center group hover:border-primary/30 transition-all">
 
                                 {/* Product Info */}
                                 <div className="w-full md:flex-1 flex gap-4 md:gap-6 items-center">
                                     <div className="shrink-0 size-20 md:size-24 bg-background-dark rounded-2xl border border-border-dark p-2 flex items-center justify-center overflow-hidden">
-                                        {product.images && product.images.length > 0 ? (
-                                            <img src={product.images[0].url} alt={name} className="w-full h-full object-cover rounded-lg" />
+                                        {item.imageUrl ? (
+                                            <img src={item.imageUrl} alt={name} className="w-full h-full object-cover rounded-lg" />
                                         ) : (
                                             <span className="material-symbols-outlined text-3xl text-slate-600">image</span>
                                         )}
                                     </div>
                                     <div className="flex flex-col gap-1 pr-4">
                                         <h3 className="font-bold text-white text-base md:text-lg leading-tight line-clamp-2">{name}</h3>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-[10px] font-bold text-slate-500 bg-white/5 px-2 py-0.5 rounded border border-white/5">{t('cart.variant_label', { defaultValue: 'Phân loại' })}: {color}</span>
-                                        </div>
                                         {/* Mobile Price Display */}
                                         <div className="md:hidden mt-2">
                                             <span className="font-bold text-primary">{price.toLocaleString('vi-VN')}₫</span>
@@ -141,14 +94,14 @@ const CartPage: React.FC = () => {
                                         <div className="flex items-center bg-background-dark rounded-xl border border-border-dark p-1 h-10">
                                             <button
                                                 className="size-8 p-0 hover:bg-surface-dark rounded-lg flex items-center justify-center text-slate-400 hover:text-white transition-colors"
-                                                onClick={() => decreaseQuantity(product.id)}
+                                                onClick={() => decreaseQuantity(item.productId)}
                                             >
                                                 <span className="material-symbols-outlined text-sm">remove</span>
                                             </button>
                                             <span className="w-8 text-center text-sm font-bold text-white">{qty}</span>
                                             <button
                                                 className="size-8 p-0 hover:bg-surface-dark rounded-lg flex items-center justify-center text-slate-400 hover:text-white transition-colors"
-                                                onClick={() => increaseQuantity(product.id)}
+                                                onClick={() => increaseQuantity(item.productId)}
                                             >
                                                 <span className="material-symbols-outlined text-sm">add</span>
                                             </button>
@@ -163,7 +116,7 @@ const CartPage: React.FC = () => {
 
                                     {/* Delete Button */}
                                     <button
-                                        onClick={() => removeItem(product.id)}
+                                        onClick={() => handleRemoveItem(item.productId)}
                                         className="size-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-red-500 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all ml-2"
                                         title={t('cart.delete_item_title', { defaultValue: 'Xóa sản phẩm' })}
                                     >

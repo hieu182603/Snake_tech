@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { authService } from '@/services/authService';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -11,6 +11,7 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { showSuccess } = useToast();
+  const { isAuthenticated, user, logout } = useAuth();
   const [search, setSearch] = useState('');
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
@@ -62,10 +63,14 @@ const Navbar: React.FC = () => {
     changeLanguage(getCurrentLanguage() === 'vi' ? 'en' : 'vi');
   };
 
-  const handleLogout = () => {
-    authService.logout();
-    setShowProfileMenu(false);
-    router.push('/auth/login');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setShowProfileMenu(false);
+      router.push('/auth/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -91,8 +96,6 @@ const Navbar: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isAuthenticated = authService.isAuthenticated();
-  const user = authService.getUser();
 
   return (
     <div className="sticky top-0 z-50 w-full flex flex-col">

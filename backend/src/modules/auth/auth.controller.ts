@@ -16,6 +16,22 @@ export const loginSchema = z.object({
     password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
+export const forgotPasswordSchema = z.object({
+    email: z.string().email('Invalid email'),
+});
+
+export const resetPasswordSchema = z.object({
+    email: z.string().email('Invalid email'),
+    otp: z.string().length(6, 'OTP must be 6 digits'),
+    newPassword: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
+export const updateProfileSchema = z.object({
+    fullName: z.string().min(2, 'Full name must be at least 2 characters').optional(),
+    phone: z.string().optional(),
+    avatar: z.string().url('Invalid avatar URL').optional(),
+});
+
 export class AuthController {
     /**
      * Register new account
@@ -233,6 +249,79 @@ export class AuthController {
                 return res.status(404).json({ message: error.message });
             }
             console.error('Resend OTP error:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    /**
+     * Forgot password - send reset OTP
+     */
+    static async forgotPassword(req: Request, res: Response) {
+        try {
+            const parse = forgotPasswordSchema.safeParse(req.body);
+            if (!parse.success) {
+                return res.status(400).json({
+                    message: 'Invalid data',
+                    errors: parse.error.flatten()
+                });
+            }
+
+            const result = await AuthService.forgotPassword(parse.data.email);
+            return res.status(200).json(result);
+        } catch (error: any) {
+            if (error.message === 'Account not found' || error.message === 'Account not verified') {
+                return res.status(404).json({ message: error.message });
+            }
+            console.error('Forgot password error:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    /**
+     * Reset password with OTP
+     */
+    static async resetPassword(req: Request, res: Response) {
+        try {
+            const parse = resetPasswordSchema.safeParse(req.body);
+            if (!parse.success) {
+                return res.status(400).json({
+                    message: 'Invalid data',
+                    errors: parse.error.flatten()
+                });
+            }
+
+            const result = await AuthService.resetPassword(parse.data);
+            return res.status(200).json(result);
+        } catch (error: any) {
+            if (error.message.includes('Invalid') || error.message.includes('expired') || error.message.includes('not found')) {
+                return res.status(400).json({ message: error.message });
+            }
+            console.error('Reset password error:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    /**
+     * Update user profile
+     */
+    static async updateProfile(req: Request, res: Response) {
+        try {
+            const parse = updateProfileSchema.safeParse(req.body);
+            if (!parse.success) {
+                return res.status(400).json({
+                    message: 'Invalid data',
+                    errors: parse.error.flatten()
+                });
+            }
+
+            const accountId = (req as any).user.userId;
+            const result = await AuthService.updateProfile(accountId, parse.data);
+            return res.status(200).json(result);
+        } catch (error: any) {
+            if (error.message === 'Account not found') {
+                return res.status(404).json({ message: error.message });
+            }
+            console.error('Update profile error:', error);
             return res.status(500).json({ message: 'Internal server error' });
         }
     }

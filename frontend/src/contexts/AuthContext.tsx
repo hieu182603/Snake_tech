@@ -21,6 +21,8 @@ export interface AuthContextType {
   register: (userData: { username: string; email: string; password: string }) => Promise<void>;
   verifyRegister: (verifyData: { username: string; password: string; email: string; role: string; otp: string }) => Promise<void>;
   resendOTP: (data: { identifier: string }) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (data: { email: string; otp: string; newPassword: string }) => Promise<void>;
   logout: () => Promise<void>;
   refreshToken: () => Promise<void>;
   isAuthenticated: () => boolean;
@@ -43,8 +45,10 @@ interface AuthProviderProps {
 }
 
 // API functions
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 const loginApi = async (credentials: { email: string; password: string }) => {
-  const response = await fetch('/api/auth/login', {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -52,15 +56,26 @@ const loginApi = async (credentials: { email: string; password: string }) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Login failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Login failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const registerApi = async (userData: { username: string; email: string; password: string }) => {
-  const response = await fetch('/api/auth/register', {
+  const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -68,15 +83,26 @@ const registerApi = async (userData: { username: string; email: string; password
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Registration failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Registration failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const verifyRegisterApi = async (verifyData: { username: string; password: string; email: string; role: string; otp: string }) => {
-  const response = await fetch('/api/auth/verify-register', {
+  const response = await fetch(`${API_BASE_URL}/auth/verify-register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -84,15 +110,26 @@ const verifyRegisterApi = async (verifyData: { username: string; password: strin
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'OTP verification failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'OTP verification failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const resendOTPApi = async (data: { identifier: string }) => {
-  const response = await fetch('/api/auth/resend-otp', {
+  const response = await fetch(`${API_BASE_URL}/auth/resend-otp`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
@@ -100,49 +137,152 @@ const resendOTPApi = async (data: { identifier: string }) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Resend OTP failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Resend OTP failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
+  }
+
+  return response.json();
+};
+
+const forgotPasswordApi = async (email: string) => {
+  const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Forgot password request failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
+  }
+
+  return response.json();
+};
+
+const resetPasswordApi = async (data: { email: string; otp: string; newPassword: string }) => {
+  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Password reset failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const refreshApi = async () => {
-  const response = await fetch('/api/auth/refresh', {
+  const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
     method: 'POST',
     credentials: 'include',
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Token refresh failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Token refresh failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const logoutApi = async () => {
-  const response = await fetch('/api/auth/logout', {
+  const response = await fetch(`${API_BASE_URL}/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Logout failed');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Logout failed';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
 };
 
 const getMeApi = async () => {
-  const response = await fetch('/api/auth/me', {
+  const token = localStorage.getItem('snake_access_token');
+  const response = await fetch(`${API_BASE_URL}/auth/me`, {
     credentials: 'include',
+    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to get user data');
+    const contentType = response.headers.get('content-type');
+    let errorMessage = 'Failed to get user data';
+
+    if (contentType && contentType.includes('application/json')) {
+      try {
+        const error = await response.json();
+        errorMessage = error.message || errorMessage;
+      } catch (e) {
+        // Ignore JSON parsing errors
+      }
+    }
+
+    // For authentication errors (401), throw a specific error that bootstrap can handle
+    if (response.status === 401) {
+      throw new Error(errorMessage);
+    }
+
+    throw new Error(errorMessage);
   }
 
   return response.json();
@@ -211,7 +351,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
 
       try {
-        // Try to get current user info - if this succeeds, we have valid cookies
+        // Try to get current user info - if this succeeds, we have valid authentication
         const userData = await getMeApi();
         setUser(userData);
 
@@ -222,9 +362,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         // Since we can't read httpOnly cookies, we'll trigger a refresh to get a new access token
         await refreshToken();
-      } catch (error) {
-        console.error('Bootstrap failed:', error);
-        // Clear auth state if bootstrap fails
+      } catch (error: any) {
+        // Handle authentication failures gracefully - this is expected when user is not logged in
+        if (error.message?.includes('No authentication token') ||
+            error.message?.includes('Access token expired') ||
+            error.message?.includes('Invalid access token')) {
+          // User is not authenticated - this is normal, not an error
+          console.log('User not authenticated');
+        } else {
+          console.error('Bootstrap failed:', error);
+        }
+
+        // Clear auth state if bootstrap fails (whether due to auth or other errors)
         setAccessToken(null);
         setUser(null);
         localStorage.removeItem('snake_access_token');
@@ -334,6 +483,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return await resendOTPApi(data);
   };
 
+  const forgotPassword = async (email: string) => {
+    return await forgotPasswordApi(email);
+  };
+
+  const resetPassword = async (data: { email: string; otp: string; newPassword: string }) => {
+    return await resetPasswordApi(data);
+  };
+
   const value: AuthContextType = {
     user,
     accessToken,
@@ -341,6 +498,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     register,
     verifyRegister,
     resendOTP,
+    forgotPassword,
+    resetPassword,
     logout,
     refreshToken,
     isAuthenticated,

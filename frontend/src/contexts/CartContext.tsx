@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { productService } from '@/services/productService';
 
 interface CartItem {
   id: string;
@@ -74,13 +75,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
-      // Mock product data - in real app, fetch from API
-      const mockProduct = {
-        id: productId,
-        name: `Product ${productId}`,
-        price: 100000,
-        imageUrl: `https://picsum.photos/200/200?random=${productId}`
-      };
+      // Fetch real product data from API
+      const product = await productService.getProductById(productId);
+      if (!product) {
+        throw new Error('Product not found');
+      }
 
       setItems(prev => {
         const existingItem = prev.find(item => item.productId === productId);
@@ -94,16 +93,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           return [...prev, {
             id: `${productId}-${Date.now()}`,
             productId,
-            name: mockProduct.name,
-            price: mockProduct.price,
+            name: product.name,
+            price: product.price,
             quantity,
-            imageUrl: mockProduct.imageUrl
+            imageUrl: product.images?.[0]?.url
           }];
         }
       });
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       console.error('Error adding to cart:', error);
     } finally {

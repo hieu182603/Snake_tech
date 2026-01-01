@@ -28,8 +28,51 @@ export class ProductService {
             // Build query
             const query: any = { isActive: true };
 
-            if (category) query.categoryId = category;
-            if (brand) query.brandId = brand;
+            // Handle category filter - lookup by name if it's not an ObjectId
+            if (category) {
+                // Check if category is already an ObjectId (24 hex chars)
+                const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+                if (objectIdRegex.test(category)) {
+                    query.categoryId = category;
+                } else {
+                    // Lookup category by name
+                    const categoryDoc = await Category.findOne({
+                        name: { $regex: new RegExp(`^${category}$`, 'i') },
+                        isActive: true
+                    });
+                    if (categoryDoc) {
+                        query.categoryId = categoryDoc._id;
+                    } else {
+                        // If no category found, return empty result
+                        return {
+                            products: [],
+                            pagination: {
+                                page,
+                                limit,
+                                total: 0,
+                                totalPages: 0
+                            }
+                        };
+                    }
+                }
+            }
+
+            // Handle brand filter - lookup by name if it's not an ObjectId
+            if (brand) {
+                const objectIdRegex = /^[0-9a-fA-F]{24}$/;
+                if (objectIdRegex.test(brand)) {
+                    query.brandId = brand;
+                } else {
+                    // Lookup brand by name
+                    const brandDoc = await Brand.findOne({
+                        name: { $regex: new RegExp(`^${brand}$`, 'i') },
+                        isActive: true
+                    });
+                    if (brandDoc) {
+                        query.brandId = brandDoc._id;
+                    }
+                }
+            }
             if (minPrice !== undefined || maxPrice !== undefined) {
                 query.price = {};
                 if (minPrice !== undefined) query.price.$gte = minPrice;

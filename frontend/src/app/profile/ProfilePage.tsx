@@ -3,9 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { authService } from '@/services/authService';
+import { orderService } from '@/services/orderService';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Address {
     id: string;
@@ -21,6 +22,7 @@ const ProfilePage: React.FC = () => {
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { showSuccess, showError } = useToast();
+    const { user, logout } = useAuth();
 
     // State quản lý chế độ chỉnh sửa thông tin chung
     const [isEditing, setIsEditing] = useState(false);
@@ -63,24 +65,26 @@ const ProfilePage: React.FC = () => {
             try {
                 setLoading(true);
 
-                // Load user profile
-                const userProfile = await authService.getUserProfile();
-                const userData = userProfile.data || userProfile;
-
-                if (userData) {
+                // Load user profile from AuthContext
+                if (user) {
                     setUser({
-                        name: userData.name || userData.username || 'User',
-                        memberId: `#${userData.id?.substring(0, 5) || '00000'}`,
-                        joinDate: userData.createdAt
-                            ? new Date(userData.createdAt).toLocaleDateString('vi-VN')
+                        name: user.name || user.username || 'User',
+                        memberId: `#${user.id?.substring(0, 5) || '00000'}`,
+                        joinDate: user.createdAt
+                            ? new Date(user.createdAt).toLocaleDateString('vi-VN')
                             : 'N/A',
-                        email: userData.email || '',
-                        phone: userData.phone || '',
+                        email: user.email || '',
+                        phone: user.phone || '',
                         avatar: 'https://picsum.photos/200/200?random=user'
                     });
                 }
 
-                // Mock recent orders for now
+                // TODO: Replace with real API call to fetch user orders
+                // const response = await fetch('/api/orders/my-orders', {
+                //   credentials: 'include',
+                //   headers: { 'Authorization': `Bearer ${token}` }
+                // });
+                // const orders = await response.json();
                 setRecentOrders([
                     {
                         id: 'ORD-001',
@@ -133,9 +137,13 @@ const ProfilePage: React.FC = () => {
                 order.status === 'SHIPPING' ? 'warning' : 'info'
     }));
 
-    const handleLogout = () => {
-        authService.logout();
-        router.push('/auth/login');
+    const handleLogout = async () => {
+        try {
+            await logout();
+            router.push('/auth/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
 
     // --- Logic Thông tin chung ---
@@ -149,10 +157,47 @@ const ProfilePage: React.FC = () => {
         setTempUser(user);
     };
 
-    const saveChanges = () => {
-        setUser(tempUser);
-        setIsEditing(false);
-        showSuccess(t('profile.messages.profileUpdated', { defaultValue: 'Profile updated successfully!' }));
+    const saveChanges = async () => {
+        try {
+            const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+            const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('snake_access_token')}`
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    fullName: tempUser.name,
+                    phone: tempUser.phone,
+                    avatar: tempUser.avatar
+                }),
+            });
+
+            if (!response.ok) {
+                const contentType = response.headers.get('content-type');
+                let errorMessage = 'Failed to update profile';
+
+                if (contentType && contentType.includes('application/json')) {
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.message || errorMessage;
+                    } catch (e) {
+                        // Ignore JSON parsing errors
+                    }
+                }
+
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            setUser(tempUser);
+            setIsEditing(false);
+            showSuccess(t('profile.messages.profileUpdated', { defaultValue: 'Profile updated successfully!' }));
+        } catch (error: any) {
+            console.error('Update profile error:', error);
+            showError(error.message || t('profile.messages.updateFailed', { defaultValue: 'Failed to update profile' }));
+        }
     };
 
     const handleChange = (field: keyof typeof user, value: string) => {

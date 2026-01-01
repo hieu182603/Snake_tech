@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
-import { authService } from '@/services/authService';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -17,6 +17,7 @@ const PasswordResetOTPModal = ({ isOpen, onClose, onVerify, email, onResend }: {
     onResend?: () => Promise<void>;
 }) => {
     const { t } = useTranslation();
+    const { forgotPassword } = useAuth();
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [isVerifying, setIsVerifying] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -152,6 +153,7 @@ const ForgotPasswordPage: React.FC = () => {
     const router = useRouter();
     const { showSuccess, showError } = useToast();
     const { t } = useTranslation();
+    const { forgotPassword, resetPassword } = useAuth();
     const [step, setStep] = useState<'EMAIL' | 'OTP' | 'RESET'>('EMAIL');
     const [email, setEmail] = useState('');
     const [formError, setFormError] = useState('');
@@ -174,7 +176,7 @@ const ForgotPasswordPage: React.FC = () => {
         if (!email) return;
 
         try {
-            await authService.requestPasswordReset(email);
+            await forgotPassword(email);
             setStep('OTP');
             showSuccess(t('auth.forgot.otpSent', { defaultValue: 'OTP đã được gửi đến email của bạn' }));
         } catch (error: any) {
@@ -211,11 +213,12 @@ const ForgotPasswordPage: React.FC = () => {
         }
 
         try {
-            await authService.verifyResetPassword({
+            await resetPassword({
                 email,
                 otp: verifiedOtp,
                 newPassword
             });
+
             showSuccess(t('auth.forgot.resetSuccess', { defaultValue: 'Đổi mật khẩu thành công' }));
             router.push('/auth/login');
         } catch (error: any) {
@@ -237,6 +240,7 @@ const ForgotPasswordPage: React.FC = () => {
                 onClose={() => setStep('EMAIL')}
                 onVerify={handleVerifyOtp}
                 email={email}
+                onResend={() => forgotPassword(email)}
             />
 
             <div className="relative w-full max-w-[440px] bg-[#1a1a2e] border border-white/10 rounded-3xl p-8 shadow-2xl z-10">

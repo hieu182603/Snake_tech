@@ -34,6 +34,9 @@ export class ProductController {
                 sortOrder = 'desc'
             } = req.query;
 
+            // Convert limit to number and cap it
+            const limitNum = Math.min(parseInt(limit as string) || 10, 100); // Max 100 items
+
             const filters = {
                 category,
                 brand,
@@ -44,7 +47,7 @@ export class ProductController {
 
             const pagination = {
                 page: parseInt(page as string),
-                limit: parseInt(limit as string),
+                limit: limitNum,
                 sortBy: sortBy as string,
                 sortOrder: sortOrder as string,
             };

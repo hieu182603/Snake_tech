@@ -52,7 +52,7 @@ export default function CatalogPage() {
           }
 
           return {
-            id: p.id,
+            id: p.id || (p as any)._id || idx.toString(),
             name: p.name,
             brand: brandValue,
             category: p.category?.name || 'Khác',
@@ -180,6 +180,17 @@ export default function CatalogPage() {
     const maxP = Math.max(priceRange[0], priceRange[1]);
 
     result = result.filter(p => p.price >= minP && p.price <= maxP);
+
+    // Remove duplicates based on ID
+    const seen = new Set();
+    result = result.filter(p => {
+      const id = p.id || (p as any)._id;
+      if (seen.has(id)) {
+        return false;
+      }
+      seen.add(id);
+      return true;
+    });
 
     if (sortBy === 'price-low') {
       result.sort((a, b) => a.price - b.price);
@@ -544,10 +555,10 @@ export default function CatalogPage() {
             </div>
           ) : currentProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-              {currentProducts.map((p) => {
+              {currentProducts.map((p, index) => {
                 return (
                   <ProductCard
-                    key={p.id}
+                    key={p.id || `product-${index}`}
                     id={p.id}
                     name={p.name}
                     price={`${p.price.toLocaleString()}₫`}

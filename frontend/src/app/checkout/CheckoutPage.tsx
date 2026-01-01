@@ -16,34 +16,10 @@ import {
   CheckCircle
 } from 'lucide-react'
 import { toast } from 'sonner'
-
-// Mock cart data
-const mockCartItems = [
-  {
-    id: '1',
-    product: {
-      id: '1',
-      name: 'Gaming Laptop Pro',
-      price: 1299999,
-      images: [{ url: '/api/placeholder/300/300' }],
-      color: 'Black'
-    },
-    quantity: 1
-  },
-  {
-    id: '2',
-    product: {
-      id: '2',
-      name: 'Mechanical Keyboard RGB',
-      price: 149999,
-      images: [{ url: '/api/placeholder/300/300' }],
-      color: 'White'
-    },
-    quantity: 2
-  }
-]
+import { useCart } from '@/contexts/CartContext'
 
 export default function CheckoutPage() {
+  const { items: cartItems, clearCart } = useCart()
   const [isProcessing, setIsProcessing] = useState(false)
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
@@ -56,7 +32,7 @@ export default function CheckoutPage() {
 
   const [paymentMethod, setPaymentMethod] = useState('cod')
 
-  const subtotal = mockCartItems.reduce((acc, curr) => acc + (curr.product?.price || 0) * curr.quantity, 0)
+  const subtotal = cartItems.reduce((acc, curr) => acc + (curr.price || 0) * curr.quantity, 0)
   const shipping = subtotal > 500000 ? 0 : 30000
   const total = subtotal + shipping
 
@@ -264,17 +240,17 @@ export default function CheckoutPage() {
                 <CardContent className="space-y-4">
                   {/* Order Items */}
                   <div className="space-y-3">
-                    {mockCartItems.map((item) => (
+                    {cartItems.map((item) => (
                       <div key={item.id} className="flex items-center space-x-3">
                         <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center">
                           <span className="text-xs font-medium">IMG</span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">{item.product.name}</p>
+                          <p className="text-sm font-medium truncate">{item.name}</p>
                           <p className="text-xs text-muted-foreground">SL: {item.quantity}</p>
                         </div>
                         <div className="text-sm font-medium">
-                          {((item.product?.price || 0) * item.quantity).toLocaleString()}đ
+                          {((item.price || 0) * item.quantity).toLocaleString()}đ
                         </div>
                       </div>
                     ))}

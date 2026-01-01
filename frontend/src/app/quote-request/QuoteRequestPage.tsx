@@ -70,7 +70,7 @@ export default function QuoteRequestPage() {
       }
     };
     loadProducts();
-  }, [activeCategory, CATEGORIES]);
+  }, [activeCategory]); // Removed CATEGORIES from dependencies
 
   const filteredProducts = useMemo(() => products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase())), [products, searchTerm]);
 

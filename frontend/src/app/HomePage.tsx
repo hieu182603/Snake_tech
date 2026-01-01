@@ -26,7 +26,7 @@ const getProductId = (product: Product): string => {
 export default function HomePage() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [timeLeft, setTimeLeft] = useState(12 * 60 * 60 + 45 * 60); // Mock countdown
+  const [timeLeft, setTimeLeft] = useState(12 * 60 * 60 + 45 * 60);
   const [activeTab, setActiveTab] = useState<'new' | 'best'>('new');
 
   // Product states

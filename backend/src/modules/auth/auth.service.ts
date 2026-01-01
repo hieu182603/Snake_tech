@@ -287,4 +287,113 @@ export class AuthService {
 
         return { message: 'OTP sent successfully' };
     }
+
+    // Forgot password - send reset OTP
+    static async forgotPassword(email: string) {
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Find account
+        const account = await Account.findOne({ email: normalizedEmail });
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        if (!account.isVerified) {
+            throw new Error('Account not verified');
+        }
+
+        // Generate OTP
+        const otp = generateOTP();
+
+        // Save OTP to database
+        await OTP.create({
+            email: normalizedEmail,
+            otp: otp,
+            type: 'RESET_PASSWORD',
+            expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+        });
+
+        // TODO: Send OTP via email
+        console.log(`Password reset OTP for ${account.email}: ${otp}`);
+
+        return { message: 'Password reset OTP sent successfully' };
+    }
+
+    // Reset password with OTP
+    static async resetPassword(resetData: { email: string; otp: string; newPassword: string }) {
+        const { email, otp, newPassword } = resetData;
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Find and verify OTP
+        const otpRecord = await OTP.findOne({
+            email: normalizedEmail,
+            otp: otp,
+            type: 'RESET_PASSWORD',
+            expiresAt: { $gt: new Date() },
+            isUsed: false
+        });
+
+        if (!otpRecord) {
+            throw new Error('Invalid or expired OTP');
+        }
+
+        // Find account
+        const account = await Account.findOne({ email: normalizedEmail });
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        // Hash new password
+        const passwordHash = await hashPassword(newPassword);
+
+        // Update password
+        account.passwordHash = passwordHash;
+        await account.save();
+
+        // Mark OTP as used
+        otpRecord.isUsed = true;
+        await otpRecord.save();
+
+        return { message: 'Password reset successfully' };
+    }
+
+    // Update user profile
+    static async updateProfile(accountId: string, profileData: {
+        fullName?: string;
+        phone?: string;
+        avatar?: string;
+    }) {
+        const account = await Account.findById(accountId);
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        // Update fields
+        if (profileData.fullName !== undefined) {
+            account.fullName = profileData.fullName.trim();
+        }
+        if (profileData.phone !== undefined) {
+            account.phone = profileData.phone?.trim();
+        }
+        if (profileData.avatar !== undefined) {
+            account.avatar = profileData.avatar;
+        }
+
+        await account.save();
+
+        return {
+            message: 'Profile updated successfully',
+            account: {
+                id: account._id,
+                email: account.email,
+                fullName: account.fullName,
+                phone: account.phone,
+                avatar: account.avatar,
+                role: account.role,
+                isVerified: account.isVerified,
+                createdAt: account.createdAt,
+                updatedAt: account.updatedAt
+            }
+        };
+    }
 }
