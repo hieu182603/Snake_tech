@@ -1,0 +1,163 @@
+[
+  {
+    "_id": "507f1f77bcf86cd799439001",
+    "name": "Apple",
+    "slug": "apple",
+    "logoUrl": "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439002",
+    "name": "NVIDIA",
+    "slug": "nvidia",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439003",
+    "name": "Razer",
+    "slug": "razer",
+    "logoUrl": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439004",
+    "name": "Samsung",
+    "slug": "samsung",
+    "logoUrl": "https://images.unsplash.com/photo-1610792516307-ea5acd9c3b00?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439005",
+    "name": "Intel",
+    "slug": "intel",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439006",
+    "name": "AMD",
+    "slug": "amd",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439007",
+    "name": "Corsair",
+    "slug": "corsair",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439008",
+    "name": "ASUS",
+    "slug": "asus",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439009",
+    "name": "Logitech",
+    "slug": "logitech",
+    "logoUrl": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439010",
+    "name": "SteelSeries",
+    "slug": "steelseries",
+    "logoUrl": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "HyperX",
+    "slug": "hyperx",
+    "logoUrl": "https://images.unsplash.com/photo-1599669454699-248893623440?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439012",
+    "name": "Kingston",
+    "slug": "kingston",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439013",
+    "name": "Western Digital",
+    "slug": "western-digital",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439014",
+    "name": "Seasonic",
+    "slug": "seasonic",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439015",
+    "name": "Fractal Design",
+    "slug": "fractal-design",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439016",
+    "name": "be quiet!",
+    "slug": "be-quiet",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439017",
+    "name": "ASRock",
+    "slug": "asrock",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439018",
+    "name": "TeamGroup",
+    "slug": "teamgroup",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439019",
+    "name": "Crucial",
+    "slug": "crucial",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439020",
+    "name": "Seagate",
+    "slug": "seagate",
+    "logoUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439021",
+    "name": "LG",
+    "slug": "lg",
+    "logoUrl": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439022",
+    "name": "Acer",
+    "slug": "acer",
+    "logoUrl": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=200",
+    "isActive": true
+  },
+  {
+    "_id": "507f1f77bcf86cd799439023",
+    "name": "Redragon",
+    "slug": "redragon",
+    "logoUrl": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=200",
+    "isActive": true
+  }
+]

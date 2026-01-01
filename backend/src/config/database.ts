@@ -6,8 +6,11 @@ import mongoose from "mongoose";
  */
 export async function connectDatabase(): Promise<void> {
     try {
-        // Sử dụng giá trị từ env, nếu trống hoặc undefined thì dùng default
-        const MONGO_URI = process.env.MONGO_URI?.trim() || "mongodb+srv://hieunguyenn1501_db_user:WrKBtW8f8fUHxRpo@cluster0.9ig0eyd.mongodb.net/?appName=Cluster0";
+        // Validate MONGO_URI is provided
+        const MONGO_URI = process.env.MONGO_URI?.trim();
+        if (!MONGO_URI) {
+            throw new Error('MONGO_URI environment variable is required');
+        }
 
         // Validate connection string format
         if (!MONGO_URI.startsWith("mongodb://") && !MONGO_URI.startsWith("mongodb+srv://")) {

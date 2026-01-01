@@ -1,0 +1,3838 @@
+[
+  {
+    "_id": "507f1f77bcf86cd799439125",
+    "name": "Intel Core i3-12100F",
+    "slug": "intel-core-i3-12100f",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 3301895.4825918637,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-0",
+    "stock": 8,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.9012793322158106,
+    "dimensions": {
+      "length": 25.090983687854504,
+      "width": 14.263575536410695,
+      "height": 11.39384780490667
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439126",
+    "name": "AMD Ryzen 5 7600",
+    "slug": "amd-ryzen-5-7600",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 7405016.23595126,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-1",
+    "stock": 50,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 0.8683130983137795,
+    "dimensions": {
+      "length": 16.759275571033008,
+      "width": 12.975383897344654,
+      "height": 10.103185975511876
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439127",
+    "name": "Intel Core i9-12900K",
+    "slug": "intel-core-i9-12900k",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 16152252.060553411,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-2",
+    "stock": 34,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.7878095983493574,
+    "dimensions": {
+      "length": 27.852414872378127,
+      "width": 12.812727277695203,
+      "height": 5.647611423881772
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439128",
+    "name": "NVIDIA GeForce RTX 4060",
+    "slug": "nvidia-geforce-rtx-4060",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 15150388.88004912,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-3",
+    "stock": 10,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.0435928891245791,
+    "dimensions": {
+      "length": 27.203629179915538,
+      "width": 19.03893136111643,
+      "height": 10.530784742008347
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439129",
+    "name": "AMD Radeon RX 7800 XT",
+    "slug": "amd-radeon-rx-7800-xt",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17868062.049485218,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-4",
+    "stock": 17,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.2432649071855257,
+    "dimensions": {
+      "length": 14.365966180331089,
+      "width": 12.485093340497214,
+      "height": 3.657827357633026
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439130",
+    "name": "Kingston Fury Beast 8GB",
+    "slug": "kingston-fury-beast-8gb",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 688934.829087949,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-5",
+    "stock": 9,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.854779495945368,
+    "dimensions": {
+      "length": 26.657220843826007,
+      "width": 10.417171969369415,
+      "height": 10.30135865962929
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439131",
+    "name": "TeamGroup T-Force Vulcan 16GB",
+    "slug": "teamgroup-t-force-vulcan-16gb",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1292933.267591833,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-6",
+    "stock": 17,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.3865154004082014,
+    "dimensions": {
+      "length": 17.87789177683795,
+      "width": 18.05158935764715,
+      "height": 5.130942482087693
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439132",
+    "name": "Crucial MX500 500GB",
+    "slug": "crucial-mx500-500gb",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 1590653.3097621442,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-7",
+    "stock": 7,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 2.2767780387186303,
+    "dimensions": {
+      "length": 14.317553052147606,
+      "width": 13.008992722053796,
+      "height": 7.516817806479468
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439133",
+    "name": "Seagate Barracuda 2TB",
+    "slug": "seagate-barracuda-2tb",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1496549.7179637803,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-8",
+    "stock": 15,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.5694469556668103,
+    "dimensions": {
+      "length": 18.56133220044221,
+      "width": 7.860222461063065,
+      "height": 10.657900695125205
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439134",
+    "name": "LG 24MP400-B 24inch",
+    "slug": "lg-24mp400-b-24inch",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 1987283.2392782322,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-9",
+    "stock": 31,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.467075024001136,
+    "dimensions": {
+      "length": 28.91478971672806,
+      "width": 13.829474668369457,
+      "height": 5.548355393538256
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439135",
+    "name": "Acer Nitro VG270UP 27inch",
+    "slug": "acer-nitro-vg270up-27inch",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 6267234.32081736,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-10",
+    "stock": 49,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.3787218373447656,
+    "dimensions": {
+      "length": 13.577795742050167,
+      "width": 18.87141083175917,
+      "height": 10.381812683761204
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439136",
+    "name": "Redragon K552 Yama",
+    "slug": "redragon-k552-yama",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 396010.5716124806,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-11",
+    "stock": 23,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.7389281274661204,
+    "dimensions": {
+      "length": 22.141830411673386,
+      "width": 15.532223365175915,
+      "height": 10.1902026827264
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439137",
+    "name": "Redragon M686 Vampire",
+    "slug": "redragon-m686-vampire",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 208966.9378342796,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-12",
+    "stock": 16,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.1531627595434313,
+    "dimensions": {
+      "length": 26.082272179550664,
+      "width": 10.360589212984845,
+      "height": 7.192875947521241
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439138",
+    "name": "Intel Core i3-12100F V2",
+    "slug": "intel-core-i3-12100f-v2",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 2848439.149476974,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-13",
+    "stock": 18,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.5417233242043298,
+    "dimensions": {
+      "length": 27.733902717410295,
+      "width": 13.879664727507786,
+      "height": 11.125623241566142
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439139",
+    "name": "AMD Ryzen 5 7600 V2",
+    "slug": "amd-ryzen-5-7600-v2",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 7022784.576736681,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-14",
+    "stock": 44,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.1937744622918522,
+    "dimensions": {
+      "length": 19.662765831789994,
+      "width": 16.906281842250692,
+      "height": 9.269545842506187
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439140",
+    "name": "Intel Core i9-12900K V2",
+    "slug": "intel-core-i9-12900k-v2",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 15759212.032555118,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-15",
+    "stock": 5,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.2946471631483756,
+    "dimensions": {
+      "length": 11.308109355844334,
+      "width": 16.30159445512019,
+      "height": 8.964360932302618
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439141",
+    "name": "NVIDIA GeForce RTX 4060 V2",
+    "slug": "nvidia-geforce-rtx-4060-v2",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 14725996.163804531,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-16",
+    "stock": 6,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.452144077559126,
+    "dimensions": {
+      "length": 21.387856314999386,
+      "width": 8.380224977203522,
+      "height": 5.124557619714359
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439142",
+    "name": "AMD Radeon RX 7800 XT V2",
+    "slug": "amd-radeon-rx-7800-xt-v2",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17718486.573417,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-17",
+    "stock": 46,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.041868407185333,
+    "dimensions": {
+      "length": 25.15287817704194,
+      "width": 7.471842792608046,
+      "height": 3.447673807058054
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439143",
+    "name": "Kingston Fury Beast 8GB V2",
+    "slug": "kingston-fury-beast-8gb-v2",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 1231943.6033168985,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-18",
+    "stock": 50,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.7427598315747006,
+    "dimensions": {
+      "length": 10.3059471803607,
+      "width": 16.463227342053145,
+      "height": 5.8768740159508
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439144",
+    "name": "TeamGroup T-Force Vulcan 16GB V2",
+    "slug": "teamgroup-t-force-vulcan-16gb-v2",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 811169.7397604729,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-19",
+    "stock": 11,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.6706786355928065,
+    "dimensions": {
+      "length": 28.42471329579318,
+      "width": 14.00103104928409,
+      "height": 4.7653136314432984
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439145",
+    "name": "Crucial MX500 500GB V2",
+    "slug": "crucial-mx500-500gb-v2",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 2229573.3102343744,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-20",
+    "stock": 8,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.3040448192110063,
+    "dimensions": {
+      "length": 12.728107676712215,
+      "width": 11.733014669110121,
+      "height": 2.257203982150662
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439146",
+    "name": "Seagate Barracuda 2TB V2",
+    "slug": "seagate-barracuda-2tb-v2",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 2010632.8561569797,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-21",
+    "stock": 25,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.006292707290707,
+    "dimensions": {
+      "length": 17.00296808242642,
+      "width": 16.77355167578551,
+      "height": 7.30498515120978
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439147",
+    "name": "LG 24MP400-B 24inch V2",
+    "slug": "lg-24mp400-b-24inch-v2",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 2637297.875785768,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-22",
+    "stock": 49,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.4164388834520123,
+    "dimensions": {
+      "length": 27.248390853473403,
+      "width": 13.827349686827255,
+      "height": 10.937890150987169
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439148",
+    "name": "Acer Nitro VG270UP 27inch V2",
+    "slug": "acer-nitro-vg270up-27inch-v2",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 6049298.6332596075,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-23",
+    "stock": 45,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.7554192655897705,
+    "dimensions": {
+      "length": 15.13353494890842,
+      "width": 6.658690552865524,
+      "height": 6.563046885508612
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439149",
+    "name": "Redragon K552 Yama V2",
+    "slug": "redragon-k552-yama-v2",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 1246968.3803226408,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-24",
+    "stock": 14,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 2.019844107025386,
+    "dimensions": {
+      "length": 23.948747312296824,
+      "width": 11.521736006021595,
+      "height": 2.034172372420056
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439150",
+    "name": "Redragon M686 Vampire V2",
+    "slug": "redragon-m686-vampire-v2",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 214223.7153887099,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-25",
+    "stock": 15,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.152868256621536,
+    "dimensions": {
+      "length": 23.786436227492914,
+      "width": 8.915689223510686,
+      "height": 4.416900170420635
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439151",
+    "name": "Intel Core i3-12100F V3",
+    "slug": "intel-core-i3-12100f-v3",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 3284354.0459209206,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-26",
+    "stock": 44,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.7277063622452733,
+    "dimensions": {
+      "length": 10.355852771042473,
+      "width": 10.86281893990048,
+      "height": 6.110757157858931
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439152",
+    "name": "AMD Ryzen 5 7600 V3",
+    "slug": "amd-ryzen-5-7600-v3",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 6588535.070215514,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-27",
+    "stock": 9,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.9983867056411233,
+    "dimensions": {
+      "length": 14.498506097665844,
+      "width": 13.437037833276005,
+      "height": 3.61422803637985
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439153",
+    "name": "Intel Core i9-12900K V3",
+    "slug": "intel-core-i9-12900k-v3",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 16323136.49329426,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-28",
+    "stock": 39,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.252059523084723,
+    "dimensions": {
+      "length": 12.079551077231464,
+      "width": 15.098288663576438,
+      "height": 9.100310339640004
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439154",
+    "name": "NVIDIA GeForce RTX 4060 V3",
+    "slug": "nvidia-geforce-rtx-4060-v3",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 15419326.05205854,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-29",
+    "stock": 50,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 0.6843559761061666,
+    "dimensions": {
+      "length": 16.35635309062994,
+      "width": 17.60354203542375,
+      "height": 4.752426565635258
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439155",
+    "name": "AMD Radeon RX 7800 XT V3",
+    "slug": "amd-radeon-rx-7800-xt-v3",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17530011.239852212,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-30",
+    "stock": 11,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.3292776761460554,
+    "dimensions": {
+      "length": 17.860805781264677,
+      "width": 17.416013237322876,
+      "height": 8.642278569973417
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439156",
+    "name": "Kingston Fury Beast 8GB V3",
+    "slug": "kingston-fury-beast-8gb-v3",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 1331090.2899831105,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-31",
+    "stock": 33,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.66235002270153,
+    "dimensions": {
+      "length": 29.960763948003155,
+      "width": 11.254155046892778,
+      "height": 10.361460286220964
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439157",
+    "name": "TeamGroup T-Force Vulcan 16GB V3",
+    "slug": "teamgroup-t-force-vulcan-16gb-v3",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1688950.4997456972,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-32",
+    "stock": 21,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.9647739193033273,
+    "dimensions": {
+      "length": 15.971634419604905,
+      "width": 11.221601273186995,
+      "height": 4.781466699484607
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439158",
+    "name": "Crucial MX500 500GB V3",
+    "slug": "crucial-mx500-500gb-v3",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 2116871.2753047864,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-33",
+    "stock": 41,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.3650737530657824,
+    "dimensions": {
+      "length": 29.04232507447993,
+      "width": 17.624163253620296,
+      "height": 11.12169313665489
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439159",
+    "name": "Seagate Barracuda 2TB V3",
+    "slug": "seagate-barracuda-2tb-v3",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1704021.5673610112,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-34",
+    "stock": 47,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.4680629647243215,
+    "dimensions": {
+      "length": 27.79372311125911,
+      "width": 11.377986294323323,
+      "height": 3.291125631367074
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439160",
+    "name": "LG 24MP400-B 24inch V3",
+    "slug": "lg-24mp400-b-24inch-v3",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 2310092.3621526095,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-35",
+    "stock": 28,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.8993463364357916,
+    "dimensions": {
+      "length": 27.93454524910882,
+      "width": 7.423723636732546,
+      "height": 5.890229087663018
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439161",
+    "name": "Acer Nitro VG270UP 27inch V3",
+    "slug": "acer-nitro-vg270up-27inch-v3",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 5875872.859513004,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-36",
+    "stock": 17,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.5618539236101743,
+    "dimensions": {
+      "length": 13.356219170609695,
+      "width": 14.722299137737696,
+      "height": 2.196664976254901
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439162",
+    "name": "Redragon K552 Yama V3",
+    "slug": "redragon-k552-yama-v3",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 984347.2703668246,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-37",
+    "stock": 31,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.514362827472222,
+    "dimensions": {
+      "length": 17.128514662231076,
+      "width": 16.867374892203152,
+      "height": 11.94776181465593
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439163",
+    "name": "Redragon M686 Vampire V3",
+    "slug": "redragon-m686-vampire-v3",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 637347.4846777859,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-38",
+    "stock": 28,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.8654386214355556,
+    "dimensions": {
+      "length": 12.082604856719858,
+      "width": 11.19680917129457,
+      "height": 9.414371737484664
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439164",
+    "name": "Intel Core i3-12100F V4",
+    "slug": "intel-core-i3-12100f-v4",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 3130569.9811595646,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-39",
+    "stock": 26,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.9925510867829153,
+    "dimensions": {
+      "length": 20.28817430922894,
+      "width": 8.025226996540061,
+      "height": 11.098259624936668
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439165",
+    "name": "AMD Ryzen 5 7600 V4",
+    "slug": "amd-ryzen-5-7600-v4",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 7460927.135913274,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-40",
+    "stock": 15,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.8652752356958682,
+    "dimensions": {
+      "length": 23.755335530422236,
+      "width": 19.65912233802007,
+      "height": 10.200587759796399
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439166",
+    "name": "Intel Core i9-12900K V4",
+    "slug": "intel-core-i9-12900k-v4",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 15864338.561707664,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-41",
+    "stock": 46,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.9174921208676698,
+    "dimensions": {
+      "length": 27.877735877917456,
+      "width": 5.48942241350977,
+      "height": 2.506292434764495
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439167",
+    "name": "NVIDIA GeForce RTX 4060 V4",
+    "slug": "nvidia-geforce-rtx-4060-v4",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 14615440.85303806,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-42",
+    "stock": 44,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.7765379713343301,
+    "dimensions": {
+      "length": 13.387586326631427,
+      "width": 19.97101330935854,
+      "height": 4.430237433501079
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439168",
+    "name": "AMD Radeon RX 7800 XT V4",
+    "slug": "amd-radeon-rx-7800-xt-v4",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 18151642.957869112,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-43",
+    "stock": 9,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.7847162508366119,
+    "dimensions": {
+      "length": 23.92305173233701,
+      "width": 12.957025292837564,
+      "height": 11.437637051481511
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439169",
+    "name": "Kingston Fury Beast 8GB V4",
+    "slug": "kingston-fury-beast-8gb-v4",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 1270197.118505944,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-44",
+    "stock": 34,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.299416647820649,
+    "dimensions": {
+      "length": 21.605166175618862,
+      "width": 9.014035246905069,
+      "height": 4.352781203537642
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439170",
+    "name": "TeamGroup T-Force Vulcan 16GB V4",
+    "slug": "teamgroup-t-force-vulcan-16gb-v4",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1379762.6794179175,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-45",
+    "stock": 27,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.1682671662710762,
+    "dimensions": {
+      "length": 13.759021533461135,
+      "width": 8.711697885699387,
+      "height": 2.7198305650055192
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439171",
+    "name": "Crucial MX500 500GB V4",
+    "slug": "crucial-mx500-500gb-v4",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 1641287.6577882972,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-46",
+    "stock": 38,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.8126146289602456,
+    "dimensions": {
+      "length": 10.311377948767788,
+      "width": 8.791336272571414,
+      "height": 2.659500750097095
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439172",
+    "name": "Seagate Barracuda 2TB V4",
+    "slug": "seagate-barracuda-2tb-v4",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1737471.8610992248,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-47",
+    "stock": 24,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.950919515966214,
+    "dimensions": {
+      "length": 18.87879272571383,
+      "width": 19.25167840325176,
+      "height": 9.627624579921008
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439173",
+    "name": "LG 24MP400-B 24inch V4",
+    "slug": "lg-24mp400-b-24inch-v4",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 1989914.33188596,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-48",
+    "stock": 29,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.8631516163557849,
+    "dimensions": {
+      "length": 11.653273540184156,
+      "width": 12.133331766290777,
+      "height": 7.412008641786148
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439174",
+    "name": "Acer Nitro VG270UP 27inch V4",
+    "slug": "acer-nitro-vg270up-27inch-v4",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 6141880.900295398,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-49",
+    "stock": 38,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.361054239866939,
+    "dimensions": {
+      "length": 21.290338083319785,
+      "width": 13.654479847780097,
+      "height": 6.4477575408202
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439175",
+    "name": "Redragon K552 Yama V4",
+    "slug": "redragon-k552-yama-v4",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 705159.7657050062,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-50",
+    "stock": 7,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 0.8859586568237323,
+    "dimensions": {
+      "length": 10.632474316943078,
+      "width": 14.959109242976208,
+      "height": 7.759988066648023
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439176",
+    "name": "Redragon M686 Vampire V4",
+    "slug": "redragon-m686-vampire-v4",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 492497.2402064387,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-51",
+    "stock": 21,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.8742251858075596,
+    "dimensions": {
+      "length": 20.795376084624007,
+      "width": 12.949445487843631,
+      "height": 7.741019991651106
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439177",
+    "name": "Intel Core i3-12100F V5",
+    "slug": "intel-core-i3-12100f-v5",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 2672973.6509910696,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-52",
+    "stock": 31,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.2461256157022627,
+    "dimensions": {
+      "length": 14.65197582269942,
+      "width": 5.082689635853188,
+      "height": 9.49155821821536
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439178",
+    "name": "AMD Ryzen 5 7600 V5",
+    "slug": "amd-ryzen-5-7600-v5",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 6838915.565735662,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-53",
+    "stock": 28,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.5823524203662735,
+    "dimensions": {
+      "length": 11.575056258875982,
+      "width": 9.54216419126153,
+      "height": 7.413744241151277
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439179",
+    "name": "Intel Core i9-12900K V5",
+    "slug": "intel-core-i9-12900k-v5",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 16336986.30859018,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-54",
+    "stock": 31,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.6758606845760831,
+    "dimensions": {
+      "length": 14.82535264470667,
+      "width": 9.588714947932225,
+      "height": 8.086557023405852
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439180",
+    "name": "NVIDIA GeForce RTX 4060 V5",
+    "slug": "nvidia-geforce-rtx-4060-v5",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 14859792.934726687,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-55",
+    "stock": 11,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.781738582885139,
+    "dimensions": {
+      "length": 22.527455706214916,
+      "width": 10.556409395875944,
+      "height": 7.578213260755156
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439181",
+    "name": "AMD Radeon RX 7800 XT V5",
+    "slug": "amd-radeon-rx-7800-xt-v5",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17656789.52922653,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-56",
+    "stock": 47,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.307398917695958,
+    "dimensions": {
+      "length": 27.075260914024298,
+      "width": 19.72274501725245,
+      "height": 3.226756864692513
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439182",
+    "name": "Kingston Fury Beast 8GB V5",
+    "slug": "kingston-fury-beast-8gb-v5",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 1063912.9166361936,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-57",
+    "stock": 38,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.0023325963414176,
+    "dimensions": {
+      "length": 27.55795437658432,
+      "width": 10.161256740503486,
+      "height": 9.46399048592864
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439183",
+    "name": "TeamGroup T-Force Vulcan 16GB V5",
+    "slug": "teamgroup-t-force-vulcan-16gb-v5",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1055569.4060921767,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-58",
+    "stock": 9,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.1048914737159414,
+    "dimensions": {
+      "length": 20.10247273452888,
+      "width": 15.918028288054089,
+      "height": 4.161867675645654
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439184",
+    "name": "Crucial MX500 500GB V5",
+    "slug": "crucial-mx500-500gb-v5",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 2191178.4101575534,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-59",
+    "stock": 29,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.463242837902273,
+    "dimensions": {
+      "length": 17.84128031807612,
+      "width": 18.587438712908906,
+      "height": 10.512689295869295
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439185",
+    "name": "Seagate Barracuda 2TB V5",
+    "slug": "seagate-barracuda-2tb-v5",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1908803.373930159,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-60",
+    "stock": 24,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.633825318657915,
+    "dimensions": {
+      "length": 22.933353939241083,
+      "width": 14.959199633440408,
+      "height": 4.434568638698089
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439186",
+    "name": "LG 24MP400-B 24inch V5",
+    "slug": "lg-24mp400-b-24inch-v5",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 2735913.4470446873,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-61",
+    "stock": 37,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.263260486864676,
+    "dimensions": {
+      "length": 20.501524637592013,
+      "width": 9.037652857543941,
+      "height": 8.814944059399902
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439187",
+    "name": "Acer Nitro VG270UP 27inch V5",
+    "slug": "acer-nitro-vg270up-27inch-v5",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 5946117.107698097,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-62",
+    "stock": 54,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.3243418970905267,
+    "dimensions": {
+      "length": 11.336689979588574,
+      "width": 9.936242117436306,
+      "height": 11.821276358820828
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439188",
+    "name": "Redragon K552 Yama V5",
+    "slug": "redragon-k552-yama-v5",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 410876.27576621296,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-63",
+    "stock": 52,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.9210208754183462,
+    "dimensions": {
+      "length": 21.902587122080757,
+      "width": 9.749888158511746,
+      "height": 7.388353172375988
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439189",
+    "name": "Redragon M686 Vampire V5",
+    "slug": "redragon-m686-vampire-v5",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 860072.7780785509,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-64",
+    "stock": 35,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.30945604790715,
+    "dimensions": {
+      "length": 26.082575124517632,
+      "width": 15.750897432926774,
+      "height": 9.279332582728134
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439190",
+    "name": "Intel Core i3-12100F V6",
+    "slug": "intel-core-i3-12100f-v6",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 3070115.747464839,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-65",
+    "stock": 29,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.8922618598721002,
+    "dimensions": {
+      "length": 13.466751977768556,
+      "width": 9.824942286560198,
+      "height": 7.1593637190669135
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439191",
+    "name": "AMD Ryzen 5 7600 V6",
+    "slug": "amd-ryzen-5-7600-v6",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 6869006.471155456,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-66",
+    "stock": 8,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.7185538572640597,
+    "dimensions": {
+      "length": 28.314580166550506,
+      "width": 7.7643809378365365,
+      "height": 2.6877241509852094
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439192",
+    "name": "Intel Core i9-12900K V6",
+    "slug": "intel-core-i9-12900k-v6",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 15807678.742062822,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-67",
+    "stock": 27,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.193301051136439,
+    "dimensions": {
+      "length": 10.317502465161624,
+      "width": 15.469707720927211,
+      "height": 4.069943557789027
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439193",
+    "name": "NVIDIA GeForce RTX 4060 V6",
+    "slug": "nvidia-geforce-rtx-4060-v6",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 15366624.393381428,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-68",
+    "stock": 18,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.1279004789836433,
+    "dimensions": {
+      "length": 27.998242017552187,
+      "width": 15.413311772486619,
+      "height": 2.0486437552574737
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439194",
+    "name": "AMD Radeon RX 7800 XT V6",
+    "slug": "amd-radeon-rx-7800-xt-v6",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17541135.509074483,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-69",
+    "stock": 9,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.368019293482146,
+    "dimensions": {
+      "length": 28.02317434277945,
+      "width": 6.80884794892092,
+      "height": 6.519498999546661
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439195",
+    "name": "Kingston Fury Beast 8GB V6",
+    "slug": "kingston-fury-beast-8gb-v6",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 577191.8749675321,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-70",
+    "stock": 48,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 2.238026817679087,
+    "dimensions": {
+      "length": 15.786989919884281,
+      "width": 6.833145994498122,
+      "height": 6.087541392070422
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439196",
+    "name": "TeamGroup T-Force Vulcan 16GB V6",
+    "slug": "teamgroup-t-force-vulcan-16gb-v6",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1277414.4844547356,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-71",
+    "stock": 36,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.4266067620842398,
+    "dimensions": {
+      "length": 14.356455577551763,
+      "width": 6.5445489088279505,
+      "height": 5.170300110795187
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439197",
+    "name": "Crucial MX500 500GB V6",
+    "slug": "crucial-mx500-500gb-v6",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 1932475.597119743,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-72",
+    "stock": 14,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.74463317169204,
+    "dimensions": {
+      "length": 27.08060273434905,
+      "width": 7.6904387593200365,
+      "height": 9.455413684087658
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439198",
+    "name": "Seagate Barracuda 2TB V6",
+    "slug": "seagate-barracuda-2tb-v6",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1728319.5973010478,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-73",
+    "stock": 46,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.312424404728962,
+    "dimensions": {
+      "length": 11.28043932304308,
+      "width": 10.29079350062134,
+      "height": 2.0572673015814162
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439199",
+    "name": "LG 24MP400-B 24inch V6",
+    "slug": "lg-24mp400-b-24inch-v6",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 2609228.7310679755,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-74",
+    "stock": 29,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.79998900367662,
+    "dimensions": {
+      "length": 28.885187145085677,
+      "width": 18.257719652882116,
+      "height": 4.798617278970865
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439200",
+    "name": "Acer Nitro VG270UP 27inch V6",
+    "slug": "acer-nitro-vg270up-27inch-v6",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 6076357.975373206,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-75",
+    "stock": 36,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.960107495583685,
+    "dimensions": {
+      "length": 13.54669625658615,
+      "width": 15.070562486359156,
+      "height": 2.528928689619008
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439201",
+    "name": "Redragon K552 Yama V6",
+    "slug": "redragon-k552-yama-v6",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 975851.9361253123,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-76",
+    "stock": 8,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.696681417759728,
+    "dimensions": {
+      "length": 20.040526943071043,
+      "width": 16.359343550590356,
+      "height": 5.721623560984311
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439202",
+    "name": "Redragon M686 Vampire V6",
+    "slug": "redragon-m686-vampire-v6",
+    "description": "Redragon M686 Vampire Wireless Gaming Mouse",
+    "price": 619196.5115233794,
+    "comparePrice": 540000,
+    "categoryId": "507f1f77bcf86cd799439023",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-77",
+    "stock": 32,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.8934574643170707,
+    "dimensions": {
+      "length": 17.803523235195907,
+      "width": 7.146612925770018,
+      "height": 7.76160529743492
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon M686 Vampire",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "sensor": "PixArt 3335",
+      "dpi": "Up to 16000 DPI",
+      "battery": "Up to 70 hours",
+      "connectivity": "2.4GHz Wireless"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon M686 Vampire - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon M686 Vampire chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439203",
+    "name": "Intel Core i3-12100F V7",
+    "slug": "intel-core-i3-12100f-v7",
+    "description": "Intel Core i3-12100F 4-Core Processor",
+    "price": 2696844.0332915355,
+    "comparePrice": 3588000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-78",
+    "stock": 24,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.2487670460418836,
+    "dimensions": {
+      "length": 10.780198477564369,
+      "width": 7.924792299208189,
+      "height": 2.8136489091402743
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i3-12100F",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock": "3.3 GHz",
+      "boost_clock": "4.3 GHz",
+      "socket": "LGA 1700",
+      "tdp": 58
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i3-12100F - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i3-12100F chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439204",
+    "name": "AMD Ryzen 5 7600 V7",
+    "slug": "amd-ryzen-5-7600-v7",
+    "description": "AMD Ryzen 5 7600 6-Core Processor",
+    "price": 7319058.282550164,
+    "comparePrice": 8388000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "AMD",
+    "sku": "AMD-AMDRyzen-79",
+    "stock": 38,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.1816702254372706,
+    "dimensions": {
+      "length": 13.372632616369495,
+      "width": 17.200765621298867,
+      "height": 2.8070289330868574
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Ryzen 5 7600",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock": "3.8 GHz",
+      "boost_clock": "5.1 GHz",
+      "socket": "AM5",
+      "tdp": 65
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Ryzen 5 7600 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Ryzen 5 7600 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439205",
+    "name": "Intel Core i9-12900K V7",
+    "slug": "intel-core-i9-12900k-v7",
+    "description": "Intel Core i9-12900K 16-Core Processor",
+    "price": 16477464.931029355,
+    "comparePrice": 19188000,
+    "categoryId": "507f1f77bcf86cd799439015",
+    "brand": "Intel",
+    "sku": "INT-IntelCor-80",
+    "stock": 24,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.954984114478107,
+    "dimensions": {
+      "length": 13.184425796153945,
+      "width": 13.06423862025886,
+      "height": 11.824755614979487
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Intel Core i9-12900K",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock": "3.2 GHz",
+      "boost_clock": "5.2 GHz",
+      "socket": "LGA 1700",
+      "tdp": 125
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "intel",
+      "intel",
+      "tech"
+    ],
+    "seoTitle": "Intel Core i9-12900K - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Intel Core i9-12900K chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439206",
+    "name": "NVIDIA GeForce RTX 4060 V7",
+    "slug": "nvidia-geforce-rtx-4060-v7",
+    "description": "NVIDIA GeForce RTX 4060 8GB GDDR6 Graphics Card",
+    "price": 14917454.12853979,
+    "comparePrice": 17988000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "NVIDIA",
+    "sku": "NVI-NVIDIAGe-81",
+    "stock": 35,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.2316228663916777,
+    "dimensions": {
+      "length": 18.25856509934134,
+      "width": 10.839564816953738,
+      "height": 4.42453241745745
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "NVIDIA GeForce RTX 4060",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "8GB GDDR6",
+      "base_clock": "1830 MHz",
+      "boost_clock": "2505 MHz",
+      "power": "115W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "nvidia",
+      "nvidia",
+      "tech"
+    ],
+    "seoTitle": "NVIDIA GeForce RTX 4060 - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua NVIDIA GeForce RTX 4060 chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439207",
+    "name": "AMD Radeon RX 7800 XT V7",
+    "slug": "amd-radeon-rx-7800-xt-v7",
+    "description": "AMD Radeon RX 7800 XT 16GB GDDR6 Graphics Card",
+    "price": 17923269.167003434,
+    "comparePrice": 21588000,
+    "categoryId": "507f1f77bcf86cd799439016",
+    "brand": "AMD",
+    "sku": "AMD-AMDRadeo-82",
+    "stock": 20,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.3954798622392186,
+    "dimensions": {
+      "length": 17.665171240770086,
+      "width": 10.932970273525118,
+      "height": 5.216909566088216
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "AMD Radeon RX 7800 XT",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "memory": "16GB GDDR6",
+      "base_clock": "1295 MHz",
+      "boost_clock": "2430 MHz",
+      "power": "263W"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "amd",
+      "amd",
+      "tech"
+    ],
+    "seoTitle": "AMD Radeon RX 7800 XT - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua AMD Radeon RX 7800 XT chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439208",
+    "name": "Kingston Fury Beast 8GB V7",
+    "slug": "kingston-fury-beast-8gb-v7",
+    "description": "Kingston Fury Beast 8GB DDR4-3200MHz",
+    "price": 1174476.518530398,
+    "comparePrice": 1068000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "Kingston",
+    "sku": "KIN-Kingston-83",
+    "stock": 50,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 1.4056217761026715,
+    "dimensions": {
+      "length": 21.547175525842288,
+      "width": 18.660011354568,
+      "height": 4.076931371249566
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Kingston Fury Beast 8GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "8GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "kingston",
+      "kingston",
+      "tech"
+    ],
+    "seoTitle": "Kingston Fury Beast 8GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Kingston Fury Beast 8GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439209",
+    "name": "TeamGroup T-Force Vulcan 16GB V7",
+    "slug": "teamgroup-t-force-vulcan-16gb-v7",
+    "description": "TeamGroup T-Force Vulcan 16GB DDR4-3200MHz",
+    "price": 1653754.5113843607,
+    "comparePrice": 1548000,
+    "categoryId": "507f1f77bcf86cd799439017",
+    "brand": "TeamGroup",
+    "sku": "TEA-TeamGrou-84",
+    "stock": 16,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.883830151797901,
+    "dimensions": {
+      "length": 21.421492029812743,
+      "width": 8.48187761720184,
+      "height": 7.139973362829493
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "TeamGroup T-Force Vulcan 16GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "16GB",
+      "type": "DDR4",
+      "speed": "3200MHz",
+      "voltage": "1.35V"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "teamgroup",
+      "teamgroup",
+      "tech"
+    ],
+    "seoTitle": "TeamGroup T-Force Vulcan 16GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua TeamGroup T-Force Vulcan 16GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439210",
+    "name": "Crucial MX500 500GB V7",
+    "slug": "crucial-mx500-500gb-v7",
+    "description": "Crucial MX500 500GB SATA SSD",
+    "price": 1489579.9000982086,
+    "comparePrice": 2148000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Crucial",
+    "sku": "CRU-CrucialM-85",
+    "stock": 27,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.0424318258470588,
+    "dimensions": {
+      "length": 16.084558433844624,
+      "width": 14.717705268453127,
+      "height": 9.50333327881895
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Crucial MX500 500GB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "500GB",
+      "type": "SATA SSD",
+      "read_speed": "Up to 560 MB/s",
+      "write_speed": "Up to 510 MB/s"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "crucial",
+      "crucial",
+      "tech"
+    ],
+    "seoTitle": "Crucial MX500 500GB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Crucial MX500 500GB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439211",
+    "name": "Seagate Barracuda 2TB V7",
+    "slug": "seagate-barracuda-2tb-v7",
+    "description": "Seagate Barracuda 2TB 7200RPM HDD",
+    "price": 1959991.9361696905,
+    "comparePrice": 2388000,
+    "categoryId": "507f1f77bcf86cd799439018",
+    "brand": "Seagate",
+    "sku": "SEA-SeagateB-86",
+    "stock": 35,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 2.443658295993841,
+    "dimensions": {
+      "length": 18.44573546238157,
+      "width": 18.33644652238996,
+      "height": 10.230297999461822
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Seagate Barracuda 2TB",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "capacity": "2TB",
+      "type": "HDD",
+      "speed": "7200RPM",
+      "cache": "256MB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "seagate",
+      "seagate",
+      "tech"
+    ],
+    "seoTitle": "Seagate Barracuda 2TB - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Seagate Barracuda 2TB chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439212",
+    "name": "LG 24MP400-B 24inch V7",
+    "slug": "lg-24mp400-b-24inch-v7",
+    "description": "LG 24MP400-B 24inch 1080p 75Hz IPS Monitor",
+    "price": 2694225.2048770497,
+    "comparePrice": 2868000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "LG",
+    "sku": "LG-LG24MP40-87",
+    "stock": 5,
+    "isActive": true,
+    "isFeatured": false,
+    "weight": 0.527896721320904,
+    "dimensions": {
+      "length": 23.353662466805307,
+      "width": 7.2287754304484695,
+      "height": 3.929652381268303
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "LG 24MP400-B 24inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "24 inch",
+      "resolution": "1920x1080",
+      "refresh_rate": "75Hz",
+      "panel_type": "IPS",
+      "response_time": "5ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "lg",
+      "lg",
+      "tech"
+    ],
+    "seoTitle": "LG 24MP400-B 24inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua LG 24MP400-B 24inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439213",
+    "name": "Acer Nitro VG270UP 27inch V7",
+    "slug": "acer-nitro-vg270up-27inch-v7",
+    "description": "Acer Nitro VG270UP 27inch 1440p 144Hz IPS Monitor",
+    "price": 5614879.721827866,
+    "comparePrice": 7188000,
+    "categoryId": "507f1f77bcf86cd799439022",
+    "brand": "Acer",
+    "sku": "ACE-AcerNitr-88",
+    "stock": 33,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 1.092964650353601,
+    "dimensions": {
+      "length": 11.447716952963404,
+      "width": 11.210172515924535,
+      "height": 10.391759012289384
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Acer Nitro VG270UP 27inch",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "size": "27 inch",
+      "resolution": "2560x1440",
+      "refresh_rate": "144Hz",
+      "panel_type": "IPS",
+      "response_time": "1ms"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "acer",
+      "acer",
+      "tech"
+    ],
+    "seoTitle": "Acer Nitro VG270UP 27inch - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Acer Nitro VG270UP 27inch chính hãng giá tốt tại Snake Tech"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439214",
+    "name": "Redragon K552 Yama V7",
+    "slug": "redragon-k552-yama-v7",
+    "description": "Redragon K552 Yama Mechanical Gaming Keyboard",
+    "price": 371886.49074565846,
+    "comparePrice": 948000,
+    "categoryId": "507f1f77bcf86cd799439024",
+    "brand": "Redragon",
+    "sku": "RED-Redragon-89",
+    "stock": 18,
+    "isActive": true,
+    "isFeatured": true,
+    "weight": 2.483333927527702,
+    "dimensions": {
+      "length": 18.266962177410143,
+      "width": 6.507772601081428,
+      "height": 3.9243815595331992
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+        "alt": "Redragon K552 Yama",
+        "isPrimary": true
+      }
+    ],
+    "specs": {
+      "layout": "Full Size",
+      "switches": "Outemu Brown",
+      "rgb": true,
+      "connectivity": "USB"
+    },
+    "ratingAvg": 0,
+    "ratingCount": 0,
+    "tags": [
+      "redragon",
+      "redragon",
+      "tech"
+    ],
+    "seoTitle": "Redragon K552 Yama - Mua chính hãng tại Snake Tech",
+    "seoDescription": "Mua Redragon K552 Yama chính hãng giá tốt tại Snake Tech"
+  }
+]

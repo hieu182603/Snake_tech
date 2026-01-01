@@ -1,0 +1,116 @@
+[
+  {
+    "_id": "507f1f77bcf86cd799439101",
+    "email": "admin@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Administrator",
+    "phone": "0912345678",
+    "role": "ADMIN",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439102",
+    "email": "manager@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Store Manager",
+    "phone": "0912345679",
+    "role": "STAFF",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439103",
+    "email": "staff1@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Nguyễn Văn Nhân Viên",
+    "phone": "0912345680",
+    "role": "STAFF",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439104",
+    "email": "staff2@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Trần Thị Nhân Viên",
+    "phone": "0912345681",
+    "role": "STAFF",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439105",
+    "email": "customer1@gmail.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Nguyễn Văn Khách",
+    "phone": "0987654321",
+    "role": "CUSTOMER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439106",
+    "email": "customer2@gmail.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Trần Thị Khách Hàng",
+    "phone": "0987654322",
+    "role": "CUSTOMER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439107",
+    "email": "customer3@gmail.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Lê Văn Khách Hàng",
+    "phone": "0987654323",
+    "role": "CUSTOMER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439108",
+    "email": "customer4@gmail.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Phạm Thị Khách",
+    "phone": "0987654324",
+    "role": "CUSTOMER",
+    "isActive": true,
+    "isVerified": false,
+    "avatarUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439109",
+    "email": "shipper1@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Nguyễn Văn Giao Hàng",
+    "phone": "0977123456",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439110",
+    "email": "shipper2@snacketech.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Trần Văn Shipper",
+    "phone": "0977123457",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200"
+  }
+]
+
+
+
+

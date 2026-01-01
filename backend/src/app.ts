@@ -24,9 +24,33 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
-// API Routes will be added here
-app.use("/api", (_req, res) => {
-  res.json({ message: "Snake Tech API is running!" });
+// Import routes
+import authRoutes from './modules/auth/auth.routes.js';
+import productRoutes from './modules/product/product.routes.js';
+import bannerRoutes from './modules/banner/banner.routes.js';
+import cartRoutes from './modules/cart/cart.routes.js';
+import orderRoutes from './modules/order/order.routes.js';
+import paymentRoutes from './modules/payment/payment.routes.js';
+import feedbackRoutes from './modules/feedback/feedback.routes.js';
+import shipperRoutes from './modules/shipper/shipper.routes.js';
+import imageRoutes from './modules/image/image.routes.js';
+import notificationRoutes from './modules/notification/notification.routes.js';
+
+// API Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/banners", bannerRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/feedback", feedbackRoutes);
+app.use("/api/shippers", shipperRoutes);
+app.use("/api/images", imageRoutes);
+app.use("/api/notifications", notificationRoutes);
+
+// Root route for quick check
+app.get("/", (_req, res) => {
+  res.status(200).json({ message: "Welcome to Snake Tech API" });
 });
 
 // 404 handler

@@ -8,6 +8,8 @@
     "start": "node dist/server.js",
     "dev": "nodemon --exec tsx src/server.ts",
     "seed": "tsx scripts/seed.ts",
+    "generate-feedback": "tsx scripts/generate-feedback.ts",
+    "generate-orders": "tsx scripts/generate-orders.ts",
     "drop-collections": "tsx scripts/drop-collections.ts",
     "init-collections": "tsx scripts/init-collections.ts",
     "reset-db": "tsx scripts/reset-db.ts"

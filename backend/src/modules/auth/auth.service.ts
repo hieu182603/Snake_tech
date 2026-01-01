@@ -1,0 +1,290 @@
+import { Account, IAccount } from './models/account.model.js';
+import { OTP } from './models/otp.model.js';
+import { generateTokenPair, rotateRefreshToken, revokeRefreshToken } from '../../utils/jwt.js';
+import { comparePassword, hashPassword } from '../../utils/hash.js';
+import { generateOTP } from '../../utils/otp.js';
+
+export class AuthService {
+    // Register new account
+    static async register(accountData: {
+        email: string;
+        password: string;
+        fullName: string;
+        phone?: string;
+    }) {
+        const { email, password, fullName, phone } = accountData;
+
+        // Normalize email
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // Check if email already exists
+        const existingAccount = await Account.findOne({ email: normalizedEmail });
+        if (existingAccount) {
+            throw new Error('Email already registered');
+        }
+
+        // Hash password
+        const passwordHash = await hashPassword(password);
+
+        // Create new account
+        const account = await Account.create({
+            email: normalizedEmail,
+            passwordHash,
+            fullName: fullName.trim(),
+            phone: phone?.trim(),
+            role: 'CUSTOMER', // Default role
+            isActive: true,
+            isVerified: false,
+        });
+
+        return {
+            message: 'Account created successfully',
+            accountId: account._id,
+            email: account.email,
+        };
+    }
+
+    // Login
+    static async login(credentials: { email: string; password: string }) {
+        const { email, password } = credentials;
+
+        // Find account
+        const account = await Account.findOne({ email: email.toLowerCase() });
+        if (!account) {
+            throw new Error('Invalid credentials');
+        }
+
+        if (!account.isActive) {
+            throw new Error('Account is deactivated');
+        }
+
+        // Verify password
+        const isPasswordValid = await comparePassword(password, account.passwordHash);
+        if (!isPasswordValid) {
+            throw new Error('Invalid credentials');
+        }
+
+        // Generate token pair
+        const { accessToken, refreshToken } = generateTokenPair(account);
+
+        return {
+            accessToken,
+            refreshToken,
+            account: {
+                id: account._id,
+                email: account.email,
+                fullName: account.fullName,
+                role: account.role,
+                phone: account.phone,
+                avatarUrl: account.avatarUrl,
+                isActive: account.isActive,
+                isVerified: account.isVerified,
+            },
+        };
+    }
+
+    // Refresh access token
+    static async refresh(refreshToken: string) {
+        try {
+            // Verify refresh token to get user ID
+            const decoded = require("../../utils/jwt.js").verifyRefreshToken(refreshToken);
+
+            // Find account
+            const account = await Account.findById(decoded.userId);
+            if (!account) {
+                throw new Error('Account not found');
+            }
+
+            if (!account.isActive) {
+                throw new Error('Account is deactivated');
+            }
+
+            // Rotate refresh token and generate new pair
+            const { accessToken, refreshToken: newRefreshToken } = rotateRefreshToken(refreshToken, account);
+
+            return {
+                accessToken,
+                refreshToken: newRefreshToken,
+            };
+        } catch (error) {
+            throw new Error('Invalid refresh token');
+        }
+    }
+
+    // Logout
+    static async logout(refreshToken: string) {
+        try {
+            // Verify token to get user ID
+            const decoded = require("../../utils/jwt.js").verifyRefreshToken(refreshToken);
+            revokeRefreshToken(decoded.userId);
+        } catch (error) {
+            // Even if verification fails, we don't throw error for logout
+            console.warn('Logout with invalid token:', error.message);
+        }
+    }
+
+    // Get current account
+    static async getCurrentAccount(accountId: string) {
+        const account = await Account.findById(accountId)
+            .select('-passwordHash')
+            .lean();
+
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        return account;
+    }
+
+    // Update account
+    static async updateAccount(accountId: string, updateData: Partial<IAccount>) {
+        const account = await Account.findByIdAndUpdate(
+            accountId,
+            { ...updateData, updatedAt: new Date() },
+            { new: true }
+        ).select('-passwordHash');
+
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        return account;
+    }
+
+    // Change password
+    static async changePassword(accountId: string, oldPassword: string, newPassword: string) {
+        const account = await Account.findById(accountId);
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        // Verify old password
+        const isOldPasswordValid = await comparePassword(oldPassword, account.passwordHash);
+        if (!isOldPasswordValid) {
+            throw new Error('Current password is incorrect');
+        }
+
+        // Hash new password
+        const newPasswordHash = await hashPassword(newPassword);
+        account.passwordHash = newPasswordHash;
+        await account.save();
+
+        return { message: 'Password changed successfully' };
+    }
+
+    // Verify account (for email verification)
+    static async verifyAccount(email: string) {
+        const account = await Account.findOne({ email: email.toLowerCase() });
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        if (account.isVerified) {
+            throw new Error('Account already verified');
+        }
+
+        account.isVerified = true;
+        await account.save();
+
+        return { message: 'Account verified successfully' };
+    }
+
+    // Verify registration with OTP
+    static async verifyRegister(verifyData: {
+        username: string;
+        password: string;
+        email: string;
+        role: string;
+        otp: string;
+    }) {
+        const { username, password, email, role, otp } = verifyData;
+
+        // Find OTP record
+        const otpRecord = await OTP.findOne({
+            email: email.toLowerCase(),
+            otp: otp,
+            type: 'REGISTER',
+            expiresAt: { $gt: new Date() }
+        });
+
+        if (!otpRecord) {
+            throw new Error('Invalid or expired OTP');
+        }
+
+        // Find the account (should exist from registration)
+        const account = await Account.findOne({ email: email.toLowerCase() });
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        if (account.isVerified) {
+            throw new Error('Account already verified');
+        }
+
+        // Update account as verified and active
+        account.isVerified = true;
+        account.isActive = true;
+        account.role = role.toUpperCase() as IAccount['role'];
+        await account.save();
+
+        // Delete used OTP
+        await OTP.deleteOne({ _id: otpRecord._id });
+
+        // Generate tokens
+        const { accessToken, refreshToken } = await generateTokenPair(account._id.toString());
+
+        // Store refresh token
+        await rotateRefreshToken(account._id.toString(), refreshToken);
+
+        return {
+            message: 'Registration verified successfully',
+            account: {
+                id: account._id,
+                username: account.username,
+                email: account.email,
+                fullName: account.fullName,
+                role: account.role,
+                isVerified: account.isVerified
+            },
+            accessToken,
+            refreshToken
+        };
+    }
+
+    // Resend OTP
+    static async resendOTP(identifier: string) {
+        // Find account by email or username
+        const account = await Account.findOne({
+            $or: [
+                { email: identifier.toLowerCase() },
+                { username: identifier }
+            ]
+        });
+
+        if (!account) {
+            throw new Error('Account not found');
+        }
+
+        // Generate new OTP
+        const otp = generateOTP();
+
+        // Delete any existing OTPs for this email
+        await OTP.deleteMany({
+            email: account.email,
+            type: 'REGISTER'
+        });
+
+        // Save new OTP
+        await OTP.create({
+            email: account.email,
+            otp: otp,
+            type: 'REGISTER',
+            expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+        });
+
+        // TODO: Send OTP via email
+        console.log(`OTP for ${account.email}: ${otp}`);
+
+        return { message: 'OTP sent successfully' };
+    }
+}

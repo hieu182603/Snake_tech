@@ -5,21 +5,36 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import AuthInput from '@/components/ui/AuthInput';
 import OTPModal from '@/components/ui/OTPModal';
-import { authService } from '@/services/authService';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useAuth } from '@/contexts/AuthContext';
+import { AccountRole } from '@/constants/roles';
 
 interface AuthViewProps {
   initialSignUp?: boolean;
 }
+
+const getRoleBasePath = (role: AccountRole): string => {
+  switch (role) {
+    case AccountRole.ADMIN:
+      return '/admin';
+    case AccountRole.STAFF:
+      return '/staff';
+    case AccountRole.CUSTOMER:
+      return '/customer';
+    case AccountRole.SHIPPER:
+      return '/shipper';
+    default:
+      return '/customer';
+  }
+};
 
 const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
   const router = useRouter();
   const pathname = usePathname();
   const toast = useToast();
   const { t } = useTranslation();
-  const { isAuthenticated, isLoading, login } = useAuth();
+  const { isAuthenticated, isLoading, login, user } = useAuth();
   const [isSignUp, setIsSignUp] = useState(initialSignUp);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -51,16 +66,22 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
   const showValidation = password.length > 0;
 
   useEffect(() => {
-    setIsSignUp(initialSignUp);
-  }, [initialSignUp]);
+    // Force login mode when on /auth/login route
+    if (pathname === '/auth/login') {
+      setIsSignUp(false);
+    } else {
+      setIsSignUp(initialSignUp);
+    }
+  }, [initialSignUp, pathname]);
 
   // Handle redirection after successful login based on user role
   useEffect(() => {
     // Wait for auth context to finish loading and only redirect if authenticated
     if (!isLoading && isAuthenticated() && pathname.startsWith('/auth')) {
-      router.push('/');
+      const defaultRoute = user?.role ? getRoleBasePath(user.role as AccountRole) : '/customer';
+      router.push(defaultRoute);
     }
-  }, [isAuthenticated, isLoading, pathname, router]);
+  }, [isAuthenticated, isLoading, pathname, router, user]);
 
   const handleToggle = () => {
     if (isAnimating) return;
@@ -73,10 +94,9 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
     e.preventDefault();
     try {
       setIsSubmitting(true);
-      const { user, token } = await authService.login({ identifier: loginIdentifier, password: loginPassword });
-      login(user, token);
+      await login({ email: loginIdentifier, password: loginPassword });
       toast.showSuccess(t('auth.login.success', { defaultValue: 'Đăng nhập thành công' }));
-      router.push('/');
+      // Redirect will be handled by useEffect based on user role
     } catch (error: any) {
       toast.showError(error.message || t('auth.login.failed', { defaultValue: 'Đăng nhập thất bại' }));
     } finally {
@@ -126,11 +146,10 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
       }
 
       // Call register API
-      await authService.register({
+      await register({
         username: username.trim(),
         email: email.trim(),
-        password: password,
-        role: 'CUSTOMER'
+        password: password
       });
 
       // Save registration data for OTP verification
@@ -159,7 +178,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
 
     try {
       setIsSubmitting(true);
-      const { user, token } = await authService.verifyRegister({
+      await verifyRegister({
         username: registrationData.username,
         password: registrationData.password,
         email: registrationData.email,
@@ -167,13 +186,10 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
         otp: otp
       });
 
-      // Update AuthContext
-      login(user, token);
-
       // Registration successful
       setShowOTP(false);
       toast.showSuccess(t('auth.register.success', { defaultValue: 'Đăng ký thành công' }));
-      router.push('/');
+      // Redirect will be handled by useEffect based on user role
     } catch (error: any) {
       throw error;
     } finally {
@@ -185,7 +201,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
     if (!registrationData) return;
 
     try {
-      await authService.resendOTP({
+      await resendOTP({
         identifier: registrationData.email
       });
       toast.showSuccess(t('auth.register.otpResent', { defaultValue: 'OTP đã được gửi lại' }));
@@ -304,7 +320,15 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
             <div className="mt-5 pt-5 border-t border-white/5 w-full">
               <p className="text-[11px] text-slate-500">
                 {t('auth.register.hasAccount')}
-                <button type="button" onClick={handleToggle} className="text-purple-400 font-bold ml-1 hover:underline outline-none">{t('auth.register.signIn')}</button>
+                {pathname === '/auth/register' ? (
+                  <Link href="/auth/login" className="text-purple-400 font-bold ml-1 hover:underline">
+                    {t('auth.register.signIn')}
+                  </Link>
+                ) : (
+                  <button type="button" onClick={handleToggle} className="text-purple-400 font-bold ml-1 hover:underline outline-none">
+                    {t('auth.register.signIn')}
+                  </button>
+                )}
               </p>
             </div>
           </form>
@@ -359,7 +383,15 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
             <div className="mt-6 pt-6 border-t border-white/5 w-full">
               <p className="text-[11px] text-slate-500">
                 {t('auth.login.noAccount')}
-                <button type="button" onClick={handleToggle} className="text-purple-400 font-bold ml-1 hover:underline outline-none">{t('auth.login.createAccount')}</button>
+                {pathname === '/auth/login' ? (
+                  <Link href="/auth/register" className="text-purple-400 font-bold ml-1 hover:underline">
+                    {t('auth.login.createAccount')}
+                  </Link>
+                ) : (
+                  <button type="button" onClick={handleToggle} className="text-purple-400 font-bold ml-1 hover:underline outline-none">
+                    {t('auth.login.createAccount')}
+                  </button>
+                )}
               </p>
             </div>
           </form>

@@ -13,6 +13,13 @@ export function validateEnvironment(): void {
 
     if (missingVars.length > 0) {
         console.error(`❌ Missing required environment variables: ${missingVars.join(', ')}`);
+        console.error('Please create a .env file based on env.example');
+        process.exit(1);
+    }
+
+    // Validate JWT_SECRET length
+    if (process.env.JWT_SECRET && process.env.JWT_SECRET.length < 32) {
+        console.error('❌ JWT_SECRET must be at least 32 characters long for security');
         process.exit(1);
     }
 }
@@ -20,18 +27,18 @@ export function validateEnvironment(): void {
 // Export validated environment variables
 export const config = {
     // Database
-    MONGO_URI: process.env.MONGO_URI || "mongodb+srv://hieunguyenn1501_db_user:WrKBtW8f8fUHxRpo@cluster0.9ig0eyd.mongodb.net/?appName=Cluster0",
+    MONGO_URI: process.env.MONGO_URI,
 
     // Server Configuration
-    PORT: process.env.PORT || 5000,
+    PORT: parseInt(process.env.PORT || '5000'),
     NODE_ENV: process.env.NODE_ENV || 'development',
 
     // JWT Configuration
-    JWT_SECRET: process.env.JWT_SECRET!,
+    JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
 
     // Email Configuration
-    EMAIL_HOST: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    EMAIL_HOST: process.env.EMAIL_HOST,
     EMAIL_PORT: parseInt(process.env.EMAIL_PORT || '587'),
     EMAIL_SECURE: process.env.EMAIL_SECURE === 'true',
     EMAIL_USER: process.env.EMAIL_USER,

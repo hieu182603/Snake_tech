@@ -1,0 +1,46 @@
+[
+  {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "Laptop & Máy tính",
+    "slug": "laptop-may-tinh",
+    "description": "Các sản phẩm laptop, máy tính để bàn và linh kiện",
+    "imageUrl": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800",
+    "parentId": null,
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "_id": "507f1f77bcf86cd799439012",
+    "name": "Điện thoại & Phụ kiện",
+    "slug": "dien-thoai-phu-kien",
+    "description": "Điện thoại thông minh và các phụ kiện di động",
+    "imageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800",
+    "parentId": null,
+    "isActive": true,
+    "sortOrder": 2
+  },
+  {
+    "_id": "507f1f77bcf86cd799439013",
+    "name": "Linh kiện máy tính",
+    "slug": "linh-kien-may-tinh",
+    "description": "Card đồ họa, RAM, SSD, Mainboard và linh kiện khác",
+    "imageUrl": "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800",
+    "parentId": "507f1f77bcf86cd799439011",
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "_id": "507f1f77bcf86cd799439014",
+    "name": "Gaming Gear",
+    "slug": "gaming-gear",
+    "description": "Chuột, bàn phím, tai nghe và phụ kiện gaming",
+    "imageUrl": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800",
+    "parentId": null,
+    "isActive": true,
+    "sortOrder": 3
+  }
+]
+
+
+
+

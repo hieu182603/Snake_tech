@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "507f1f77bcf86cd799439211",
+    "email": "honglinhchu704@yahoo.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Hoàng Linh Châu",
+    "phone": "058797409",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": false,
+    "avatarUrl": "https://images.unsplash.com/photo-510610715708?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439212",
+    "email": "hunhlanem213@outlook.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Huỳnh Lan Em",
+    "phone": "059218425",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": false,
+    "avatarUrl": "https://images.unsplash.com/photo-228850948777?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439213",
+    "email": "tanhan551@yahoo.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Tô Anh An",
+    "phone": "081238679",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-742656374984?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439214",
+    "email": "lquanglong3@gmail.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Lý Quang Long",
+    "phone": "079865646",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-310252886056?w=200"
+  },
+  {
+    "_id": "507f1f77bcf86cd799439215",
+    "email": "lcuyn310@outlook.com",
+    "passwordHash": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "fullName": "Lê Đức Uyên",
+    "phone": "098965728",
+    "role": "SHIPPER",
+    "isActive": true,
+    "isVerified": true,
+    "avatarUrl": "https://images.unsplash.com/photo-946996243793?w=200"
+  }
+]

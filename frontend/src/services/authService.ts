@@ -1,4 +1,7 @@
-// Mock auth service for Snake_tech
+/**
+ * @deprecated This service is deprecated. Use AuthContext instead for real API integration.
+ * Only kept for backward compatibility during migration.
+ */
 export const authService = {
   login: async (credentials: { identifier: string; password: string }) => {
     // Mock login - in real app, this would call API
