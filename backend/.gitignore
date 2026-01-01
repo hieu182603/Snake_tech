@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
-.env
+.env*
 .env.local
 .env.development.local
 .env.test.local
@@ -48,7 +48,6 @@ jspm_packages/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 
 # IDE files
 .vscode/
