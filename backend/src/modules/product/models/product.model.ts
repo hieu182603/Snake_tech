@@ -40,8 +40,7 @@ const productSchema = new Schema<IProduct>({
   },
   slug: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   description: {
     type: String

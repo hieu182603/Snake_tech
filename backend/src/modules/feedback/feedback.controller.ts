@@ -65,4 +65,23 @@ export class FeedbackController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    /**
+     * Get all feedback (Admin/Staff)
+     */
+    static async getAllFeedback(req: Request, res: Response) {
+        try {
+            const { page = 1, limit = 10, search, status } = req.query;
+            const feedback = await FeedbackService.getAllFeedback(
+                Number(page),
+                Number(limit),
+                search as string,
+                status as string
+            );
+            return res.status(200).json(feedback);
+        } catch (error: any) {
+            console.error('Get all feedback error:', error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }

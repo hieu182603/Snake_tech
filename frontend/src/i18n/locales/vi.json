@@ -802,6 +802,35 @@
       "title": "Phản hồi",
       "subtitle": "Đánh giá và phản hồi khách hàng"
     },
+    "dashboard": "Tổng Quan",
+    "analytics": {
+      "title": "Phân tích"
+    },
+    "reports": {
+      "title": "Báo cáo"
+    },
+    "products": {
+      "title": "Sản phẩm",
+      "subtitle": "Quản lý danh sách sản phẩm",
+      "addProduct": "Thêm sản phẩm",
+      "searchPlaceholder": "Tìm kiếm sản phẩm...",
+      "noProductsMatch": "Không tìm thấy sản phẩm phù hợp"
+    },
+    "orders": {
+      "title": "Đơn hàng"
+    },
+    "customers": {
+      "title": "Khách hàng"
+    },
+    "shippers": {
+      "title": "Shipper"
+    },
+    "banners": {
+      "title": "Banner"
+    },
+    "accounts": {
+      "title": "Tài khoản"
+    },
     "exportReport": "Xuất báo cáo",
     "refresh": "Làm mới",
     "viewAll": "Xem tất cả",
@@ -810,6 +839,20 @@
     "today": "Hôm nay",
     "week": "7 ngày qua",
     "month": "Tháng này",
-    "allTime": "Tất cả"
+    "allTime": "Tất cả thời gian",
+    "systemAdmin": "Quản trị Hệ thống",
+    "manageAccounts": "Quản lý tài khoản",
+    "systemSettings": "Cài đặt hệ thống",
+    "all": "Tất cả",
+    "unread": "Chưa đọc",
+    "noNotifications": "Không có thông báo mới",
+    "markAsRead": "Đánh dấu đã đọc",
+    "totalRevenue": "Tổng doanh thu",
+    "totalOrders": "Tổng đơn hàng",
+    "avgOrderValue": "Giá trị đơn trung bình",
+    "totalCustomers": "Tổng khách hàng",
+    "reportDetail": "Chi tiết báo cáo",
+    "active": "Hoạt động",
+    "inactive": "Tạm ẩn"
   }
 }

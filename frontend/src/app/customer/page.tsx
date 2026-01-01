@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/contexts/AuthContext'
 import Button from '@/components/ui/Button'
@@ -18,9 +18,55 @@ import {
 import { toast } from 'sonner'
 import { AccountRole } from '@/constants/roles'
 
+interface DashboardStats {
+  ordersCount: number;
+  wishlistCount: number;
+  rfqCount: number;
+  notificationsCount: number;
+}
+
 export default function CustomerDashboard() {
   const { user, logout } = useAuth()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [stats, setStats] = useState<DashboardStats>({
+    ordersCount: 0,
+    wishlistCount: 0,
+    rfqCount: 0,
+    notificationsCount: 0
+  })
+  const [statsLoading, setStatsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        setStatsLoading(true);
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${API_BASE_URL}/dashboard/stats`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setStats(data);
+      } catch (error: any) {
+        console.error('Fetch dashboard stats error:', error);
+        toast.error('Không thể tải thống kê dashboard');
+      } finally {
+        setStatsLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchDashboardStats();
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
@@ -73,7 +119,7 @@ export default function CustomerDashboard() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <div className="text-right">
-                  <p className="text-sm font-medium text-foreground">{user?.name}</p>
+                  <p className="text-sm font-medium text-foreground">{user?.fullName}</p>
                   <Badge className={getRoleBadgeColor(user?.role || '')}>
                     {getRoleDisplayName(user?.role || '')}
                   </Badge>
@@ -107,7 +153,7 @@ export default function CustomerDashboard() {
         >
           <div className="bg-gradient-to-r from-primary to-primary/80 rounded-lg p-6 text-primary-foreground">
             <h2 className="text-2xl font-bold mb-2">
-              Chào mừng, {user?.name}!
+              Chào mừng, {user?.fullName}!
             </h2>
             <p className="text-primary-foreground/80">
               Chúc bạn có một trải nghiệm mua sắm tuyệt vời tại Snake Tech.
@@ -128,9 +174,11 @@ export default function CustomerDashboard() {
               <ShoppingBag className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold">
+                {statsLoading ? '...' : stats.ordersCount}
+              </div>
               <p className="text-xs text-muted-foreground">
-                Chưa có đơn hàng nào
+                {statsLoading ? 'Đang tải...' : 'Đơn hàng đã đặt'}
               </p>
             </CardContent>
           </Card>
@@ -141,7 +189,9 @@ export default function CustomerDashboard() {
               <Heart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold">
+                {statsLoading ? '...' : stats.wishlistCount}
+              </div>
               <p className="text-xs text-muted-foreground">
                 Sản phẩm yêu thích
               </p>
@@ -150,26 +200,30 @@ export default function CustomerDashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Ví tiền</CardTitle>
+              <CardTitle className="text-sm font-medium">RFQ</CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">0đ</div>
+              <div className="text-2xl font-bold">
+                {statsLoading ? '...' : stats.rfqCount}
+              </div>
               <p className="text-xs text-muted-foreground">
-                Số dư tài khoản
+                Yêu cầu báo giá
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Cài đặt</CardTitle>
+              <CardTitle className="text-sm font-medium">Thông báo</CardTitle>
               <Settings className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">✓</div>
+              <div className="text-2xl font-bold">
+                {statsLoading ? '...' : stats.notificationsCount}
+              </div>
               <p className="text-xs text-muted-foreground">
-                Tài khoản đã xác thực
+                Chưa đọc
               </p>
             </CardContent>
           </Card>
@@ -195,7 +249,7 @@ export default function CustomerDashboard() {
             <CardContent className="space-y-4">
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Họ tên:</span>
-                <span className="text-sm font-medium">{user?.name}</span>
+                <span className="text-sm font-medium">{user?.fullName}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Email:</span>

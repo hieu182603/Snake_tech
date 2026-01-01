@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { productService } from '@/services/productService';
+import { rfqService } from '@/services/rfqService';
 import { useToast } from '@/contexts/ToastContext';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -97,17 +98,48 @@ export default function QuoteRequestPage() {
       showError(t('quote.errors.missingInfo'));
       return;
     }
-    // Simulate submit
-    showSuccess(t('quote.success.submitMessage', {
-      total: totalPrice.toLocaleString('vi-VN'),
-      count: quoteItems.length,
-      name: customer.name,
-      phone: customer.phone
-    }));
-    setQuoteItems([]);
-    setCustomer({ name: '', email: '', phone: '', note: '' });
-    // Optionally navigate somewhere
-    router.push('/');
+
+    try {
+      // Transform quote items to RFQ format
+      const rfqItems = quoteItems.map(item => ({
+        productId: item.id,
+        productName: item.name,
+        qty: item.qty
+      }));
+
+      const rfqData = {
+        items: rfqItems,
+        customer: {
+          name: customer.name,
+          email: customer.email,
+          phone: customer.phone
+        },
+        title: `RFQ - ${customer.name} - ${new Date().toLocaleDateString()}`,
+        description: customer.note || `RFQ request with ${quoteItems.length} items`,
+        total: totalPrice
+      };
+
+      const result = await rfqService.createRFQ(rfqData);
+
+      if (result.success) {
+        showSuccess(t('quote.success.submitMessage', {
+          total: totalPrice.toLocaleString('vi-VN'),
+          count: quoteItems.length,
+          name: customer.name,
+          phone: customer.phone
+        }));
+
+        // Clear form
+        setQuoteItems([]);
+        setCustomer({ name: '', email: '', phone: '', note: '' });
+
+        // Navigate to success page or dashboard
+        router.push('/customer');
+      }
+    } catch (error: any) {
+      console.error('RFQ submission error:', error);
+      showError(error.message || t('quote.errors.submitFailed'));
+    }
   };
 
   return (
@@ -142,7 +174,7 @@ export default function QuoteRequestPage() {
               ) : filteredProducts.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {filteredProducts.map(p => (
-                    <div key={p.id} className="group flex gap-4 p-4 rounded-2xl border border-border-dark bg-background-dark/50">
+                    <div key={`${p.category}-${p.id}`} className="group flex gap-4 p-4 rounded-2xl border border-border-dark bg-background-dark/50">
                       <div className="w-20 h-20 rounded-lg overflow-hidden">
                         <img src={p.image} alt={p.name || 'product'} className="w-full h-full object-cover" />
                       </div>

@@ -8,6 +8,13 @@ dotenv.config();
  */
 export function validateEnvironment(): void {
     const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET'];
+    const cloudinaryVars = ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'];
+
+    // Add Cloudinary vars to required list if any are set
+    const hasCloudinaryVars = cloudinaryVars.some(varName => process.env[varName]);
+    if (hasCloudinaryVars) {
+        requiredEnvVars.push(...cloudinaryVars);
+    }
 
     const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
@@ -46,4 +53,9 @@ export const config = {
 
     // Frontend URL for CORS
     FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
+
+    // Cloudinary Configuration
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
 };

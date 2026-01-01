@@ -1,4 +1,6 @@
 import { Order } from './models/order.model.js';
+import { emitToUser, emitToRole } from '../../config/socket.js';
+import { NotificationService } from '../notification/notification.service.js';
 
 export class OrderService {
     /**
@@ -72,11 +74,11 @@ export class OrderService {
     static async getAllOrders() {
         try {
             const orders = await Order.find({})
-                .populate('userId', 'username email fullName')
+                .populate('accountId', 'username email fullName')
                 .sort({ createdAt: -1 })
                 .select('-__v');
 
-            return orders;
+            return { orders };
         } catch (error) {
             console.error('Get all orders error:', error);
             throw error;
@@ -86,12 +88,69 @@ export class OrderService {
     /**
      * Update order status (Admin/Staff)
      */
-    static async updateOrderStatus(orderId: string, status: string) {
+    static async updateOrderStatus(orderId: string, status: string, updatedBy?: string) {
         try {
             const order = await Order.findByIdAndUpdate(
                 orderId,
                 { status, updatedAt: new Date() },
                 { new: true }
+            ).populate('accountId', 'fullName email username');
+
+            if (!order) {
+                throw new Error('Order not found');
+            }
+
+            // Emit real-time update via Socket.IO
+            emitToUser(order.accountId.toString(), 'order_status_changed', {
+                orderId: order._id,
+                status: order.status,
+                updatedAt: order.updatedAt,
+                code: order.code
+            });
+
+            // Emit to admin/staff
+            emitToRole('ADMIN', 'order_status_changed', {
+                orderId: order._id,
+                status: order.status,
+                updatedAt: order.updatedAt,
+                code: order.code,
+                customerId: order.accountId._id,
+                customerName: order.accountId.fullName,
+                customerEmail: order.accountId.email
+            });
+
+            emitToRole('STAFF', 'order_status_changed', {
+                orderId: order._id,
+                status: order.status,
+                updatedAt: order.updatedAt,
+                code: order.code,
+                customerId: order.accountId._id,
+                customerName: order.accountId.fullName,
+                customerEmail: order.accountId.email
+            });
+
+            // Create notification for customer
+            const statusMessages = {
+                'CONFIRMED': 'Đơn hàng của bạn đã được xác nhận',
+                'PROCESSING': 'Đơn hàng của bạn đang được xử lý',
+                'SHIPPED': 'Đơn hàng của bạn đã được giao cho shipper',
+                'DELIVERED': 'Đơn hàng của bạn đã được giao thành công',
+                'CANCELLED': 'Đơn hàng của bạn đã bị hủy',
+                'RETURNED': 'Đơn hàng của bạn đã được trả lại'
+            };
+
+            const message = statusMessages[status as keyof typeof statusMessages] || `Trạng thái đơn hàng đã được cập nhật thành ${status}`;
+
+            await NotificationService.createNotification(
+                order.accountId._id.toString(),
+                'Cập nhật đơn hàng',
+                `Đơn hàng ${order.code}: ${message}`,
+                'order',
+                {
+                    orderId: order._id,
+                    status: order.status,
+                    code: order.code
+                }
             );
 
             return order;

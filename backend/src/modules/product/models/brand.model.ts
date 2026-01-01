@@ -17,8 +17,7 @@ const brandSchema = new Schema<IBrand>({
   },
   slug: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   logoUrl: {
     type: String

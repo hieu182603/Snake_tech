@@ -14,8 +14,7 @@ const shipperProfileSchema = new Schema<IShipperProfile>({
   accountId: {
     type: Schema.Types.ObjectId,
     ref: 'Account',
-    required: true,
-    unique: true
+    required: true
   },
   vehicleType: {
     type: String

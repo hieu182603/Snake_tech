@@ -569,7 +569,7 @@ export default function CatalogPage() {
                         : p.tag
                     }
                     rating={p.rating}
-                    imageUrl={p.imageUrl}
+                    imageUrl={undefined}
                   />
                 );
               })}

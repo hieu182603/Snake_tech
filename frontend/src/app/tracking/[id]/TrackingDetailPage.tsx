@@ -40,8 +40,20 @@ export default function TrackingDetailPage() {
       if (!id) return;
       try {
         setLoading(true);
-        const res = (await orderService.getOrderById(id)) as any;
-        const data = res?.data?.order || res?.order || res?.data || res;
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const response = await fetch(`${API_BASE_URL}/orders/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
         if (data) {
           setOrder(data);
           setSteps(generateSteps(data));

@@ -107,14 +107,7 @@ const Navbar: React.FC = () => {
             <span className="opacity-90">{t('nav.supportEmail', { defaultValue: 'Email: support@techstore.vn' })}</span>
           </div>
           <div className="flex gap-4 items-center">
-            {isAuthenticated && user && (() => {
-              const userRole = user.role || '';
-              const isAdmin = userRole === 'ADMIN' || userRole === 'MANAGER' || userRole === 'STAFF';
-
-              return isAdmin && (
-                <Link href="/admin" className="hover:underline opacity-90">{t('nav.sellerChannel', { defaultValue: 'Seller Channel' })}</Link>
-              );
-            })()}
+            {/* Admin link temporarily removed */}
           </div>
         </div>
       </div>

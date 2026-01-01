@@ -51,10 +51,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
     setAddingToCart(true);
     try {
-      await addToCart({
-        productId: product.id,
-        quantity,
-      });
+      await addToCart(product.id!, quantity);
       toast.success('Đã thêm vào giỏ hàng!');
     } catch (error) {
       console.error('Error adding to cart:', error);

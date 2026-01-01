@@ -1,21 +1,22 @@
 import jwt from 'jsonwebtoken';
+import { RefreshToken } from '../modules/auth/models/refreshToken.model.js';
+import { hashPassword, comparePassword } from './hash.js';
 
 // JWT Configuration
 export const JWT_CONFIG = {
     ACCESS_TOKEN: {
-        SECRET: process.env.JWT_ACCESS_SECRET || 'snake_access_secret_dev',
-        EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+        SECRET: process.env.JWT_SECRET || 'snake_access_secret_dev',
+        EXPIRES_IN: '15m',
         COOKIE_NAME: 'snakeAccessToken',
     },
     REFRESH_TOKEN: {
-        SECRET: process.env.JWT_REFRESH_SECRET || 'snake_refresh_secret_dev',
-        EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+        SECRET: process.env.JWT_SECRET || 'snake_refresh_secret_dev',
+        EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
         COOKIE_NAME: 'snakeRefreshToken',
     }
 };
 
-// Global refresh token store (in production, use Redis or database)
-const refreshTokens = new Map();
+// Refresh tokens are now stored in the database using the RefreshToken model
 
 /**
  * Generate Access Token
@@ -23,7 +24,7 @@ const refreshTokens = new Map();
 export const generateAccessToken = (payload: any): string => {
     return jwt.sign(payload, JWT_CONFIG.ACCESS_TOKEN.SECRET, {
         expiresIn: JWT_CONFIG.ACCESS_TOKEN.EXPIRES_IN
-    });
+    } as jwt.SignOptions);
 };
 
 /**
@@ -32,13 +33,13 @@ export const generateAccessToken = (payload: any): string => {
 export const generateRefreshToken = (payload: any): string => {
     return jwt.sign(payload, JWT_CONFIG.REFRESH_TOKEN.SECRET, {
         expiresIn: JWT_CONFIG.REFRESH_TOKEN.EXPIRES_IN
-    });
+    } as jwt.SignOptions);
 };
 
 /**
  * Generate token pair for account
  */
-export const generateTokenPair = (account: any) => {
+export const generateTokenPair = async (account: any) => {
     const payload = {
         userId: account._id.toString(),
         email: account.email,
@@ -48,8 +49,18 @@ export const generateTokenPair = (account: any) => {
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
-    // Store refresh token with user ID for rotation
-    refreshTokens.set(account._id.toString(), refreshToken);
+    // Hash and store refresh token in database
+    const tokenHash = await hashPassword(refreshToken);
+
+    // Remove any existing refresh tokens for this account
+    await RefreshToken.deleteMany({ accountId: account._id });
+
+    // Store new refresh token
+    await RefreshToken.create({
+        accountId: account._id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+    });
 
     return { accessToken, refreshToken };
 };
@@ -58,43 +69,47 @@ export const generateTokenPair = (account: any) => {
  * Verify Access Token
  */
 export const verifyAccessToken = (token: string) => {
-    try {
-        return jwt.verify(token, JWT_CONFIG.ACCESS_TOKEN.SECRET);
-    } catch (error) {
-        throw error;
-    }
+    return jwt.verify(token, JWT_CONFIG.ACCESS_TOKEN.SECRET) as jwt.JwtPayload;
 };
 
 /**
  * Verify Refresh Token
  */
 export const verifyRefreshToken = (token: string) => {
-    try {
-        return jwt.verify(token, JWT_CONFIG.REFRESH_TOKEN.SECRET);
-    } catch (error) {
-        throw error;
-    }
+    return jwt.verify(token, JWT_CONFIG.REFRESH_TOKEN.SECRET) as jwt.JwtPayload;
 };
 
 /**
  * Rotate Refresh Token
  */
-export const rotateRefreshToken = (oldRefreshToken: string, account: any) => {
+export const rotateRefreshToken = async (oldRefreshToken: string, account: any) => {
     try {
         // Verify the old refresh token
         const decoded = verifyRefreshToken(oldRefreshToken);
 
-        // Check if token exists in our store
-        const storedToken = refreshTokens.get(decoded.userId);
-        if (!storedToken || storedToken !== oldRefreshToken) {
+        // Find the refresh token in database
+        const refreshTokenDoc = await RefreshToken.findOne({
+            accountId: decoded.userId,
+            revokedAt: null,
+            expiresAt: { $gt: new Date() }
+        });
+
+        if (!refreshTokenDoc) {
+            throw new Error('Refresh token not found');
+        }
+
+        // Verify the token hash matches
+        const isValidToken = await comparePassword(oldRefreshToken, refreshTokenDoc.tokenHash);
+        if (!isValidToken) {
             throw new Error('Invalid refresh token');
         }
 
-        // Remove old token
-        refreshTokens.delete(decoded.userId);
+        // Revoke old token
+        refreshTokenDoc.revokedAt = new Date();
+        await refreshTokenDoc.save();
 
         // Generate new token pair
-        return generateTokenPair(account);
+        return await generateTokenPair(account);
     } catch (error) {
         throw new Error('Refresh token rotation failed');
     }
@@ -103,18 +118,30 @@ export const rotateRefreshToken = (oldRefreshToken: string, account: any) => {
 /**
  * Revoke Refresh Token (logout)
  */
-export const revokeRefreshToken = (userId: string) => {
-    refreshTokens.delete(userId);
+export const revokeRefreshToken = async (userId: string) => {
+    await RefreshToken.updateMany(
+        { accountId: userId, revokedAt: null },
+        { revokedAt: new Date() }
+    );
 };
 
 /**
  * Check if refresh token is valid
  */
-export const isRefreshTokenValid = (token: string): boolean => {
+export const isRefreshTokenValid = async (token: string): Promise<boolean> => {
     try {
         const decoded = verifyRefreshToken(token);
-        const storedToken = refreshTokens.get(decoded.userId);
-        return storedToken === token;
+        const refreshTokenDoc = await RefreshToken.findOne({
+            accountId: decoded.userId,
+            revokedAt: null,
+            expiresAt: { $gt: new Date() }
+        });
+
+        if (!refreshTokenDoc) {
+            return false;
+        }
+
+        return await comparePassword(token, refreshTokenDoc.tokenHash);
     } catch (error) {
         return false;
     }

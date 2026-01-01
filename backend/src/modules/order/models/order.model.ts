@@ -151,8 +151,7 @@ const orderTimelineSchema = new Schema<IOrderTimeline>({
 const orderSchema = new Schema<IOrder>({
   code: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   accountId: {
     type: Schema.Types.ObjectId,

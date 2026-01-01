@@ -18,8 +18,7 @@ const paymentSchema = new Schema<IPayment>({
   orderId: {
     type: Schema.Types.ObjectId,
     ref: 'Order',
-    required: true,
-    unique: true
+    required: true
   },
   method: {
     type: String,
@@ -41,9 +40,7 @@ const paymentSchema = new Schema<IPayment>({
     default: PaymentProviderStatus.INIT
   },
   providerTxnId: {
-    type: String,
-    sparse: true,
-    unique: true
+    type: String
   },
   rawPayload: {
     type: Schema.Types.Mixed

@@ -48,7 +48,7 @@ const ProfilePage: React.FC = () => {
     const showValidation = passwordForm.newPassword.length > 0;
 
     // Dữ liệu người dùng
-    const [user, setUser] = useState({
+    const [userProfile, setUserProfile] = useState({
         name: '',
         memberId: '',
         joinDate: '',
@@ -67,38 +67,73 @@ const ProfilePage: React.FC = () => {
 
                 // Load user profile from AuthContext
                 if (user) {
-                    setUser({
-                        name: user.name || user.username || 'User',
+                    setUserProfile({
+                        name: user.fullName || 'User',
                         memberId: `#${user.id?.substring(0, 5) || '00000'}`,
-                        joinDate: user.createdAt
-                            ? new Date(user.createdAt).toLocaleDateString('vi-VN')
-                            : 'N/A',
+                        joinDate: new Date().toLocaleDateString('vi-VN'),
                         email: user.email || '',
                         phone: user.phone || '',
                         avatar: 'https://picsum.photos/200/200?random=user'
                     });
                 }
 
-                // TODO: Replace with real API call to fetch user orders
-                // const response = await fetch('/api/orders/my-orders', {
-                //   credentials: 'include',
-                //   headers: { 'Authorization': `Bearer ${token}` }
-                // });
-                // const orders = await response.json();
-                setRecentOrders([
-                    {
-                        id: 'ORD-001',
-                        date: new Date().toLocaleDateString('vi-VN'),
-                        total: '2,500,000₫',
-                        status: 'DELIVERED'
-                    },
-                    {
-                        id: 'ORD-002',
-                        date: new Date(Date.now() - 86400000).toLocaleDateString('vi-VN'),
-                        total: '1,200,000₫',
-                        status: 'SHIPPING'
+                // Fetch real user orders from API
+                const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+                try {
+                    const response = await fetch(`${API_BASE_URL}/orders/my-orders`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include'
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        // Transform API response to match component interface
+                        const transformedOrders = (data.orders || []).slice(0, 2).map((order: any) => ({
+                            id: order.code || order.id,
+                            date: order.createdAt ? new Date(order.createdAt).toLocaleDateString('vi-VN') : new Date().toLocaleDateString('vi-VN'),
+                            total: order.total ? order.total.toLocaleString('vi-VN') + '₫' : '0₫',
+                            status: order.status || 'PENDING'
+                        }));
+                        setRecentOrders(transformedOrders);
+                    } else {
+                        // Fallback to mock data if API fails
+                        console.warn('Failed to fetch orders, using mock data');
+                        setRecentOrders([
+                            {
+                                id: 'ORD-001',
+                                date: new Date().toLocaleDateString('vi-VN'),
+                                total: '2,500,000₫',
+                                status: 'DELIVERED'
+                            },
+                            {
+                                id: 'ORD-002',
+                                date: new Date(Date.now() - 86400000).toLocaleDateString('vi-VN'),
+                                total: '1,200,000₫',
+                                status: 'SHIPPING'
+                            }
+                        ]);
                     }
-                ]);
+                } catch (error) {
+                    console.error('Error fetching orders:', error);
+                    // Fallback to mock data on error
+                    setRecentOrders([
+                        {
+                            id: 'ORD-001',
+                            date: new Date().toLocaleDateString('vi-VN'),
+                            total: '2,500,000₫',
+                            status: 'DELIVERED'
+                        },
+                        {
+                            id: 'ORD-002',
+                            date: new Date(Date.now() - 86400000).toLocaleDateString('vi-VN'),
+                            total: '1,200,000₫',
+                            status: 'SHIPPING'
+                        }
+                    ]);
+                }
             } catch (error) {
                 console.error('Error loading user data:', error);
             } finally {
@@ -168,9 +203,9 @@ const ProfilePage: React.FC = () => {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    fullName: tempUser.name,
-                    phone: tempUser.phone,
-                    avatar: tempUser.avatar
+                    fullName: tempUser?.fullName,
+                    phone: tempUser?.phone,
+                    avatar: tempUser?.avatarUrl
                 }),
             });
 
@@ -191,7 +226,14 @@ const ProfilePage: React.FC = () => {
             }
 
             const data = await response.json();
-            setUser(tempUser);
+            if (tempUser) setUserProfile({
+                name: tempUser.fullName || 'User',
+                memberId: `#${tempUser.id?.substring(0, 5) || '00000'}`,
+                joinDate: new Date().toLocaleDateString('vi-VN'),
+                email: tempUser.email || '',
+                phone: tempUser.phone || '',
+                avatar: tempUser.avatarUrl || 'https://picsum.photos/200/200?random=user'
+            });
             setIsEditing(false);
             showSuccess(t('profile.messages.profileUpdated', { defaultValue: 'Profile updated successfully!' }));
         } catch (error: any) {
@@ -200,8 +242,8 @@ const ProfilePage: React.FC = () => {
         }
     };
 
-    const handleChange = (field: keyof typeof user, value: string) => {
-        setTempUser(prev => ({ ...prev, [field]: value }));
+    const handleChange = (field: string, value: string) => {
+        setTempUser(prev => prev ? { ...prev, [field]: value } : null);
     };
 
     const handleChangePassword = () => {
@@ -222,7 +264,7 @@ const ProfilePage: React.FC = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const result = reader.result as string;
-                setUser(prev => ({ ...prev, avatar: result }));
+                setUserProfile(prev => ({ ...prev, avatar: result }));
             };
             reader.readAsDataURL(file);
         }
@@ -237,8 +279,8 @@ const ProfilePage: React.FC = () => {
             setEditingAddress(null);
             setAddressForm({
                 label: 'Nhà riêng',
-                recipientName: user.name,
-                phone: user.phone,
+                recipientName: user?.fullName || '',
+                phone: user?.phone || '',
                 detail: '',
                 isDefault: false
             });
@@ -340,7 +382,7 @@ const ProfilePage: React.FC = () => {
                             className="size-28 rounded-3xl bg-surface-dark border-4 border-surface-dark overflow-hidden shadow-2xl relative cursor-pointer"
                             onClick={handleAvatarClick}
                         >
-                            <img src={user.avatar} className="w-full h-full object-cover" alt="Avatar" />
+                            <img src={user?.avatarUrl || 'https://picsum.photos/200/200?random=user'} className="w-full h-full object-cover" alt="Avatar" />
 
                             {/* Overlay Camera Icon */}
                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -366,15 +408,15 @@ const ProfilePage: React.FC = () => {
                                 <div className="mb-2">
                                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1">{t('profile.labels.displayName', { defaultValue: 'Tên hiển thị' })}</label>
                                     <input
-                                        value={tempUser.name}
-                                        onChange={(e) => handleChange('name', e.target.value)}
+                                        value={tempUser?.fullName || ''}
+                                        onChange={(e) => handleChange('fullName', e.target.value)}
                                         className="text-2xl font-black text-white bg-background-dark border border-primary rounded-lg px-3 py-1 w-full md:w-[300px] outline-none"
                                     />
                                 </div>
                             ) : (
-                                <h1 className="text-3xl font-black text-white tracking-tight">{user.name}</h1>
+                                <h1 className="text-3xl font-black text-white tracking-tight">{user?.fullName}</h1>
                             )}
-                            <p className="text-slate-500 text-sm font-medium">{t('profile.member_since', { defaultValue: 'Thành viên từ: {{date}} • ID: {{id}}', date: user.joinDate, id: user.memberId })}</p>
+                            <p className="text-slate-500 text-sm font-medium">{t('profile.member_since', { defaultValue: 'Thành viên từ: {{date}} • ID: {{id}}', date: userProfile.joinDate, id: userProfile.memberId })}</p>
                         </div>
 
                         <div className="flex gap-3 flex-wrap">
@@ -410,17 +452,17 @@ const ProfilePage: React.FC = () => {
                                     <div>
                                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{t('profile.labels.email', { defaultValue: 'Email' })}</p>
                                         {isEditing ? (
-                                            <input value={tempUser.email} onChange={(e) => handleChange('email', e.target.value)} className="w-full bg-background-dark border border-border-dark focus:border-primary rounded-lg px-3 py-2 text-white outline-none" />
+                                            <input value={tempUser?.email || ''} onChange={(e) => handleChange('email', e.target.value)} className="w-full bg-background-dark border border-border-dark focus:border-primary rounded-lg px-3 py-2 text-white outline-none" />
                                         ) : (
-                                            <p className="text-white font-medium">{user.email}</p>
+                                            <p className="text-white font-medium">{user?.email}</p>
                                         )}
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{t('profile.labels.phone', { defaultValue: 'Số điện thoại' })}</p>
                                         {isEditing ? (
-                                            <input value={tempUser.phone} onChange={(e) => handleChange('phone', e.target.value)} className="w-full bg-background-dark border border-border-dark focus:border-primary rounded-lg px-3 py-2 text-white outline-none" />
+                                            <input value={tempUser?.phone || ''} onChange={(e) => handleChange('phone', e.target.value)} className="w-full bg-background-dark border border-border-dark focus:border-primary rounded-lg px-3 py-2 text-white outline-none" />
                                         ) : (
-                                            <p className="text-white font-medium">{user.phone}</p>
+                                            <p className="text-white font-medium">{user?.phone}</p>
                                         )}
                                     </div>
                                 </div>

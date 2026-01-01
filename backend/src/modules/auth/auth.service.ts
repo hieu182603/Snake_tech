@@ -1,8 +1,9 @@
 import { Account, IAccount } from './models/account.model.js';
 import { OTP } from './models/otp.model.js';
+import { sendMail } from '../../utils/mailer.js';
 import { generateTokenPair, rotateRefreshToken, revokeRefreshToken } from '../../utils/jwt.js';
 import { comparePassword, hashPassword } from '../../utils/hash.js';
-import { generateOTP } from '../../utils/otp.js';
+import { generateOTP, hashOTP, compareOTP } from '../../utils/otp.js';
 
 export class AuthService {
     // Register new account
@@ -65,7 +66,7 @@ export class AuthService {
         }
 
         // Generate token pair
-        const { accessToken, refreshToken } = generateTokenPair(account);
+        const { accessToken, refreshToken } = await generateTokenPair(account);
 
         return {
             accessToken,
@@ -100,7 +101,7 @@ export class AuthService {
             }
 
             // Rotate refresh token and generate new pair
-            const { accessToken, refreshToken: newRefreshToken } = rotateRefreshToken(refreshToken, account);
+            const { accessToken, refreshToken: newRefreshToken } = await rotateRefreshToken(refreshToken, account);
 
             return {
                 accessToken,
@@ -116,7 +117,7 @@ export class AuthService {
         try {
             // Verify token to get user ID
             const decoded = require("../../utils/jwt.js").verifyRefreshToken(refreshToken);
-            revokeRefreshToken(decoded.userId);
+            await revokeRefreshToken(decoded.userId);
         } catch (error) {
             // Even if verification fails, we don't throw error for logout
             console.warn('Logout with invalid token:', error.message);
@@ -199,15 +200,19 @@ export class AuthService {
     }) {
         const { username, password, email, role, otp } = verifyData;
 
-        // Find OTP record
+        // Find OTP record by target/purpose and verify hashed OTP
         const otpRecord = await OTP.findOne({
-            email: email.toLowerCase(),
-            otp: otp,
-            type: 'REGISTER',
+            target: email.toLowerCase(),
+            purpose: 'REGISTER',
             expiresAt: { $gt: new Date() }
         });
 
         if (!otpRecord) {
+            throw new Error('Invalid or expired OTP');
+        }
+
+        const isValidOtp = await compareOTP(otp, otpRecord.otpHash);
+        if (!isValidOtp) {
             throw new Error('Invalid or expired OTP');
         }
 
@@ -231,10 +236,9 @@ export class AuthService {
         await OTP.deleteOne({ _id: otpRecord._id });
 
         // Generate tokens
-        const { accessToken, refreshToken } = await generateTokenPair(account._id.toString());
+        const { accessToken, refreshToken } = generateTokenPair(account);
 
-        // Store refresh token
-        await rotateRefreshToken(account._id.toString(), refreshToken);
+        // refresh token already stored by generateTokenPair
 
         return {
             message: 'Registration verified successfully',
@@ -265,24 +269,36 @@ export class AuthService {
             throw new Error('Account not found');
         }
 
-        // Generate new OTP
+        // Generate new OTP and hash it
         const otp = generateOTP();
+        const otpHash = await hashOTP(otp);
 
-        // Delete any existing OTPs for this email
+        // Delete any existing OTPs for this target/purpose
         await OTP.deleteMany({
-            email: account.email,
-            type: 'REGISTER'
+            target: account.email,
+            purpose: 'REGISTER'
         });
 
-        // Save new OTP
+        // Save new OTP (hashed)
         await OTP.create({
-            email: account.email,
-            otp: otp,
-            type: 'REGISTER',
+            target: account.email,
+            purpose: 'REGISTER',
+            otpHash: otpHash,
             expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
         });
 
-        // TODO: Send OTP via email
+        // Send OTP via email (best-effort)
+        try {
+            await sendMail({
+                to: account.email,
+                subject: 'Your verification code',
+                text: `Your verification code is: ${otp}`,
+                html: `<p>Your verification code is: <strong>${otp}</strong></p><p>It will expire in 10 minutes.</p>`
+            });
+        } catch (e) {
+            console.error('Failed to send OTP email:', e);
+        }
+
         console.log(`OTP for ${account.email}: ${otp}`);
 
         return { message: 'OTP sent successfully' };
@@ -302,18 +318,30 @@ export class AuthService {
             throw new Error('Account not verified');
         }
 
-        // Generate OTP
+        // Generate OTP and hash
         const otp = generateOTP();
+        const otpHash = await hashOTP(otp);
 
         // Save OTP to database
         await OTP.create({
-            email: normalizedEmail,
-            otp: otp,
-            type: 'RESET_PASSWORD',
+            target: normalizedEmail,
+            purpose: 'RESET_PASSWORD',
+            otpHash: otpHash,
             expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
         });
 
-        // TODO: Send OTP via email
+        // Send OTP via email (best-effort)
+        try {
+            await sendMail({
+                to: account.email,
+                subject: 'Password reset code',
+                text: `Your password reset code is: ${otp}`,
+                html: `<p>Your password reset code is: <strong>${otp}</strong></p><p>It will expire in 10 minutes.</p>`
+            });
+        } catch (e) {
+            console.error('Failed to send password reset email:', e);
+        }
+
         console.log(`Password reset OTP for ${account.email}: ${otp}`);
 
         return { message: 'Password reset OTP sent successfully' };
@@ -324,16 +352,19 @@ export class AuthService {
         const { email, otp, newPassword } = resetData;
         const normalizedEmail = email.toLowerCase().trim();
 
-        // Find and verify OTP
+        // Find OTP record by target/purpose and verify hashed OTP
         const otpRecord = await OTP.findOne({
-            email: normalizedEmail,
-            otp: otp,
-            type: 'RESET_PASSWORD',
-            expiresAt: { $gt: new Date() },
-            isUsed: false
+            target: normalizedEmail,
+            purpose: 'RESET_PASSWORD',
+            expiresAt: { $gt: new Date() }
         });
 
         if (!otpRecord) {
+            throw new Error('Invalid or expired OTP');
+        }
+
+        const isValid = await compareOTP(otp, otpRecord.otpHash);
+        if (!isValid) {
             throw new Error('Invalid or expired OTP');
         }
 
@@ -350,9 +381,8 @@ export class AuthService {
         account.passwordHash = passwordHash;
         await account.save();
 
-        // Mark OTP as used
-        otpRecord.isUsed = true;
-        await otpRecord.save();
+        // Delete used OTP
+        await OTP.deleteOne({ _id: otpRecord._id });
 
         return { message: 'Password reset successfully' };
     }

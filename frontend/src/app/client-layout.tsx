@@ -17,19 +17,20 @@ interface ClientLayoutProps {
 export function ClientLayout({ children }: ClientLayoutProps) {
   const pathname = usePathname();
 
-  // Hide footer on auth pages
+  // Hide navbar/footer on auth and admin pages
   const isAuthPage = pathname?.startsWith('/auth');
+  const isAdminPage = pathname?.startsWith('/admin');
 
   return (
     <I18nProvider>
       <AuthProvider>
         <CartProvider>
           <ToastProvider>
-            {!isAuthPage && <Navbar />}
+            {!isAuthPage && !isAdminPage && <Navbar />}
             <main className="min-h-screen">
               {children}
             </main>
-            {!isAuthPage && <Footer />}
+            {!isAuthPage && !isAdminPage && <Footer />}
           </ToastProvider>
         </CartProvider>
       </AuthProvider>

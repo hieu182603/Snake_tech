@@ -19,7 +19,6 @@ const categorySchema = new Schema<ICategory>({
   slug: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true
   },
   parentId: {

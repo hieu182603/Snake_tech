@@ -25,9 +25,7 @@ const imageSchema = new Schema<IImage>({
     required: true
   },
   publicId: {
-    type: String,
-    sparse: true,
-    unique: true
+    type: String
   },
   provider: {
     type: String,

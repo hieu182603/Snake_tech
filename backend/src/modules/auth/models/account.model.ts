@@ -19,7 +19,6 @@ const accountSchema = new Schema<IAccount>({
   email: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true,
     trim: true
   },

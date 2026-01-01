@@ -1,4 +1,4 @@
-import WaitingPaymentPage from '@/pages/waiting-payment';
+import WaitingPaymentPage from '../WaitingPaymentPage';
 
 export default function WaitingPayment() {
   return <WaitingPaymentPage />;

@@ -34,7 +34,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
   const pathname = usePathname();
   const toast = useToast();
   const { t } = useTranslation();
-  const { isAuthenticated, isLoading, login, user } = useAuth();
+  const { isAuthenticated, isLoading, login, user, register, verifyRegister, resendOTP } = useAuth();
   const [isSignUp, setIsSignUp] = useState(initialSignUp);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -145,7 +145,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
         return;
       }
 
-      // Call register API
+      // Call register API (backend expects username)
       await register({
         username: username.trim(),
         email: email.trim(),
@@ -179,7 +179,8 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
     try {
       setIsSubmitting(true);
       await verifyRegister({
-        username: registrationData.username,
+        // Backend verifyRegister signature expects a username field but uses email+otp primarily.
+        username: registrationData.username || '',
         password: registrationData.password,
         email: registrationData.email,
         role: 'CUSTOMER',

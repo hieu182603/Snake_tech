@@ -14,8 +14,7 @@ const assignmentSchema = new Schema<IAssignment>({
   orderId: {
     type: Schema.Types.ObjectId,
     ref: 'Order',
-    required: true,
-    unique: true
+    required: true
   },
   shipperAccountId: {
     type: Schema.Types.ObjectId,

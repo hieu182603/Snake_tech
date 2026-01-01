@@ -258,28 +258,48 @@ const logoutApi = async () => {
 };
 
 const getMeApi = async () => {
-  const token = localStorage.getItem('snake_access_token');
-  const response = await fetch(`${API_BASE_URL}/auth/me`, {
-    credentials: 'include',
-    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-  });
+  const tokenFromStorage = localStorage.getItem('snake_access_token');
+
+  const doRequest = async (bearerToken?: string) => {
+    return await fetch(`${API_BASE_URL}/auth/me`, {
+      credentials: 'include',
+      headers: bearerToken ? { 'Authorization': `Bearer ${bearerToken}` } : {},
+    });
+  };
+
+  // 1) Try with stored token (if any)
+  let response = await doRequest(tokenFromStorage || undefined);
+
+  // 2) If unauthorized, try refresh once and retry
+  if (response.status === 401) {
+    try {
+      const refreshRes = await refreshApi(); // refreshApi will call /auth/refresh with credentials: 'include'
+      const newToken = refreshRes?.accessToken;
+      if (newToken) {
+        localStorage.setItem('snake_access_token', newToken);
+        response = await doRequest(newToken);
+      } else {
+        // no token returned -> treat as unauthenticated
+        throw new Error('No authentication token');
+      }
+    } catch (e: any) {
+      // Refresh failed -> propagate auth error for bootstrap to handle gracefully
+      // Don't log the original error, just throw a generic auth error
+      throw new Error('No authentication token');
+    }
+  }
 
   if (!response.ok) {
-    const contentType = response.headers.get('content-type');
+    const contentType = response.headers.get('content-type') || '';
     let errorMessage = 'Failed to get user data';
 
-    if (contentType && contentType.includes('application/json')) {
+    if (contentType.includes('application/json')) {
       try {
         const error = await response.json();
         errorMessage = error.message || errorMessage;
       } catch (e) {
         // Ignore JSON parsing errors
       }
-    }
-
-    // For authentication errors (401), throw a specific error that bootstrap can handle
-    if (response.status === 401) {
-      throw new Error(errorMessage);
     }
 
     throw new Error(errorMessage);
@@ -321,7 +341,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   // Refresh access token
-  const refreshToken = useCallback(async () => {
+  const refreshToken = useCallback(async (isBootstrap = false) => {
     if (refreshing) return; // Prevent multiple concurrent refresh requests
 
     setRefreshing(true);
@@ -338,7 +358,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       return newToken;
     } catch (error) {
-      console.error('Token refresh failed:', error);
+      if (!isBootstrap) {
+        console.error('Token refresh failed:', error);
+      }
       throw error;
     } finally {
       setRefreshing(false);
@@ -351,29 +373,44 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoading(true);
 
       try {
-        // Try to get current user info - if this succeeds, we have valid authentication
-        const userData = await getMeApi();
-        setUser(userData);
+        // Check if we have a stored access token
+        const storedToken = localStorage.getItem('snake_access_token');
 
-        // Store user role for role-based components
-        if (userData?.role) {
-          localStorage.setItem('snake_user_role', userData.role);
+        if (storedToken) {
+          try {
+            // Try to get current user info with stored token
+            // getMeApi() will automatically try to refresh if the token is expired
+            const userData = await getMeApi();
+            setUser(userData);
+            setAccessToken(storedToken);
+
+            // Store user role for role-based components
+            if (userData?.role) {
+              localStorage.setItem('snake_user_role', userData.role);
+            }
+          } catch (authError: any) {
+            // Authentication failed completely - user needs to log in
+            console.log('Authentication failed:', authError.message);
+            localStorage.removeItem('snake_access_token');
+            localStorage.removeItem('snake_user_role');
+          }
+        } else {
+          // No stored token - user is not authenticated
+          // Don't try to refresh since there are no tokens to refresh
+          console.log('No stored authentication token found');
         }
-
-        // Since we can't read httpOnly cookies, we'll trigger a refresh to get a new access token
-        await refreshToken();
       } catch (error: any) {
-        // Handle authentication failures gracefully - this is expected when user is not logged in
+        // Handle authentication failures gracefully
         if (error.message?.includes('No authentication token') ||
             error.message?.includes('Access token expired') ||
             error.message?.includes('Invalid access token')) {
-          // User is not authenticated - this is normal, not an error
+          // User is not authenticated - this is normal
           console.log('User not authenticated');
         } else {
           console.error('Bootstrap failed:', error);
         }
 
-        // Clear auth state if bootstrap fails (whether due to auth or other errors)
+        // Only clear auth state for actual authentication errors
         setAccessToken(null);
         setUser(null);
         localStorage.removeItem('snake_access_token');

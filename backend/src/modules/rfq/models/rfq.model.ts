@@ -72,8 +72,7 @@ const rfqQuotationSchema = new Schema<IRFQQuotation>({
 const rfqSchema = new Schema<IRFQ>({
   code: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   accountId: {
     type: Schema.Types.ObjectId,

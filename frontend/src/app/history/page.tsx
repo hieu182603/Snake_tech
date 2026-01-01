@@ -1,4 +1,4 @@
-import OrderHistoryPage from '@/pages/order-history';
+import OrderHistoryPage from '../OrderHistoryPage';
 
 export default function History() {
   return <OrderHistoryPage />;
