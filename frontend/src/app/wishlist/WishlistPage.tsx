@@ -159,7 +159,7 @@ export default function WishlistPage() {
                   {/* Price */}
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-black text-white">
-                      {item.productId.price.toLocaleString()}đ
+                      {(item.productId.price || 0).toLocaleString()}đ
                     </span>
                     <span className="text-sm text-slate-400">
                       Còn {item.productId.stock} sản phẩm

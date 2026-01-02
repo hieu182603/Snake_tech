@@ -153,8 +153,8 @@ const Navbar: React.FC = () => {
             {/* Language Toggle */}
             <button
               onClick={toggleLang}
-              className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all font-black text-[10px]"
-              title={currentLang === 'vi' ? 'Ngôn ngữ' : 'Language'}
+              className="size-10 rounded-full border border-border-dark bg-background-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all font-black text-[10px]"
+              title={currentLang === 'vi' ? "Switch to English" : "Chuyển sang Tiếng Việt"}
             >
               {currentLang === 'vi' ? 'VN' : 'EN'}
             </button>
@@ -162,19 +162,16 @@ const Navbar: React.FC = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
-              title={isDark ? 'Light mode' : 'Dark mode'}
+              className="size-10 rounded-full border border-border-dark bg-background-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              <span
-                className={`material-symbols-outlined text-[20px] transition-transform duration-300 ${isDark ? '' : 'rotate-120'}`}
-                aria-hidden="true"
-              >
+              <span className="material-symbols-outlined text-[20px] transition-transform duration-500 rotate-0 dark:-rotate-180">
                 {isDark ? 'light_mode' : 'dark_mode'}
               </span>
             </button>
 
             {/* Notification Toggle */}
-            {isAuthenticated && user && (
+            {isAuthenticated() && user && (
               <div className="relative" ref={notifRef}>
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
@@ -233,16 +230,16 @@ const Navbar: React.FC = () => {
             <div className="h-8 w-px bg-border-dark hidden sm:block"></div>
 
             {/* User Profile */}
-            {isAuthenticated && user ? (
+            {isAuthenticated() && user ? (
               <div className="relative" ref={menuRef}>
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
                   className="flex items-center gap-3 rounded-full hover:bg-surface-accent pr-1 transition-all group"
                 >
                   <div className="size-10 rounded-full overflow-hidden border-2 border-border-dark group-hover:border-primary transition-all bg-surface-dark flex items-center justify-center">
-                    {user.username ? (
+                    {user.fullName ? (
                       <span className="text-primary font-black text-sm">
-                        {(user.username || 'U').charAt(0).toUpperCase()}
+                        {(user.fullName || 'U').charAt(0).toUpperCase()}
                       </span>
                     ) : (
                       <span className="material-symbols-outlined text-text-muted">person</span>
@@ -250,7 +247,7 @@ const Navbar: React.FC = () => {
                   </div>
                   <div className="hidden xl:flex flex-col text-left">
                     <span className="text-xs font-bold text-text-main leading-none">
-                      {user.username || 'User'}
+                      {user.fullName || 'User'}
                     </span>
                     <span className="text-[10px] text-primary font-black uppercase">
                       {user.role || 'CUSTOMER'}
@@ -262,8 +259,8 @@ const Navbar: React.FC = () => {
                 {showProfileMenu && (
                   <div className="absolute right-0 mt-4 w-60 bg-surface-dark border border-border-dark rounded-2xl shadow-xl p-2 animate-in fade-in slide-in-from-top-2 duration-200 ring-1 ring-black/5">
                     <div className="px-4 py-3 bg-surface-accent rounded-xl mb-2">
-                      <p className="text-sm font-bold text-text-main">{user.username || 'User'}</p>
-                      <p className="text-xs text-text-muted truncate">{user.username || user.email || ''}</p>
+                      <p className="text-sm font-bold text-text-main">{user.fullName || 'User'}</p>
+                      <p className="text-xs text-text-muted truncate">{user.fullName || user.email || ''}</p>
                     </div>
                 <Link
                       href="/profile"

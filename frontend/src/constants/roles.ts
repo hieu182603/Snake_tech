@@ -12,10 +12,10 @@ export const getRoleBasePath = (role: AccountRole): string => {
     case AccountRole.STAFF:
       return '/staff';
     case AccountRole.CUSTOMER:
-      return '/customer';
+      return '/'; // Customer redirect to home page
     case AccountRole.SHIPPER:
       return '/shipper';
     default:
-      return '/customer';
+      return '/'; // Default to home page
   }
 };

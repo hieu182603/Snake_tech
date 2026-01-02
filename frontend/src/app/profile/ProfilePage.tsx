@@ -78,18 +78,12 @@ const ProfilePage: React.FC = () => {
                 }
 
                 // Fetch real user orders from API
-                const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
                 try {
-                    const response = await fetch(`${API_BASE_URL}/orders/my-orders`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'include'
-                    });
+                    const { apiClient } = await import('@/lib/api');
+                    const result = await apiClient.get('/orders/my-orders');
 
-                    if (response.ok) {
-                        const data = await response.json();
+                    if (result.success) {
+                        const data = result.data;
                         // Transform API response to match component interface
                         const transformedOrders = (data.orders || []).slice(0, 2).map((order: any) => ({
                             id: order.code || order.id,
@@ -194,38 +188,18 @@ const ProfilePage: React.FC = () => {
 
     const saveChanges = async () => {
         try {
-            const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-            const response = await fetch(`${API_BASE_URL}/auth/profile`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('snake_access_token')}`
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    fullName: tempUser?.fullName,
-                    phone: tempUser?.phone,
-                    avatar: tempUser?.avatarUrl
-                }),
+            const { apiClient } = await import('@/lib/api');
+            const result = await apiClient.put('/auth/profile', {
+                fullName: tempUser?.fullName,
+                phone: tempUser?.phone,
+                avatar: tempUser?.avatarUrl
             });
 
-            if (!response.ok) {
-                const contentType = response.headers.get('content-type');
-                let errorMessage = 'Failed to update profile';
-
-                if (contentType && contentType.includes('application/json')) {
-                    try {
-                        const error = await response.json();
-                        errorMessage = error.message || errorMessage;
-                    } catch (e) {
-                        // Ignore JSON parsing errors
-                    }
-                }
-
-                throw new Error(errorMessage);
+            if (!result.success) {
+                throw new Error(result.error || 'Failed to update profile');
             }
 
-            const data = await response.json();
+            const data = result.data;
             if (tempUser) setUserProfile({
                 name: tempUser.fullName || 'User',
                 memberId: `#${tempUser.id?.substring(0, 5) || '00000'}`,

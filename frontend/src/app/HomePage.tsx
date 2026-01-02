@@ -36,6 +36,9 @@ export default function HomePage() {
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
+  // Popup State
+  const [showPopup, setShowPopup] = useState(false);
+
   // Transform Product to ProductDisplay format
   const transformProduct = useCallback((product: Product): ProductDisplay => {
     const price = product.price.toLocaleString('vi-VN') + '₫';
@@ -118,6 +121,18 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, []);
 
+  // Popup Logic
+  useEffect(() => {
+    // Check session storage
+    const hasSeenPopup = sessionStorage.getItem('hasSeenPromoPopup');
+    if (!hasSeenPopup) {
+      const timer = setTimeout(() => {
+        setShowPopup(true);
+      }, 2000); // Delay 2 seconds
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const formatTime = (seconds: number) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
@@ -131,6 +146,17 @@ export default function HomePage() {
         <span className="bg-[#1a0505] border border-red-900/50 px-2 py-1 rounded">{s.toString().padStart(2, '0')}</span>
       </div>
     );
+  };
+
+  const handleClosePopup = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setShowPopup(false);
+    sessionStorage.setItem('hasSeenPromoPopup', 'true');
+  };
+
+  const handlePopupClick = () => {
+    handleClosePopup();
+    router.push('/catalog?filter=flash-sale');
   };
 
   const categories = [
@@ -444,6 +470,75 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* --- SALES POPUP OVERLAY --- */}
+      {showPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => handleClosePopup()}></div>
+
+          <div className="relative w-full max-w-md sm:max-w-xl md:max-w-2xl bg-transparent rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+
+             {/* Close Button */}
+             <button
+                onClick={(e) => handleClosePopup(e)}
+                className="absolute top-2 right-2 z-20 size-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-all border border-white/10"
+             >
+                <span className="material-symbols-outlined text-lg">close</span>
+             </button>
+
+             {/* Popup Content */}
+             <div
+               className="relative cursor-pointer group"
+               onClick={handlePopupClick}
+             >
+                <img
+                  src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80&w=800"
+                  alt="Sales Popup"
+                  className="w-full h-auto object-cover rounded-3xl border border-white/20"
+                />
+
+                {/* CTA Button Overlay (Optional - if image doesn't have button) */}
+                <div className="absolute bottom-6 w-full flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                   <button className="bg-white text-black px-8 py-3 rounded-full font-black text-sm uppercase tracking-wider shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
+                      Mua ngay <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                   </button>
+                </div>
+             </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- ZALO CHAT FLOATING BUTTON --- */}
+      <a
+        href="https://zalo.me/0919985956" 
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-8 right-8 z-50 group"
+      >
+        {/* Ping Effect Ring */}
+        <span className="absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-20 animate-ping duration-1000"></span>
+
+        {/* Main Button Container */}
+        <div className="relative size-14 rounded-full bg-white border-2 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 overflow-hidden">
+           <img
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Icon_of_Zalo.svg/2048px-Icon_of_Zalo.svg.png"
+             alt="Zalo"
+             className="w-14 h-14 object-cover"
+           />
+        </div>
+
+        {/* Notification Badge */}
+        <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white border-2 border-background-dark animate-bounce">1</span>
+
+        {/* Tooltip on Hover */}
+        <div className="absolute right-full top-1/2 -translate-y-1/2 mr-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none origin-right transform transition-transform duration-200 scale-90 group-hover:scale-100">
+           <div className="bg-white text-blue-600 px-4 py-2 rounded-xl shadow-xl text-xs font-bold whitespace-nowrap relative border border-blue-100">
+              Chat tư vấn ngay!
+              {/* Arrow */}
+              <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white border-t border-r border-blue-100 rotate-45 rounded-sm"></div>
+           </div>
+        </div>
+      </a>
 
     </div>
   );

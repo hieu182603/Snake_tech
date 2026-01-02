@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,45 +9,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--primary)',
-        'primary-dark': 'var(--primary-dark)',
-        secondary: '#8b5cf6',
-        accent: '#f59e0b',
-        background: {
-          DEFAULT: 'var(--background)',
-          dark: '#0a0a0a',
-          light: '#ffffff',
-        },
-        surface: {
-          DEFAULT: 'var(--surface)',
-          dark: 'var(--surface-dark)',
-          accent: 'var(--surface-accent)',
-        },
-        border: {
-          DEFAULT: 'var(--border)',
-          dark: 'var(--border-dark)',
-        },
-        text: {
-          main: 'var(--text-main)',
-          muted: 'var(--text-muted)',
-          secondary: 'var(--text-secondary)',
-          tertiary: 'var(--text-tertiary)',
-          inverse: 'var(--text-inverse)',
-          'inverse-muted': 'var(--text-inverse-muted)',
-          'on-primary': 'var(--text-on-primary)',
-          'on-surface': 'var(--text-on-surface)',
-          accent: 'var(--text-accent)',
-          success: 'var(--text-success)',
-          warning: 'var(--text-warning)',
-          error: 'var(--text-error)',
-          info: 'var(--text-info)',
-          strong: 'var(--text-strong)',
-        },
+        // Semantic Colors mapped to CSS Variables
+        primary: 'var(--color-primary)',
+
+        // Dynamic Backgrounds (Changes based on mode)
+        'background-dark': 'var(--bg-main)', // Main background
+        'surface-dark': 'var(--bg-surface)', // Card background
+        'surface-accent': 'var(--bg-accent)', // Hover/Active states
+
+        'border-dark': 'var(--border-color)', // Border color
+
+        // Text colors that adapt
+        'text-main': 'var(--text-main)',
+        'text-muted': 'var(--text-muted)',
+        'text-inverted': 'var(--text-inverted)',
       },
       fontFamily: {
         display: ['Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
+      animation: {
+        'gradient': 'gradient 8s linear infinite',
+        'bounce-slow': 'bounce 3s infinite',
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': { 'background-position': 'left center' },
+          '50%': { 'background-position': 'right center' },
+        }
+      }
     },
   },
   plugins: [],

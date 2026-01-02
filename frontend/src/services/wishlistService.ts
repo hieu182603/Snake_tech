@@ -28,91 +28,30 @@ interface Wishlist {
 }
 
 class WishlistService {
-  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  private api = new (await import('@/lib/api')).ApiClient();
 
   async getWishlist(): Promise<Wishlist> {
-    const response = await fetch(`${this.baseUrl}/wishlist`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.get<Wishlist>('/wishlist');
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to get wishlist');
     }
-
-    return await response.json();
+    return result.data!;
   }
 
   async addToWishlist(productId: string): Promise<Wishlist> {
-    const response = await fetch(`${this.baseUrl}/wishlist`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({ productId })
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.post<Wishlist>('/wishlist', { productId });
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to add to wishlist');
     }
-
-    return await response.json();
+    return result.data!;
   }
 
   async removeFromWishlist(productId: string): Promise<Wishlist> {
-    const response = await fetch(`${this.baseUrl}/wishlist/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.delete<Wishlist>(`/wishlist/${productId}`);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to remove from wishlist');
     }
-
-    return await response.json();
+    return result.data!;
   }
 }
 

@@ -40,6 +40,58 @@ export const useAuth = () => {
   return context;
 };
 
+// API helper function for authenticated requests
+export const authenticatedFetch = async (url: string, options: RequestInit = {}): Promise<Response> => {
+  const token = localStorage.getItem('snake_access_token');
+
+  const defaultOptions: RequestInit = {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && { 'Authorization': `Bearer ${token}` }),
+      ...options.headers,
+    },
+    ...options,
+  };
+
+  let response = await fetch(url, defaultOptions);
+
+  // If unauthorized, try to refresh token once
+  if (response.status === 401 && token) {
+    try {
+      console.log('Token expired, attempting refresh...');
+      const refreshResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (refreshResponse.ok) {
+        const refreshData = await refreshResponse.json();
+        const newToken = refreshData.accessToken;
+
+        if (newToken) {
+          localStorage.setItem('snake_access_token', newToken);
+
+          // Retry the original request with new token
+          const retryOptions = {
+            ...defaultOptions,
+            headers: {
+              ...defaultOptions.headers,
+              'Authorization': `Bearer ${newToken}`,
+            },
+          };
+
+          response = await fetch(url, retryOptions);
+        }
+      }
+    } catch (refreshError) {
+      console.error('Token refresh failed:', refreshError);
+    }
+  }
+
+  return response;
+};
+
 interface AuthProviderProps {
   children: React.ReactNode;
 }

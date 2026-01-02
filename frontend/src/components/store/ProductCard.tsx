@@ -48,11 +48,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           setIsAdded(false);
         }, 2000);
       } else {
-        toast?.error?.(result.error || 'Không thể thêm sản phẩm vào giỏ');
+        toast?.showError?.(result.error || 'Không thể thêm sản phẩm vào giỏ');
       }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
-      toast?.error?.('Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+      toast?.showError?.('Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
     }
   };
 
@@ -67,11 +67,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         // Navigate to checkout
         router.push('/checkout');
       } else {
-        toast?.error?.(result.error || 'Không thể thực hiện mua ngay - sản phẩm không tìm thấy');
+        toast?.showError?.(result.error || 'Không thể thực hiện mua ngay - sản phẩm không tìm thấy');
       }
     } catch (error) {
       console.error('Failed to buy now:', error);
-      toast?.error?.('Không thể mua ngay — vui lòng thử lại');
+      toast?.showError?.('Không thể mua ngay — vui lòng thử lại');
     }
   };
 

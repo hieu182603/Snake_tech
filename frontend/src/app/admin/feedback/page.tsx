@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -49,52 +48,21 @@ export default function AdminFeedbackPage() {
   const loadFeedbacks = async () => {
     try {
       setLoading(true)
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
-      let token = localStorage.getItem('snake_access_token')
+      const { apiClient } = await import('@/lib/api')
 
-      const makeRequest = async (authToken?: string) => {
-        return await fetch(`${API_BASE_URL}/feedback?page=1&limit=100&search=${searchTerm}&status=${statusFilter}&rating=${ratingFilter}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(authToken && { 'Authorization': `Bearer ${authToken}` })
-          },
-          credentials: 'include'
-        })
+      const result = await apiClient.get('/feedback', {
+        page: 1,
+        limit: 100,
+        search: searchTerm,
+        status: statusFilter,
+        rating: ratingFilter
+      })
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load feedbacks')
       }
 
-      let response = await makeRequest(token)
-
-      // If unauthorized, try to refresh token and retry
-      if (response.status === 401) {
-        try {
-          console.log('Token expired, attempting refresh...')
-          // Try to refresh token
-          const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
-            method: 'POST',
-            credentials: 'include'
-          })
-
-          if (refreshResponse.ok) {
-            const refreshData = await refreshResponse.json()
-            const newToken = refreshData.accessToken
-
-            // Store new token
-            localStorage.setItem('snake_access_token', newToken)
-
-            // Retry the original request with new token
-            response = await makeRequest(newToken)
-          }
-        } catch (refreshError) {
-          console.error('Token refresh failed:', refreshError)
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
-      }
-
-      const data = await response.json()
+      const data = result.data
       setFeedbacks(data.feedbacks || [])
     } catch (error) {
       console.error('Load feedbacks error:', error)
@@ -227,77 +195,110 @@ export default function AdminFeedbackPage() {
           </select>
         </div>
 
-        {/* Feedbacks List */}
-        <div className="grid gap-4">
-          {filteredFeedbacks.map((feedback) => (
-            <motion.div
-              key={feedback.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <MessageSquare className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="font-bold text-white text-lg">{feedback.title}</h3>
+        {/* Feedbacks Table */}
+        <div className="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-background-dark/50 border-b border-border-dark">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Đánh giá
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Sản phẩm
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Khách hàng
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Đánh giá
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Ngày tạo
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Trạng thái
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Thao tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border-dark">
+                {filteredFeedbacks.map((feedback, index) => (
+                  <tr key={feedback.id || feedback.customerName || `feedback-${index}`} className="hover:bg-background-dark/30 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="max-w-xs">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-bold text-white text-sm truncate">{feedback.title}</h3>
+                          <div className="flex items-center gap-1">
+                            {renderStars(feedback.rating)}
+                          </div>
+                        </div>
+                        <p className="text-slate-400 text-xs line-clamp-2">{feedback.content}</p>
+                        {feedback.helpful !== undefined && (
+                          <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                            <div className="flex items-center gap-1">
+                              <ThumbsUp className="h-3 w-3" />
+                              {feedback.helpful}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <ThumbsDown className="h-3 w-3" />
+                              {feedback.notHelpful}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-slate-400 max-w-xs truncate">
+                        {feedback.productName || 'N/A'}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-slate-400">
+                        {feedback.customerName}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-1">
-                        {renderStars(feedback.rating)}
+                        <span className="text-sm font-medium text-white">{feedback.rating}</span>
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       </div>
-                    </div>
-                    <p className="text-slate-300 mb-2">{feedback.content}</p>
-                    <div className="flex items-center gap-4 text-sm text-slate-400">
-                      <span>{feedback.customerName}</span>
-                      <span>•</span>
-                      <span>{feedback.productName}</span>
-                      <span>•</span>
-                      <span>{new Date(feedback.createdAt).toLocaleDateString('vi-VN')}</span>
-                    </div>
-                    {feedback.helpful !== undefined && (
-                      <div className="flex items-center gap-4 mt-2 text-sm text-slate-400">
-                        <div className="flex items-center gap-1">
-                          <ThumbsUp className="h-3 w-3" />
-                          {feedback.helpful}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <ThumbsDown className="h-3 w-3" />
-                          {feedback.notHelpful}
-                        </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-slate-400">
+                        {new Date(feedback.createdAt).toLocaleDateString('vi-VN')}
                       </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Badge className={getStatusBadgeColor(feedback.status)}>
-                    {getStatusDisplayName(feedback.status)}
-                  </Badge>
-
-                  <Button variant="outline" size="sm">
-                    <Eye className="h-4 w-4 mr-1" />
-                    Chi tiết
-                  </Button>
-                </div>
-              </div>
-
-              {/* Action Buttons for Pending Reviews */}
-              {feedback.status === 'PENDING' && (
-                <div className="flex gap-2 pt-4 border-t border-border-dark">
-                  <Button variant="outline" size="sm" className="text-green-400 border-green-400 hover:bg-green-400 hover:text-white">
-                    <CheckCircle className="h-4 w-4 mr-1" />
-                    Duyệt
-                  </Button>
-                  <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-400 hover:text-white">
-                    <XCircle className="h-4 w-4 mr-1" />
-                    Từ chối
-                  </Button>
-                </div>
-              )}
-            </motion.div>
-          ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge className={getStatusBadgeColor(feedback.status)}>
+                        {getStatusDisplayName(feedback.status)}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
+                          <Eye className="h-4 w-4 mr-1" />
+                          Chi tiết
+                        </Button>
+                        {feedback.status === 'PENDING' && (
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="text-green-400 hover:text-white p-1">
+                              <CheckCircle className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="text-red-400 hover:text-white p-1">
+                              <XCircle className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {filteredFeedbacks.length === 0 && (

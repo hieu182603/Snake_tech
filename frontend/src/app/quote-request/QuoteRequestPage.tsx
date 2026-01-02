@@ -133,8 +133,8 @@ export default function QuoteRequestPage() {
         setQuoteItems([]);
         setCustomer({ name: '', email: '', phone: '', note: '' });
 
-        // Navigate to success page or dashboard
-        router.push('/customer');
+        // Navigate to success page or home
+        router.push('/');
       }
     } catch (error: any) {
       console.error('RFQ submission error:', error);
@@ -181,7 +181,7 @@ export default function QuoteRequestPage() {
                       <div className="flex-1">
                         <h4 className="font-bold text-text-main text-sm">{p.name}</h4>
                         <div className="flex items-center justify-between mt-4">
-                          <span className="font-bold text-text-main">{p.price.toLocaleString()}đ</span>
+                          <span className="font-bold text-text-main">{(p.price || 0).toLocaleString()}đ</span>
                           <Button size="sm" variant="secondary" icon="add" onClick={() => addToQuote(p)}>{t('quote.addButton')}</Button>
                         </div>
                       </div>
@@ -225,7 +225,7 @@ export default function QuoteRequestPage() {
                 </div>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-sm text-slate-400">{t('quote.totalLabel')}</span>
-                  <span className="text-xl font-black text-text-main">{totalPrice.toLocaleString()}đ</span>
+                  <span className="text-xl font-black text-text-main">{(totalPrice || 0).toLocaleString()}đ</span>
                 </div>
               </div>
 

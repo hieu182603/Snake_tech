@@ -53,20 +53,19 @@ export default function AdminAccountsPage() {
         return
       }
 
-      const response = await fetch(`${API_BASE_URL}/admin/accounts?page=${currentPage}&limit=${itemsPerPage}&search=${searchTerm}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(accessToken && { 'Authorization': `Bearer ${accessToken}` })
-        },
-        credentials: 'include'
+      const { apiClient } = await import('@/lib/api')
+
+      const result = await apiClient.get('/admin/accounts', {
+        page: currentPage,
+        limit: itemsPerPage,
+        search: searchTerm
       })
 
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load accounts')
       }
 
-      const data = await response.json()
+      const data = result.data
       setAccounts(data.accounts || [])
       setTotalPages(data.pagination?.pages || 1)
       setTotalAccounts(data.pagination?.total || 0)
@@ -140,12 +139,18 @@ export default function AdminAccountsPage() {
 
   return (
     <div className="space-y-6 pb-10">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">{t('admin.accounts.title')}</h1>
-          <p className="text-slate-400 text-sm mt-1">
-            {t('admin.accounts.subtitle')}
-          </p>
+        {/* Header & Actions */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-black text-white tracking-tight">{t('admin.accounts.title', { defaultValue: 'Tài khoản' })}</h1>
+            <p className="text-slate-400 text-sm mt-1">
+              {t('admin.accounts.subtitle', { defaultValue: 'Quản lý tài khoản người dùng và quyền hạn' })}
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <Button variant="outline" icon="download" size="sm">{t('admin.exportReport', { defaultValue: 'Xuất báo cáo' })}</Button>
+            <Button variant="primary" icon="add" size="sm">{t('admin.addAccount', { defaultValue: 'Thêm tài khoản' })}</Button>
+          </div>
         </div>
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -189,47 +194,95 @@ export default function AdminAccountsPage() {
           </div>
         ) : (
           <>
-            {/* Accounts List */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredAccounts.map((account) => (
-                <Card key={account.id}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <Users className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-lg">{account.fullName}</CardTitle>
-                          <p className="text-sm text-muted-foreground">@{account.username}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <p className="text-sm text-muted-foreground">{account.email}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge className={getRoleBadgeColor(account.role)}>
-                          {getRoleDisplayName(account.role)}
-                        </Badge>
-                        <Badge variant={account.isActive ? "default" : "destructive"}>
-                          {account.isActive ? t('common.active', { defaultValue: 'Hoạt động' }) : t('common.inactive', { defaultValue: 'Tạm khóa' })}
-                        </Badge>
-                        <Badge variant={account.isVerified ? "default" : "secondary"}>
-                          {account.isVerified ? t('auth.register.verified', { defaultValue: 'Đã xác thực' }) : t('auth.register.unverified', { defaultValue: 'Chưa xác thực' })}
-                        </Badge>
-                      </div>
-                      <div className="text-xs text-muted-foreground space-y-1">
-                        <p>Tạo: {new Date(account.createdAt).toLocaleDateString('vi-VN')}</p>
-                        {account.lastLogin && (
-                          <p>Đăng nhập cuối: {new Date(account.lastLogin).toLocaleDateString('vi-VN')}</p>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            {/* Accounts Table */}
+            <div className="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-background-dark/50 border-b border-border-dark">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Tài khoản
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Vai trò
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Ngày tạo
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Đăng nhập cuối
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Trạng thái
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-400 uppercase tracking-wider">
+                        Thao tác
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border-dark">
+                    {filteredAccounts.map((account, index) => (
+                      <tr key={account.id || account.username || `account-${index}`} className="hover:bg-background-dark/30 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                              <Users className="h-5 w-5 text-primary" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-white">
+                                {account.fullName}
+                              </div>
+                              <div className="text-xs text-slate-400">
+                                @{account.username}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-slate-400">
+                            {account.email}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <Badge className={getRoleBadgeColor(account.role)}>
+                            {getRoleDisplayName(account.role)}
+                          </Badge>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-slate-400">
+                            {new Date(account.createdAt).toLocaleDateString('vi-VN')}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-slate-400">
+                            {account.lastLogin ? new Date(account.lastLogin).toLocaleDateString('vi-VN') : 'Chưa đăng nhập'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex flex-col gap-1">
+                            <Badge variant={account.isActive ? "default" : "destructive"} className="text-xs">
+                              {account.isActive ? 'Hoạt động' : 'Tạm khóa'}
+                            </Badge>
+                            <Badge variant={account.isVerified ? "default" : "secondary"} className="text-xs">
+                              {account.isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
+                            </Badge>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center gap-2">
+                            <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
+                              {t('common.edit', { defaultValue: 'Sửa' })}
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {filteredAccounts.length === 0 && (

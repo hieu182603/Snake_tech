@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -48,23 +47,14 @@ export default function AdminShippersPage() {
   const loadShippers = async () => {
     try {
       setLoading(true)
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+      const { apiClient } = await import('@/lib/api')
+      const result = await apiClient.get('/admin/accounts', { role: 'SHIPPER', page: 1, limit: 100 })
 
-      const response = await fetch(`${API_BASE_URL}/admin/accounts?role=SHIPPER&page=1&limit=100`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(accessToken && { 'Authorization': `Bearer ${accessToken}` })
-        },
-        credentials: 'include'
-      })
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load shippers')
       }
 
-      const data = await response.json()
-      setShippers(data.accounts || [])
+      setShippers(result.data?.accounts || [])
     } catch (error) {
       console.error('Load shippers error:', error)
       // Mock data for now
@@ -160,11 +150,9 @@ export default function AdminShippersPage() {
 
         {/* Shippers List */}
         <div className="grid gap-4">
-          {filteredShippers.map((shipper) => (
-            <motion.div
-              key={shipper.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+          {filteredShippers.map((shipper, index) => (
+            <div
+              key={shipper.id || shipper.fullName || `shipper-${index}`}
               className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
             >
               <div className="flex items-center justify-between">
@@ -223,7 +211,7 @@ export default function AdminShippersPage() {
                 <span>Tham gia: {new Date(shipper.createdAt).toLocaleDateString('vi-VN')}</span>
                 <span>Đánh giá: {shipper.rating || 'N/A'}</span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

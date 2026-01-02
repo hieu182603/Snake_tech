@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -44,22 +43,15 @@ export default function AdminBannersPage() {
   const loadBanners = async () => {
     try {
       setLoading(true)
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+      const { apiClient } = await import('@/lib/api')
 
-      const response = await fetch(`${API_BASE_URL}/banners`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      })
+      const result = await apiClient.get('/banners')
 
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load banners')
       }
 
-      const data = await response.json()
-      setBanners(data.banners || [])
+      setBanners(result.data?.banners || [])
     } catch (error) {
       console.error('Load banners error:', error)
       // Mock data for now
@@ -167,11 +159,9 @@ export default function AdminBannersPage() {
 
         {/* Banners Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBanners.map((banner) => (
-            <motion.div
-              key={banner.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+          {filteredBanners.map((banner, index) => (
+            <div
+              key={banner.id || banner.title || `banner-${index}`}
               className="bg-surface-dark border border-border-dark rounded-2xl overflow-hidden hover:border-primary/30 transition-all group"
             >
               {/* Banner Image */}
@@ -231,14 +221,12 @@ export default function AdminBannersPage() {
                   <div>Cập nhật: {new Date(banner.updatedAt).toLocaleDateString('vi-VN')}</div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Add New Banner Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="bg-surface-dark border border-dashed border-border-dark rounded-2xl p-8 hover:border-primary/30 transition-all cursor-pointer group"
         >
           <div className="text-center">
@@ -250,7 +238,7 @@ export default function AdminBannersPage() {
               Tải lên hình ảnh và tạo banner quảng cáo mới
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {filteredBanners.length === 0 && (
           <div className="text-center py-20">

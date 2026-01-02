@@ -21,11 +21,11 @@ const getRoleBasePath = (role: AccountRole): string => {
     case AccountRole.STAFF:
       return '/staff';
     case AccountRole.CUSTOMER:
-      return '/customer';
+      return '/'; // Customer redirect to home page
     case AccountRole.SHIPPER:
       return '/shipper';
     default:
-      return '/customer';
+      return '/'; // Default to home page
   }
 };
 
@@ -414,7 +414,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialSignUp = false }) => {
               <div className="relative">
                 <div className="absolute -top-10 -left-10 size-20 bg-purple-500 rounded-full blur-[50px] opacity-50"></div>
                 <div className="relative z-10">
-                  <h1 className="text-4xl font-black text-white mb-2 tracking-tighter drop-shadow-lg">TechStore<span className="text-purple-400">.</span></h1>
+                  <h1 className="text-4xl font-black text-white mb-2 tracking-tighter drop-shadow-lg">Snake tech<span className="text-purple-400">.</span></h1>
                   <p className="text-sm text-slate-200 font-medium tracking-wide uppercase opacity-90">Premium Gear for Pros</p>
                 </div>
               </div>

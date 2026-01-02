@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, createContext } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -15,6 +15,8 @@ export interface AdminOutletContext {
   isInRange: (dateStr: string) => boolean;
 }
 
+export const AdminLayoutContext = createContext<AdminOutletContext | null>(null);
+
 export default function AdminLayout({
   children,
 }: {
@@ -24,6 +26,10 @@ export default function AdminLayout({
   const router = useRouter();
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [dateRange, setDateRange] = useState<DateRangeOption>('all');
+
+  // Feature States
+  const [isDark, setIsDark] = useState(false);
+  const [lang, setLang] = useState<'vi' | 'en'>('vi');
 
   // Dropdown States
   const [showNotifications, setShowNotifications] = useState(false);
@@ -38,6 +44,13 @@ export default function AdminLayout({
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Initialize Theme
+    if (document.documentElement.classList.contains('dark')) {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
@@ -91,7 +104,6 @@ export default function AdminLayout({
 
   const navItems = [
     { name: t('admin.dashboard', { defaultValue: 'Tổng Quan' }), path: '/admin', icon: 'dashboard' },
-    { name: t('admin.analytics.title', { defaultValue: 'Phân tích' }), path: '/admin/analytics', icon: 'analytics' },
     { name: t('admin.reports.title', { defaultValue: 'Báo cáo' }), path: '/admin/reports', icon: 'description' },
     { name: t('admin.products.title', { defaultValue: 'Sản phẩm' }), path: '/admin/products', icon: 'inventory_2' },
     { name: t('admin.orders.title', { defaultValue: 'Đơn hàng' }), path: '/admin/orders', icon: 'shopping_cart' },
@@ -102,13 +114,29 @@ export default function AdminLayout({
     { name: t('admin.accounts.title', { defaultValue: 'Tài khoản' }), path: '/admin/accounts', icon: 'manage_accounts' },
   ];
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    // Simple redirect on logout; actual logout handled by AuthContext elsewhere
     try {
-      await logout();
-      router.push('/auth/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
+      // Clear local storage token/user to force re-login
+      localStorage.removeItem('sa_token');
+      localStorage.removeItem('user');
+    } catch (e) {}
+    router.push('/login');
+  };
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (isDark) {
+      html.classList.remove('dark');
+      setIsDark(false);
+    } else {
+      html.classList.add('dark');
+      setIsDark(true);
     }
+  };
+
+  const toggleLang = () => {
+    setLang(prev => prev === 'vi' ? 'en' : 'vi');
   };
 
   // Enhanced Mock Notifications
@@ -141,7 +169,7 @@ export default function AdminLayout({
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(99,102,241,0.4)]">
             <span className="material-symbols-outlined text-white text-[20px] font-black">bolt</span>
           </div>
-          {isSidebarOpen && <h1 className="text-xl font-black tracking-tighter text-white uppercase truncate">Snake Tech</h1>}
+          {isSidebarOpen && <h1 className="text-xl font-black tracking-tighter text-white uppercase truncate">Snake tech</h1>}
         </div>
 
         <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-2 custom-scrollbar">
@@ -195,14 +223,38 @@ export default function AdminLayout({
               </select>
             </div>
 
-            <div className="flex items-center gap-4 border-l border-border-dark pl-6">
+            <div className="flex items-center gap-3 border-l border-border-dark pl-6">
+              {/* Language & Theme Toggles */}
+              <div className="hidden md:flex items-center gap-2">
+                  <button
+                    onClick={toggleLang}
+                    className="size-9 rounded-lg border border-border-dark bg-surface-dark text-text-muted hover:text-text-main hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
+                    title={lang === 'vi' ? "Switch to English" : "Chuyển sang Tiếng Việt"}
+                  >
+                    {lang === 'vi' ? 'VN' : 'EN'}
+                  </button>
+                  <button
+                    onClick={toggleTheme}
+                    className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
+                    title={isDark ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+                  >
+                    <span className="material-symbols-outlined text-[18px] transition-transform duration-500 rotate-0 dark:-rotate-120">
+                      {isDark ? 'light_mode' : 'dark_mode'}
+                    </span>
+                  </button>
+              </div>
+
               {/* Notification Dropdown */}
               <div className="relative" ref={notifRef}>
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="relative rounded-xl p-2 text-gray-400 hover:bg-surface-accent hover:text-white transition-all"
+                  className="relative rounded-xl p-2 text-text-muted hover:bg-surface-accent hover:text-text-main transition-all"
+                  title="Thông báo"
                 >
                   <span className="material-symbols-outlined text-[20px]">notifications</span>
+                  {unreadCount > 0 && (
+                    <span className="absolute top-2 right-2.5 size-2 rounded-full bg-primary ring-2 ring-background-dark animate-pulse shadow-sm"></span>
+                  )}
                   {unreadCount > 0 && (
                     <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-pulse"></span>
                   )}
@@ -276,8 +328,8 @@ export default function AdminLayout({
                     className="flex items-center gap-3 hover:bg-surface-accent rounded-xl p-1.5 transition-all group"
                 >
                     <div className="text-right hidden md:block">
-                        <p className="text-xs font-bold text-white group-hover:text-primary transition-colors">{user?.fullName || 'Admin'}</p>
-                        <p className="text-[10px] font-black text-slate-500 uppercase">{t('profile.membership.level', { defaultValue: 'Administrator' })}</p>
+                        <p className="text-xs font-bold text-white group-hover:text-primary transition-colors">Admin User</p>
+                        <p className="text-[10px] font-black text-slate-500 uppercase">Administrator</p>
                     </div>
                     <div className="size-9 rounded-lg bg-cover bg-center border border-border-dark group-hover:border-primary transition-all" style={{ backgroundImage: `url('https://picsum.photos/100/100?random=admin')` }}></div>
                 </button>
@@ -285,8 +337,8 @@ export default function AdminLayout({
                 {showProfileMenu && (
                     <div className="absolute right-0 mt-4 w-56 bg-surface-dark border border-border-dark rounded-2xl shadow-xl p-2 animate-in fade-in slide-in-from-top-2 duration-200 z-50">
                         <div className="px-3 py-2 border-b border-border-dark mb-2 md:hidden">
-                            <p className="text-sm font-bold text-white">{user?.fullName || 'Admin'}</p>
-                            <p className="text-[10px] text-slate-500">{t('profile.membership.level', { defaultValue: 'Administrator' })}</p>
+                            <p className="text-sm font-bold text-white">Admin User</p>
+                            <p className="text-[10px] text-slate-500">Administrator</p>
                         </div>
                         <Link
                             href="/admin/accounts"
@@ -317,7 +369,14 @@ export default function AdminLayout({
 
         {/* Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-10 custom-scrollbar bg-background-dark">
-          {children}
+          <AdminLayoutContext.Provider value={{
+            dateRange,
+            setDateRange,
+            getDateRangeLabel,
+            isInRange
+          }}>
+            {children}
+          </AdminLayoutContext.Provider>
         </main>
       </div>
     </div>

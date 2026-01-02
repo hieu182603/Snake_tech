@@ -49,91 +49,30 @@ interface RFQsResponse {
 }
 
 class RFQService {
-  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  private api = new (await import('@/lib/api')).ApiClient();
 
   async createRFQ(rfqData: CreateRFQData): Promise<{ success: boolean; rfqId: string; message: string }> {
-    const response = await fetch(`${this.baseUrl}/rfq`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(rfqData)
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.post<{ success: boolean; rfqId: string; message: string }>('/rfq', rfqData);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to create RFQ');
     }
-
-    return await response.json();
+    return result.data!;
   }
 
   async getMyRFQs(page: number = 1, limit: number = 10): Promise<RFQsResponse> {
-    const response = await fetch(`${this.baseUrl}/rfq/my?page=${page}&limit=${limit}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.get<RFQsResponse>('/rfq/my', { page, limit });
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to get RFQs');
     }
-
-    return await response.json();
+    return result.data!;
   }
 
   async getRFQById(rfqId: string): Promise<RFQ> {
-    const response = await fetch(`${this.baseUrl}/rfq/${rfqId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    });
-
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type');
-      let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const errorData = await response.json();
-          errorMessage += ` - ${errorData.message || errorData.error || 'Unknown error'}`;
-        } catch (e) {
-          // Ignore JSON parsing errors
-        }
-      }
-
-      throw new Error(errorMessage);
+    const result = await this.api.get<RFQ>(`/rfq/${rfqId}`);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to get RFQ');
     }
-
-    return await response.json();
+    return result.data!;
   }
 }
 

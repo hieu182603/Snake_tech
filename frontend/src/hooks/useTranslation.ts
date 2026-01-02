@@ -1,4 +1,4 @@
-import { useTranslation as useI18nextTranslation, TFunction } from 'react-i18next';
+import { useTranslation as useI18nextTranslation } from 'react-i18next';
 
 function humanizeMissingKey(key: string) {
   try {
@@ -21,7 +21,7 @@ export const useTranslation = () => {
 
   // safe translator: if translation returns the raw key or a humanized missing-key value,
   // fall back to options.defaultValue to avoid hydration mismatches between server/client.
-  const t: TFunction = (key: string, options?: any) => {
+  const t = (key: string, options?: any) => {
     try {
       const res = origT(key, options);
       const missingHuman = humanizeMissingKey(key);

@@ -479,7 +479,7 @@
       "address": "Địa chỉ",
       "note": "Ghi chú (Tùy chọn)"
     },
-    "termsAgree": "Bằng việc đặt hàng, bạn đồng ý với Điều khoản của TechStore.",
+    "termsAgree": "Bằng việc đặt hàng, bạn đồng ý với Điều khoản của Snake tech.",
     "orderFailed": "Đặt hàng thất bại",
     "paymentSuccess": "Thanh toán thành công",
     "paymentFailed": "Thanh toán thất bại"
@@ -515,7 +515,7 @@
       "customerName": "Alex User",
       "empty": {
         "title": "Chưa có đơn hàng nào",
-        "description": "Bạn chưa mua sắm sản phẩm nào tại TechStore."
+        "description": "Bạn chưa mua sắm sản phẩm nào tại Snake tech."
       },
       "total": "Tổng tiền",
       "subtotal": "Tạm tính",
@@ -642,7 +642,7 @@
       "thankYou": "Cảm ơn bạn đã đăng ký!"
     },
     "payment": "Thanh toán",
-    "copyright": "© 2024 TechStore Vietnam. All rights reserved.",
+    "copyright": "© 2024 Snake tech Vietnam. All rights reserved.",
     "terms": "Điều khoản",
     "privacy": "Quyền riêng tư",
     "cookies": "Cookies"

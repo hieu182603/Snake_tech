@@ -5,57 +5,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS Variables for default theme (set to Home page dark aesthetic as baseline) */
+/* CSS Variables for Theming */
 :root {
-  /* Background / surfaces */
-  --background: #0a0a0a;
-  --surface: #1a1a1a;
-  --surface-accent: #2a0a0a;
-  --border: #333333;
+  /* --- LIGHT MODE PALETTE (Default) --- */
+  --color-primary: #DC2626;   /* Red 600 */
 
-  /* Text */
-  --text-main: #ffffff;
-  --text-muted: #a3a3a3;
-  --text-secondary: #b8c4c2;
-  --text-tertiary: #7a7d7d;
-  --text-inverse: #0a0a0a;
-  --text-inverse-muted: #2a2a2a;
-  --text-on-primary: #ffffff;
-  --text-on-surface: #ffffff;
-  --text-accent: #ff6b6b;
-  --text-success: #51cf66;
-  --text-warning: #ffd43b;
-  --text-error: #ff8787;
-  --text-info: #74c0fc;
-  --text-strong: #ffffff;
+  --bg-main: #F3F4F6;         /* Gray 100 - Nền chính sáng */
+  --bg-surface: #FFFFFF;      /* White - Nền thẻ sáng */
+  --bg-accent: #E5E7EB;       /* Gray 200 - Hover sáng */
 
-  /* Brand */
-  --primary: #dc2626;
-  --primary-dark: #b91c1c;
+  --border-color: #E5E7EB;    /* Gray 200 - Viền sáng */
+
+  --text-main: #111827;       /* Gray 900 - Chữ đen đậm */
+  --text-muted: #6B7280;      /* Gray 500 - Chữ xám trung tính */
+  --text-inverted: #FFFFFF;   /* Chữ trắng (dùng trên nền primary) */
 }
 
-/* CSS Variables for Dark Theme */
+/* --- DARK MODE PALETTE --- */
 .dark {
-  --background: #0a0a0a;
-  --surface: #1a1a1a;
-  --surface-accent: #2a2a2a;
-  --border: #333333;
-  --text-main: #ffffff;
-  --text-muted: #a3a3a3;
-  --text-secondary: #b8c4c2;
-  --text-tertiary: #7a7d7d;
-  --text-inverse: #0a0a0a;
-  --text-inverse-muted: #2a2a2a;
-  --text-on-primary: #ffffff;
-  --text-on-surface: #ffffff;
-  --text-accent: #ff6b6b;
-  --text-success: #51cf66;
-  --text-warning: #ffd43b;
-  --text-error: #ff8787;
-  --text-info: #74c0fc;
-  --text-strong: #ffffff;
-  --primary: #dc2626;
-  --primary-dark: #b91c1c;
+  --color-primary: #DC2626;   /* Red 600 */
+
+  --bg-main: #020617;         /* Slate 950 - Nền chính tối */
+  --bg-surface: #0F172A;      /* Slate 900 - Nền thẻ tối */
+  --bg-accent: #1E293B;       /* Slate 800 - Hover tối */
+
+  --border-color: #1E293B;    /* Slate 800 - Viền tối */
+
+  --text-main: #F8FAFC;       /* Slate 50 - Chữ trắng sáng */
+  --text-muted: #94A3B8;      /* Slate 400 - Chữ xám sáng */
+  --text-inverted: #FFFFFF;   /* Chữ trắng */
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* REMOVE ALL DEFAULT FOCUS OUTLINES */
+*, *::before, *::after {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
 
 /* Material Symbols styling */
@@ -79,19 +85,3 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-/* Additional CSS variables for better theme control */
-:root {
-  --surface-dark: #ffffff;
-  --border-dark: #dcdcdc;
-  --text-secondary: #475569;
-}
-
-.dark {
-  --surface-dark: #111111;
-  --border-dark: #2b2b2b;
-  --text-secondary: #94a3b8;
-}
-
-
-

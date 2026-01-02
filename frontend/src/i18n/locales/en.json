@@ -476,7 +476,7 @@
       "address": "Address",
       "note": "Note (Optional)"
     },
-    "termsAgree": "By placing an order, you agree to TechStore's Terms and Conditions.",
+    "termsAgree": "By placing an order, you agree to Snake tech's Terms and Conditions.",
     "orderFailed": "Order failed",
     "paymentSuccess": "Payment successful",
     "paymentFailed": "Payment failed"
@@ -512,7 +512,7 @@
       "customerName": "Alex User",
       "empty": {
         "title": "No orders yet",
-        "description": "You haven't purchased any products at TechStore."
+        "description": "You haven't purchased any products at Snake tech."
       },
       "total": "Total",
       "subtotal": "Subtotal",
@@ -639,7 +639,7 @@
       "thankYou": "Thank you for subscribing!"
     },
     "payment": "Payment",
-    "copyright": "© 2024 TechStore Vietnam. All rights reserved.",
+    "copyright": "© 2024 Snake tech Vietnam. All rights reserved.",
     "terms": "Terms",
     "privacy": "Privacy",
     "cookies": "Cookies"

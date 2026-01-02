@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -109,25 +108,18 @@ export default function AdminReportsPage() {
   const generateReport = async (type: string) => {
     setGeneratingReport(type)
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+      const { apiClient } = await import('@/lib/api')
 
-      const response = await fetch(`${API_BASE_URL}/reports/generate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({
+      const result = await apiClient.post('/reports/generate', {
           type,
           period: 'current_month'
-        })
       })
 
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to generate report')
       }
 
-      const data = await response.json()
+      const data = result.data
 
       // Add new report to list
       const newReport: Report = {
@@ -264,11 +256,9 @@ export default function AdminReportsPage() {
             </div>
           ) : (
             <div className="grid gap-4">
-              {reports.map((report) => (
-                <motion.div
-                  key={report.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+              {reports.map((report, index) => (
+                <div
+                  key={report.id || report.name || `report-${index}`}
                   className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
                 >
                   <div className="flex items-center justify-between">
@@ -308,7 +298,7 @@ export default function AdminReportsPage() {
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
