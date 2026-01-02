@@ -41,18 +41,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
     if (isAdded || activeOperations.has(`add-${id}`)) return;
 
     try {
-      const ok = await addToCart(id.toString(), 1);
-      if (ok) {
+      const result = await addToCart(id.toString(), 1);
+      if (result.success) {
         setIsAdded(true);
         setTimeout(() => {
           setIsAdded(false);
         }, 2000);
       } else {
-        toast?.error?.('Không thể thêm sản phẩm vào giỏ');
+        toast?.error?.(result.error || 'Không thể thêm sản phẩm vào giỏ');
       }
     } catch (error) {
-      // Error is handled by CartContext and toast is shown there
       console.error('Failed to add product to cart:', error);
+      toast?.error?.('Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
     }
   };
 
@@ -62,20 +62,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
     try {
       // Add to cart first
-      const ok = await addToCart(id.toString(), 1);
-      if (ok) {
+      const result = await addToCart(id.toString(), 1);
+      if (result.success) {
         // Navigate to checkout
         router.push('/checkout');
       } else {
-        toast?.error?.('Không thể thực hiện mua ngay - sản phẩm không tìm thấy');
+        toast?.error?.(result.error || 'Không thể thực hiện mua ngay - sản phẩm không tìm thấy');
       }
     } catch (error) {
       console.error('Failed to buy now:', error);
-      try {
-        toast.error?.('Không thể mua ngay — vui lòng thử lại');
-      } catch (e) {
-        // ignore
-      }
+      toast?.error?.('Không thể mua ngay — vui lòng thử lại');
     }
   };
 

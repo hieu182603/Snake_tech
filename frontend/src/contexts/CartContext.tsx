@@ -17,7 +17,7 @@ interface CartContextType {
   totalAmount: number;
   loading: boolean;
   activeOperations: Set<string>;
-  addToCart: (productId: string, quantity: number) => Promise<boolean>;
+  addToCart: (productId: string, quantity: number) => Promise<{ success: boolean; error?: string }>;
   increaseQuantity: (productId: string, amount?: number) => Promise<void>;
   decreaseQuantity: (productId: string, amount?: number) => Promise<void>;
   removeItem: (productId: string) => Promise<void>;
@@ -68,7 +68,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   }, [items]);
 
-  const addToCart = async (productId: string, quantity: number): Promise<boolean> => {
+  const addToCart = async (productId: string, quantity: number): Promise<{ success: boolean; error?: string }> => {
     const operationId = `add-${productId}`;
     setActiveOperations(prev => new Set(prev).add(operationId));
 
@@ -80,7 +80,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       if (!product) {
         // Product not found on server - don't crash, log and exit gracefully
         console.error(`Product not found for id ${productId}`);
-        return false;
+        return { success: false, error: 'Sản phẩm không tồn tại hoặc đã bị xóa' };
       }
 
       setItems(prev => {
@@ -102,10 +102,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
           }];
         }
       });
-      return true;
+      return { success: true };
     } catch (error) {
       console.error('Error adding to cart:', error);
-      return false;
+      return { success: false, error: 'Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.' };
     } finally {
       setActiveOperations(prev => {
         const newSet = new Set(prev);

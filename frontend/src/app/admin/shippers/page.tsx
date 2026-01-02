@@ -35,13 +35,11 @@ interface Shipper {
 
 export default function AdminShippersPage() {
   const { t } = useTranslation()
-  const { accessToken, user, isAuthenticated } = useAuth()
+  const { accessToken } = useAuth()
   const [shippers, setShippers] = useState<Shipper[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('ALL')
-
-  const isAuthorized = isAuthenticated() && user && ['ADMIN'].includes(user.role)
 
   useEffect(() => {
     loadShippers()
@@ -51,14 +49,6 @@ export default function AdminShippersPage() {
     try {
       setLoading(true)
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
-
-      // Check if user is authenticated and has admin role
-      if (!isAuthenticated() || !user || !['ADMIN'].includes(user.role)) {
-        console.log('User not authenticated or not admin:', { isAuthenticated: isAuthenticated(), user })
-        // Don't throw error, just return early - the page will show auth message
-        setShippers([])
-        return
-      }
 
       const response = await fetch(`${API_BASE_URL}/admin/accounts?role=SHIPPER&page=1&limit=100`, {
         method: 'GET',
@@ -168,105 +158,85 @@ export default function AdminShippersPage() {
           </select>
         </div>
 
-        {!isAuthorized ? (
+        {/* Shippers List */}
+        <div className="grid gap-4">
+          {filteredShippers.map((shipper) => (
+            <motion.div
+              key={shipper.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Truck className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-lg">{shipper.fullName}</h3>
+                    <p className="text-slate-400 text-sm">@{shipper.username}</p>
+                    <div className="flex items-center gap-4 mt-1">
+                      <div className="flex items-center gap-1 text-slate-400 text-sm">
+                        <Phone className="h-3 w-3" />
+                        {shipper.phone}
+                      </div>
+                      {shipper.currentLocation && (
+                        <div className="flex items-center gap-1 text-slate-400 text-sm">
+                          <MapPin className="h-3 w-3" />
+                          {shipper.currentLocation}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant={shipper.isActive ? "default" : "secondary"}>
+                        {shipper.isActive ? 'Hoạt động' : 'Tạm nghỉ'}
+                      </Badge>
+                      <Badge variant={shipper.isVerified ? "default" : "secondary"}>
+                        {shipper.isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
+                      </Badge>
+                    </div>
+                    {shipper.rating && (
+                      <div className="text-sm text-slate-400">
+                        <div className="flex items-center gap-1">
+                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                          {shipper.rating} • {shipper.totalDeliveries} giao hàng
+                        </div>
+                        <div className="text-xs">
+                          {shipper.vehicleType} • {shipper.licensePlate}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <Button variant="outline" size="sm">
+                    Chi tiết
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-border-dark flex justify-between text-sm text-slate-400">
+                <span>Tham gia: {new Date(shipper.createdAt).toLocaleDateString('vi-VN')}</span>
+                <span>Đánh giá: {shipper.rating || 'N/A'}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {filteredShippers.length === 0 && (
           <div className="text-center py-20">
             <Truck className="mx-auto h-24 w-24 text-slate-400 mb-6" />
             <h2 className="text-2xl font-bold text-white mb-4">
-              Yêu cầu quyền truy cập
+              Không tìm thấy shipper
             </h2>
-            <p className="text-slate-400 mb-6">
-              Bạn cần đăng nhập với tài khoản Admin để truy cập trang này.
+            <p className="text-slate-400">
+              Thử tìm kiếm với từ khóa khác
             </p>
-            <button
-              onClick={() => window.location.href = '/auth'}
-              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
-            >
-              Đăng nhập
-            </button>
           </div>
-        ) : (
-          <>
-            {/* Shippers List */}
-            <div className="grid gap-4">
-              {filteredShippers.map((shipper) => (
-                <motion.div
-                  key={shipper.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Truck className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-white text-lg">{shipper.fullName}</h3>
-                        <p className="text-slate-400 text-sm">@{shipper.username}</p>
-                        <div className="flex items-center gap-4 mt-1">
-                          <div className="flex items-center gap-1 text-slate-400 text-sm">
-                            <Phone className="h-3 w-3" />
-                            {shipper.phone}
-                          </div>
-                          {shipper.currentLocation && (
-                            <div className="flex items-center gap-1 text-slate-400 text-sm">
-                              <MapPin className="h-3 w-3" />
-                              {shipper.currentLocation}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant={shipper.isActive ? "default" : "secondary"}>
-                            {shipper.isActive ? 'Hoạt động' : 'Tạm nghỉ'}
-                          </Badge>
-                          <Badge variant={shipper.isVerified ? "default" : "secondary"}>
-                            {shipper.isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
-                          </Badge>
-                        </div>
-                        {shipper.rating && (
-                          <div className="text-sm text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                              {shipper.rating} • {shipper.totalDeliveries} giao hàng
-                            </div>
-                            <div className="text-xs">
-                              {shipper.vehicleType} • {shipper.licensePlate}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      <Button variant="outline" size="sm">
-                        Chi tiết
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-border-dark flex justify-between text-sm text-slate-400">
-                    <span>Tham gia: {new Date(shipper.createdAt).toLocaleDateString('vi-VN')}</span>
-                    <span>Đánh giá: {shipper.rating || 'N/A'}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {filteredShippers.length === 0 && (
-              <div className="text-center py-20">
-                <Truck className="mx-auto h-24 w-24 text-slate-400 mb-6" />
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  Không tìm thấy shipper
-                </h2>
-                <p className="text-slate-400">
-                  Thử tìm kiếm với từ khóa khác
-                </p>
-              </div>
-            )}
-          </>
         )}
       </div>
     </div>

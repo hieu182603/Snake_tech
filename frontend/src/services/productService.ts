@@ -42,7 +42,8 @@ class ProductService {
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
     const data = await response.json();
-    return data.product || data.data || null;
+    // Backend returns product directly, not wrapped in data.product or data.data
+    return data || null;
   }
 
   async getProductsByCategoryName(categoryName: string, limit?: number): Promise<Product[]> {

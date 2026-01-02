@@ -22,8 +22,6 @@ const Navbar: React.FC = () => {
 
   // States for features
   const [isDark, setIsDark] = useState(true);
-  // Temporary lock to disable theme switching (user requested)
-  const THEME_LOCKED = true;
 
   const menuRef = useRef<HTMLDivElement>(null);
   const { changeLanguage, getCurrentLanguage, t } = useTranslation();
@@ -51,10 +49,6 @@ const Navbar: React.FC = () => {
   }, []);
 
   const toggleTheme = () => {
-    if (THEME_LOCKED) {
-      // theme switching temporarily disabled
-      return;
-    }
     const html = document.documentElement;
     if (isDark) {
       html.classList.remove('dark');
@@ -126,10 +120,10 @@ const Navbar: React.FC = () => {
           {/* Logo & Links */}
           <div className="flex items-center gap-8 md:gap-12">
             <Link href="/" className="flex items-center gap-2 text-primary group">
-              <div className="w-16 sm:w-20 md:w-24 lg:w-28 xl:w-36 2xl:w-44 rounded-xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform">
-                <Image src="/image/logo3.png" alt="Snake Tech" width={320} height={320} className="object-contain" />
+              <div className="size-25 sm:size-30 md:size-35 lg:size-40 xl:size-45 2xl:size-50 rounded-xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Image src="/image/logo3.png" alt="Snake Tech" width={1000} height={1000} className="object-contain" />
               </div>
-              
+
             </Link>
 
             <nav className="hidden lg:flex items-center bg-surface-dark/50 p-1 rounded-full border border-border-dark">
@@ -168,8 +162,8 @@ const Navbar: React.FC = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all ${THEME_LOCKED ? 'opacity-50 cursor-not-allowed' : ''}`}
-              title={THEME_LOCKED ? 'Theme switching disabled' : (isDark ? 'Light mode' : 'Dark mode')}
+              className="size-10 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-primary hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
+              title={isDark ? 'Light mode' : 'Dark mode'}
             >
               <span
                 className={`material-symbols-outlined text-[20px] transition-transform duration-300 ${isDark ? '' : 'rotate-120'}`}

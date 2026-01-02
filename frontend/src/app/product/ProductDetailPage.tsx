@@ -51,11 +51,11 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
 
     setAddingToCart(true);
     try {
-      const ok = await addToCart(product.id!, quantity);
-      if (ok) {
+      const result = await addToCart(product.id!, quantity);
+      if (result.success) {
         toast.success('Đã thêm vào giỏ hàng!');
       } else {
-        toast.error('Không thể thêm vào giỏ hàng');
+        toast.error(result.error || 'Không thể thêm vào giỏ hàng');
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -69,11 +69,11 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     if (!product || !user) return;
 
     try {
-      const ok = await addToCart(product.id!, quantity);
-      if (ok) {
+      const result = await addToCart(product.id!, quantity);
+      if (result.success) {
         router.push('/checkout');
       } else {
-        toast.error('Không thể mua ngay');
+        toast.error(result.error || 'Không thể mua ngay');
       }
     } catch (error) {
       console.error('Error buying now:', error);

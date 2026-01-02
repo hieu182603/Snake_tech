@@ -30,7 +30,7 @@ interface Customer {
 
 export default function AdminCustomersPage() {
   const { t } = useTranslation()
-  const { accessToken, user, isAuthenticated } = useAuth()
+  const { accessToken } = useAuth()
   const [customers, setCustomers] = useState<Customer[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -40,8 +40,6 @@ export default function AdminCustomersPage() {
   const [totalCustomers, setTotalCustomers] = useState(0)
   const itemsPerPage = 10
 
-  const isAuthorized = isAuthenticated() && user && ['ADMIN', 'STAFF'].includes(user.role)
-
   useEffect(() => {
     loadCustomers()
   }, [])
@@ -50,16 +48,6 @@ export default function AdminCustomersPage() {
     try {
       setLoading(true)
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
-
-      // Check if user is authenticated and has admin role
-      if (!isAuthenticated() || !user || !['ADMIN', 'STAFF'].includes(user.role)) {
-        console.log('User not authenticated or not admin:', { isAuthenticated: isAuthenticated(), user })
-        // Don't throw error, just return early - the page will show auth message
-        setCustomers([])
-        setTotalPages(1)
-        setTotalCustomers(0)
-        return
-      }
 
       const response = await fetch(`${API_BASE_URL}/admin/customers?page=${currentPage}&limit=${itemsPerPage}&search=${searchTerm}`, {
         method: 'GET',
@@ -115,9 +103,9 @@ export default function AdminCustomersPage() {
   }
 
   const filteredCustomers = customers.filter(customer => {
-    const matchesSearch = (customer.username || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (customer.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (customer.fullName || '').toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = customer.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         customer.fullName.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === 'ALL' ||
                          (statusFilter === 'ACTIVE' && customer.isActive) ||
                          (statusFilter === 'INACTIVE' && !customer.isActive) ||
@@ -167,108 +155,88 @@ export default function AdminCustomersPage() {
           </select>
         </div>
 
-        {!isAuthorized ? (
+        {/* Customers List */}
+        <div className="grid gap-4">
+          {filteredCustomers.map((customer) => (
+            <motion.div
+              key={customer.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Users className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-lg">{customer.fullName}</h3>
+                    <p className="text-slate-400 text-sm">@{customer.username}</p>
+                    <div className="flex items-center gap-4 mt-1">
+                      <div className="flex items-center gap-1 text-slate-400 text-sm">
+                        <Mail className="h-3 w-3" />
+                        {customer.email}
+                      </div>
+                      {customer.phone && (
+                        <div className="flex items-center gap-1 text-slate-400 text-sm">
+                          <Phone className="h-3 w-3" />
+                          {customer.phone}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant={customer.isActive ? "default" : "destructive"}>
+                        {customer.isActive ? 'Hoạt động' : 'Tạm khóa'}
+                      </Badge>
+                      <Badge variant={customer.isVerified ? "default" : "secondary"}>
+                        {customer.isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
+                      </Badge>
+                    </div>
+                    {customer.totalOrders && (
+                      <div className="text-sm text-slate-400">
+                        <div className="flex items-center gap-1">
+                          <ShoppingBag className="h-3 w-3" />
+                          {customer.totalOrders} đơn hàng
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <DollarSign className="h-3 w-3" />
+                          {customer.totalSpent?.toLocaleString()}đ
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <Button variant="outline" size="sm">
+                    Chi tiết
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-border-dark flex justify-between text-sm text-slate-400">
+                <span>Tham gia: {new Date(customer.createdAt).toLocaleDateString('vi-VN')}</span>
+                {customer.lastOrderDate && (
+                  <span>Đơn hàng cuối: {new Date(customer.lastOrderDate).toLocaleDateString('vi-VN')}</span>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {filteredCustomers.length === 0 && (
           <div className="text-center py-20">
             <Users className="mx-auto h-24 w-24 text-slate-400 mb-6" />
             <h2 className="text-2xl font-bold text-white mb-4">
-              Yêu cầu quyền truy cập
+              Không tìm thấy khách hàng
             </h2>
-            <p className="text-slate-400 mb-6">
-              Bạn cần đăng nhập với tài khoản Admin hoặc Staff để truy cập trang này.
+            <p className="text-slate-400">
+              Thử tìm kiếm với từ khóa khác
             </p>
-            <button
-              onClick={() => window.location.href = '/auth'}
-              className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
-            >
-              Đăng nhập
-            </button>
           </div>
-        ) : (
-          <>
-            {/* Customers List */}
-            <div className="grid gap-4">
-              {filteredCustomers.map((customer) => (
-                <motion.div
-                  key={customer.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-surface-dark border border-border-dark rounded-2xl p-6 hover:border-primary/30 transition-all"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Users className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-white text-lg">{customer.fullName}</h3>
-                        <p className="text-slate-400 text-sm">@{customer.username}</p>
-                        <div className="flex items-center gap-4 mt-1">
-                          <div className="flex items-center gap-1 text-slate-400 text-sm">
-                            <Mail className="h-3 w-3" />
-                            {customer.email}
-                          </div>
-                          {customer.phone && (
-                            <div className="flex items-center gap-1 text-slate-400 text-sm">
-                              <Phone className="h-3 w-3" />
-                              {customer.phone}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant={customer.isActive ? "default" : "destructive"}>
-                            {customer.isActive ? 'Hoạt động' : 'Tạm khóa'}
-                          </Badge>
-                          <Badge variant={customer.isVerified ? "default" : "secondary"}>
-                            {customer.isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
-                          </Badge>
-                        </div>
-                        {customer.totalOrders && (
-                          <div className="text-sm text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <ShoppingBag className="h-3 w-3" />
-                              {customer.totalOrders} đơn hàng
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <DollarSign className="h-3 w-3" />
-                              {customer.totalSpent?.toLocaleString()}đ
-                            </div>
-                          </div>
-                        )}
-                      </div>
-
-                      <Button variant="outline" size="sm">
-                        Chi tiết
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-border-dark flex justify-between text-sm text-slate-400">
-                    <span>Tham gia: {new Date(customer.createdAt).toLocaleDateString('vi-VN')}</span>
-                    {customer.lastOrderDate && (
-                      <span>Đơn hàng cuối: {new Date(customer.lastOrderDate).toLocaleDateString('vi-VN')}</span>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {filteredCustomers.length === 0 && (
-              <div className="text-center py-20">
-                <Users className="mx-auto h-24 w-24 text-slate-400 mb-6" />
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  Không tìm thấy khách hàng
-                </h2>
-                <p className="text-slate-400">
-                  Thử tìm kiếm với từ khóa khác
-                </p>
-              </div>
-            )}
-          </>
         )}
     </div>
   )
