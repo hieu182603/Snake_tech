@@ -328,10 +328,7 @@ export default function AdminLayout({
                             <span className="material-symbols-outlined text-[18px]">manage_accounts</span>
                             {t('admin.manageAccounts', { defaultValue: 'Quản lý tài khoản' })}
                         </Link>
-                        <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white transition-all text-left">
-                            <span className="material-symbols-outlined text-[18px]">settings</span>
-                            {t('admin.systemSettings', { defaultValue: 'Cài đặt hệ thống' })}
-                        </button>
+                        {/* system settings button removed per UI request */}
                         <div className="h-px bg-border-dark my-2"></div>
                         <button
                             onClick={handleLogout}

@@ -9,7 +9,7 @@ import type { Product } from '@/types/product';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastContext';
 
 interface ProductDetailPageProps {
   id: string;
@@ -28,6 +28,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
   const { t } = useTranslation();
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const toast = useToast();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
         setProduct(productData);
       } catch (error) {
         console.error('Error loading product:', error);
-        toast.error(t('product.loadError', { defaultValue: 'Không thể tải thông tin sản phẩm' }));
+        toast.showError(t('product.loadError', { defaultValue: 'Không thể tải thông tin sản phẩm' }));
       } finally {
         setLoading(false);
       }
@@ -70,18 +71,24 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     if (id) {
       fetchProduct();
     }
-  }, [id, t]);
+  }, [id]);
 
   const handleAddToCart = async () => {
     if (!product || !user) return;
 
     setAddingToCart(true);
     try {
-      const result = await addToCart(product.id!, quantity);
+      const pid = (product as any).id || (product as any)._id;
+      if (!pid) {
+        console.error('Product id missing when adding to cart', product);
+        toast.error(t('cart.addError', { defaultValue: 'Không thể thêm vào giỏ hàng' }));
+        return;
+      }
+      const result = await addToCart(pid.toString(), quantity);
       if (result.success) {
-        toast.success(t('cart.added', { defaultValue: 'Đã thêm vào giỏ hàng!' }));
+        toast.showSuccess(t('cart.added', { defaultValue: 'Đã thêm vào giỏ hàng!' }));
       } else {
-        toast.error(result.error || t('cart.addError', { defaultValue: 'Không thể thêm vào giỏ hàng' }));
+        toast.showError(result.error || t('cart.addError', { defaultValue: 'Không thể thêm vào giỏ hàng' }));
       }
     } catch (error) {
       console.error('Error adding to cart:', error);

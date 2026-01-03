@@ -3,6 +3,29 @@ import type { Product, Category } from "../types/product";
 class ProductService {
   private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
+  private normalizeProduct(product: any) {
+    if (!product || typeof product !== 'object') return product;
+
+    const id = product.id || product._id || (product._id && String(product._id)) || undefined;
+    const images = product.images || (product.image ? (Array.isArray(product.image) ? product.image : [{ url: product.image }]) : []);
+    const name = product.name || product.title || '';
+    const price = typeof product.price === 'number' ? product.price : (product.price ? Number(product.price) : 0);
+    const originalPrice = product.originalPrice || product.oldPrice || 0;
+    const stock = typeof product.stock === 'number' ? product.stock : (product.stock ? parseInt(product.stock, 10) || 0 : 0);
+    const category = (product.category && (typeof product.category === 'string' ? product.category : product.category.name)) || (product.categoryId && (typeof product.categoryId === 'string' ? product.categoryId : product.categoryId.name)) || '';
+
+    return {
+      ...product,
+      id,
+      images,
+      name,
+      price,
+      originalPrice,
+      stock,
+      category
+    };
+  }
+
   async getAllProducts(): Promise<Product[]> {
     const response = await fetch(`${this.baseUrl}/products`);
     if (!response.ok) {
@@ -32,18 +55,42 @@ class ProductService {
       throw new Error(errorMessage);
     }
     const data = await response.json();
-    return data.products || data.data?.products || [];
+    const raw = data.products || data.data?.products || [];
+    return Array.isArray(raw) ? raw.map((p: any) => this.normalizeProduct(p)) : [];
   }
 
   async getProductById(id: string): Promise<Product | null> {
-    const response = await fetch(`${this.baseUrl}/products/${id}`);
-    if (!response.ok) {
-      if (response.status === 404) return null;
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+    const url = `${this.baseUrl}/products/${id}`;
+    try {
+      // log for easier debugging in dev console
+      if (typeof window !== 'undefined' && (window as any).console) {
+        console.debug(`[ProductService] fetching product by id: ${id}`, { url });
+      }
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        if (response.status === 404) return null;
+        const text = await response.text().catch(() => '');
+        throw new Error(`API request failed: ${response.status} ${response.statusText}${text ? ` - ${text.slice(0, 200)}` : ''}`);
+      }
+
+      const data = await response.json().catch((e) => {
+        throw new Error(`Failed to parse JSON from ${url}: ${e?.message || e}`);
+      });
+
+      // Normalize product before returning
+      const product = data || null;
+      return product ? (this.normalizeProduct(product) as Product) : null;
+    } catch (err: any) {
+      // Network errors (e.g. failed to fetch / CORS / server down) surface as TypeError
+      const message = err?.message || String(err);
+      // Attach the URL to make debugging easier
+      const enriched = new Error(`[ProductService] Failed to fetch ${url} — ${message}`);
+      // preserve original stack if present
+      if (err?.stack) enriched.stack = `${enriched.stack}\nCaused by: ${err.stack}`;
+      throw enriched;
     }
-    const data = await response.json();
-    // Backend returns product directly, not wrapped in data.product or data.data
-    return data || null;
   }
 
   async getProductsByCategoryName(categoryName: string, limit?: number): Promise<Product[]> {
@@ -76,7 +123,8 @@ class ProductService {
       throw new Error(errorMessage);
     }
     const data = await response.json();
-    return data.products || data.data?.products || [];
+    const raw = data.products || data.data?.products || [];
+    return Array.isArray(raw) ? raw.map((p: any) => this.normalizeProduct(p)) : [];
   }
 
   async getTopSellingProducts(limit: number = 8): Promise<Product[]> {
@@ -85,7 +133,9 @@ class ProductService {
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
     const data = await response.json();
-    return (data.products || data.data?.products || []).slice(0, limit);
+    const raw = data.products || data.data?.products || [];
+    const arr = Array.isArray(raw) ? raw.map((p: any) => this.normalizeProduct(p)) : [];
+    return arr.slice(0, limit);
   }
 
   async getNewProducts(limit: number = 8): Promise<{ laptops: Product[]; pcs: Product[]; accessories: Product[] }> {
@@ -118,7 +168,8 @@ class ProductService {
     }
     const data = await response.json();
     const products = data.products || data.data?.products || [];
-    return this.categorizeProducts(products.slice(0, limit * 3));
+    const normalized = Array.isArray(products) ? products.map((p: any) => this.normalizeProduct(p)) : [];
+    return this.categorizeProducts(normalized.slice(0, limit * 3));
   }
 
   private categorizeProducts(products: Product[]): { laptops: Product[]; pcs: Product[]; accessories: Product[] } {

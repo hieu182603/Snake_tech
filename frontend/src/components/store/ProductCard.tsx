@@ -44,11 +44,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
       const result = await addToCart(id.toString(), 1);
       if (result.success) {
         setIsAdded(true);
+        toast.showSuccess?.('Đã thêm vào giỏ hàng');
         setTimeout(() => {
           setIsAdded(false);
         }, 2000);
       } else {
-        toast?.showError?.(result.error || 'Không thể thêm sản phẩm vào giỏ');
+        toast.showError?.(result.error || 'Không thể thêm sản phẩm vào giỏ');
       }
     } catch (error) {
       console.error('Failed to add product to cart:', error);
