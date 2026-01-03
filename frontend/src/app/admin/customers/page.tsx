@@ -145,16 +145,16 @@ export default function AdminCustomersPage() {
       </div>
 
       <div className="rounded-2xl border border-border-dark bg-surface-dark shadow-sm">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-hidden rounded-t-2xl">
           <table className="w-full text-left text-sm">
             <thead className="bg-[#192f33] text-xs uppercase text-gray-300 border-b border-border-dark">
               <tr>
-                <th className="px-6 py-4 font-semibold">Khách hàng</th>
+                <th className="px-6 py-4 font-semibold rounded-tl-2xl">Khách hàng</th>
                 <th className="px-6 py-4 font-semibold">Liên hệ</th>
                 <th className="px-6 py-4 font-semibold">Đơn hàng</th>
                 <th className="px-6 py-4 font-semibold">Tổng chi tiêu</th>
                 <th className="px-6 py-4 font-semibold">Trạng thái</th>
-                <th className="px-6 py-4 font-semibold text-right">Thao tác</th>
+                <th className="px-6 py-4 font-semibold text-right rounded-tr-2xl">Thao tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-dark">
@@ -304,7 +304,8 @@ export default function AdminCustomersPage() {
                     <select
                         value={editingCustomer.status}
                         onChange={(e) => setEditingCustomer({...editingCustomer, status: e.target.value as any})}
-                        className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none cursor-pointer"
+                        className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none cursor-pointer appearance-none pr-10"
+                        style={{ backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M6 8l4 4 4-4' stroke='%23A3A3A3' stroke-width='1.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right calc(0.9rem + 5px) calc(50% - 3px)', backgroundSize: '14px' }}
                     >
                         <option value="Active">Đang hoạt động (Active)</option>
                         <option value="Inactive">Tạm ngưng (Inactive)</option>

@@ -271,16 +271,16 @@ export default function AdminProductsPage() {
 
       {/* Product Table */}
       <div className="rounded-2xl border border-border-dark bg-surface-dark shadow-sm">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-hidden rounded-t-2xl">
           <table className="w-full text-left text-sm">
             <thead className="bg-[#1a1a1a] text-xs uppercase text-gray-300 border-b border-border-dark">
               <tr>
-                <th className="px-6 py-4 font-semibold">Tên sản phẩm</th>
+                <th className="px-6 py-4 font-semibold rounded-tl-2xl">Tên sản phẩm</th>
                 <th className="px-6 py-4 font-semibold">Thương hiệu</th>
                 <th className="px-6 py-4 font-semibold">Giá bán</th>
                 <th className="px-6 py-4 font-semibold text-center">Tồn kho</th>
                 <th className="px-6 py-4 font-semibold">Trạng thái</th>
-                <th className="px-6 py-4 font-semibold text-right">Thao tác</th>
+                <th className="px-6 py-4 font-semibold text-right rounded-tr-2xl">Thao tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-dark">

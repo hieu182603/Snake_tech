@@ -91,7 +91,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <select
               value={data.brand}
               onChange={(e) => setData({...data, brand: e.target.value})}
-              className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none transition-colors cursor-pointer"
+              className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none transition-colors cursor-pointer appearance-none pr-10"
+              style={{ backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M6 8l4 4 4-4' stroke='%23A3A3A3' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.9rem center', backgroundSize: '10px' }}
             >
               <option>Chọn thương hiệu</option>
               <option>Apple</option>
@@ -108,7 +109,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <select
               value={data.category}
               onChange={(e) => setData({...data, category: e.target.value})}
-              className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none transition-colors cursor-pointer"
+              className="w-full h-12 bg-background-dark border border-border-dark rounded-xl px-4 text-white focus:border-primary outline-none transition-colors cursor-pointer appearance-none pr-10"
+              style={{ backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M6 8l4 4 4-4' stroke='%23A3A3A3' stroke-width='1' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 0.9rem center', backgroundSize: '10px' }}
             >
               <option>Chọn danh mục</option>
               <option>Laptop</option>
