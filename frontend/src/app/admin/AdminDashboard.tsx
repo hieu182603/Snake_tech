@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -8,6 +8,7 @@ import {
   BarChart, Bar, Cell, PieChart, Pie
 } from 'recharts';
 import Button from '@/components/ui/Button';
+import Modal from '@/components/ui/Modal';
 import { Badge } from '@/components/ui/badge';
 import { AdminLayoutContext } from './AdminLayout';
 import { useAuth } from '@/contexts/AuthContext';
@@ -43,15 +44,35 @@ export default function AdminDashboard() {
   const { user } = useAuth();
   const { t } = useTranslation();
   const context = useContext(AdminLayoutContext);
+  const [lowStockItems, setLowStockItems] = useState([
+    { name: 'RTX 4090 OC', stock: 2, img: 'https://picsum.photos/50?random=1' },
+    { name: 'Keychron Q1 Pro', stock: 0, img: 'https://picsum.photos/50?random=2' },
+  ]);
+  const [showRestockModal, setShowRestockModal] = useState(false);
+  const [restockIndex, setRestockIndex] = useState<number | null>(null);
+  const [restockQty, setRestockQty] = useState<number>(1);
 
   if (!context) {
     return <div>Loading...</div>;
   }
 
-  const { getDateRangeLabel } = context;
+  const { getDateRangeLabel, dateRange, setDateRange } = context;
 
   // Helper for currency
   const fmt = (num: number) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 }).format(num);
+
+  const openRestock = (index: number) => {
+    setRestockIndex(index);
+    setRestockQty(1);
+    setShowRestockModal(true);
+  }
+
+  const handleConfirmRestock = () => {
+    if (restockIndex === null) return;
+    setLowStockItems(prev => prev.map((it, i) => i === restockIndex ? { ...it, stock: it.stock + (restockQty || 0) } : it));
+    setShowRestockModal(false);
+    alert('Nhập kho thành công');
+  }
 
   return (
     <div className="space-y-8 pb-10">
@@ -63,7 +84,21 @@ export default function AdminDashboard() {
             Số liệu kinh doanh: <span className="text-primary font-bold">{getDateRangeLabel()}</span>
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
+          <div className="hidden sm:flex items-center gap-2 bg-surface-dark border border-border-dark rounded-full px-2 py-1">
+            <span className="material-symbols-outlined text-gray-400 text-[18px]">calendar_today</span>
+            <select
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value as any)}
+              className="bg-transparent border-none text-sm font-medium text-white focus:ring-0 cursor-pointer outline-none min-w-[130px] pl-1 pr-2 py-1 appearance-none"
+            >
+              <option value="all">{t('admin.allTime', { defaultValue: 'Tất cả thời gian' })}</option>
+              <option value="today">{t('admin.today', { defaultValue: 'Hôm nay' })}</option>
+              <option value="week">{t('admin.week', { defaultValue: '7 ngày qua' })}</option>
+              <option value="month">{t('admin.month', { defaultValue: 'Tháng này' })}</option>
+            </select>
+            <span className="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+          </div>
           <Button variant="outline" icon="calendar_today" size="sm" className="hidden sm:flex">{t('admin.schedule', { defaultValue: 'Lên lịch' })}</Button>
           <Button variant="primary" icon="refresh" size="sm">{t('admin.refreshData', { defaultValue: 'Cập nhật dữ liệu' })}</Button>
         </div>
@@ -228,22 +263,41 @@ export default function AdminDashboard() {
                     <Button variant="ghost" size="sm" className="text-[10px] h-6 px-2">Xem tất cả</Button>
                 </div>
                 <div className="space-y-3">
-                    {[
-                        { name: 'RTX 4090 OC', stock: 2, img: 'https://picsum.photos/50?random=1' },
-                        { name: 'Keychron Q1 Pro', stock: 0, img: 'https://picsum.photos/50?random=2' },
-                    ].map((item, i) => (
+                    {lowStockItems.map((item, i) => (
                         <div key={i} className="flex items-center gap-3 p-2 rounded-xl bg-background-dark border border-border-dark">
                             <img src={item.img} className="size-10 rounded-lg object-cover" alt="" />
                             <div className="flex-1 min-w-0">
                                 <p className="text-xs font-bold text-text-main truncate">{item.name}</p>
                                 <p className="text-[10px] text-text-muted">Kho: <span className={item.stock === 0 ? 'text-red-500 font-bold' : 'text-orange-500 font-bold'}>{item.stock}</span></p>
                             </div>
-                            <Button size="sm" variant="secondary" className="h-7 text-[10px] px-2">Nhập</Button>
+                            <Button size="sm" variant="secondary" className="h-7 text-[10px] px-2" onClick={() => openRestock(i)}>Nhập</Button>
                         </div>
                     ))}
                 </div>
             </div>
         </div>
+            {showRestockModal && restockIndex !== null && (
+                <Modal
+                  isOpen={showRestockModal}
+                  onClose={() => setShowRestockModal(false)}
+                  title="Nhập kho"
+                  footer={
+                    <div className="flex justify-end gap-3 w-full">
+                      <Button variant="outline" onClick={() => setShowRestockModal(false)}>Hủy</Button>
+                      <Button variant="primary" onClick={handleConfirmRestock}>Xác nhận</Button>
+                    </div>
+                  }
+                >
+                  <div className="space-y-4">
+                    <p className="font-bold">{lowStockItems[restockIndex].name}</p>
+                    <p className="text-sm text-slate-400">Kho hiện tại: <span className="font-bold text-white">{lowStockItems[restockIndex].stock}</span></p>
+                    <div className="flex items-center gap-2">
+                      <input type="number" min={1} value={restockQty} onChange={(e) => setRestockQty(Number(e.target.value))} className="w-24 px-3 py-2 rounded-lg bg-background-dark border border-border-dark text-white outline-none" />
+                      <span className="text-sm text-slate-400">sản phẩm</span>
+                    </div>
+                  </div>
+                </Modal>
+            )}
       </div>
     </div>
   );

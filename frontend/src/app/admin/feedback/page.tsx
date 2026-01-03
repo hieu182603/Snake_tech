@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Button from '@/components/ui/Button'
+import Pagination from '@/components/ui/Pagination'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -40,6 +41,8 @@ export default function AdminFeedbackPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('ALL')
   const [ratingFilter, setRatingFilter] = useState<string>('ALL')
+  const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 5
 
   useEffect(() => {
     loadFeedbacks()
@@ -114,6 +117,16 @@ export default function AdminFeedbackPage() {
     const matchesRating = ratingFilter === 'ALL' || feedback.rating.toString() === ratingFilter
     return matchesSearch && matchesStatus && matchesRating
   })
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filteredFeedbacks.length])
+
+  const totalPagesComputed = Math.max(1, Math.ceil(filteredFeedbacks.length / ITEMS_PER_PAGE))
+  const paginatedFeedbacks = React.useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE
+    return filteredFeedbacks.slice(start, start + ITEMS_PER_PAGE)
+  }, [currentPage, filteredFeedbacks])
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
@@ -225,7 +238,7 @@ export default function AdminFeedbackPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-dark">
-                {filteredFeedbacks.map((feedback, index) => (
+                {paginatedFeedbacks.map((feedback, index) => (
                   <tr key={feedback.id || feedback.customerName || `feedback-${index}`} className="hover:bg-background-dark/30 transition-colors">
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
@@ -300,6 +313,12 @@ export default function AdminFeedbackPage() {
             </table>
           </div>
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPagesComputed}
+          onPageChange={setCurrentPage}
+        />
 
         {filteredFeedbacks.length === 0 && (
           <div className="text-center py-20">

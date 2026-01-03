@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Button from '@/components/ui/Button'
+import Pagination from '@/components/ui/Pagination'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Users } from 'lucide-react'
@@ -108,6 +109,17 @@ export default function AdminAccountsPage() {
     const matchesRole = roleFilter === 'ALL' || account.role === roleFilter
     return matchesSearch && matchesRole
   })
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filteredAccounts.length])
+
+  const computedTotalPages = Math.max(1, Math.ceil(filteredAccounts.length / itemsPerPage))
+  const totalPagesToUse = totalPages || computedTotalPages
+  const paginatedAccounts = React.useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage
+    return filteredAccounts.slice(start, start + itemsPerPage)
+  }, [currentPage, filteredAccounts])
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
@@ -224,7 +236,7 @@ export default function AdminAccountsPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border-dark">
-                    {filteredAccounts.map((account, index) => (
+                    {paginatedAccounts.map((account, index) => (
                       <tr key={account.id || account.username || `account-${index}`} className="hover:bg-background-dark/30 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
@@ -283,6 +295,12 @@ export default function AdminAccountsPage() {
                   </tbody>
                 </table>
               </div>
+
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPagesToUse}
+                onPageChange={setCurrentPage}
+              />
             </div>
 
             {filteredAccounts.length === 0 && (

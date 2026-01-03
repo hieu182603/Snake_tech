@@ -41,7 +41,7 @@ export default function AdminOrdersPage() {
     return <div>Loading...</div>;
   }
 
-  const { isInRange } = context;
+  const { isInRange, dateRange, setDateRange } = context;
   const [selectedOrder, setSelectedOrder] = useState<OrderDetail | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState('All');
@@ -209,7 +209,21 @@ export default function AdminOrdersPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="flex w-full md:w-auto gap-3">
+        <div className="flex w-full md:w-auto gap-3 items-center">
+          <div className="hidden sm:flex items-center gap-2 bg-surface-dark border border-border-dark rounded-full px-2 py-1">
+            <span className="material-symbols-outlined text-gray-400 text-[18px]">calendar_today</span>
+            <select
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value as any)}
+              className="bg-transparent border-none text-sm font-medium text-white focus:ring-0 cursor-pointer outline-none min-w-[140px] pl-1 pr-2 py-1 appearance-none"
+            >
+              <option value="all">Tất cả thời gian</option>
+              <option value="today">Hôm nay</option>
+              <option value="week">7 ngày qua</option>
+              <option value="month">Tháng này</option>
+            </select>
+            <span className="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+          </div>
           <select
             className="h-11 appearance-none rounded-xl border border-border-dark bg-background-dark px-4 pl-4 text-sm text-white focus:border-primary outline-none min-w-[180px] cursor-pointer"
             value={filterStatus}
@@ -230,12 +244,12 @@ export default function AdminOrdersPage() {
           <table className="w-full text-left text-sm border-collapse">
             <thead className="bg-[#1a1a1a] text-xs uppercase tracking-wider text-slate-400 border-b border-border-dark">
               <tr>
-                <th className="px-6 py-5 font-bold">Mã đơn hàng</th>
+                <th className="px-6 py-5 font-bold rounded-tl-2xl">Mã đơn hàng</th>
                 <th className="px-6 py-5 font-bold">Khách hàng</th>
                 <th className="px-6 py-5 font-bold">Ngày đặt</th>
                 <th className="px-6 py-5 font-bold">Tổng tiền</th>
                 <th className="px-6 py-5 font-bold text-center">Trạng thái</th>
-                <th className="px-6 py-5 font-bold text-right">Hành động</th>
+                <th className="px-6 py-5 font-bold text-right rounded-tr-2xl">Hành động</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-dark/50">
@@ -273,40 +287,43 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                        <button
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          icon="visibility"
                           onClick={() => setSelectedOrder(o)}
-                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-dark border border-border-dark text-slate-300 hover:text-white hover:border-primary transition-all text-xs font-bold"
+                          className="text-slate-300 hover:text-white hover:border-primary px-3 py-1.5 text-xs font-bold"
                           title="Xem chi tiết"
                         >
-                          <span className="material-symbols-outlined text-[16px]">visibility</span>
                           Chi tiết
-                        </button>
+                        </Button>
                         <div className="relative">
                             <button
                                 onClick={() => setActiveProcessId(activeProcessId === o.id ? null : o.id)}
                                 className="flex items-center gap-1 rounded-lg bg-blue-500/10 text-blue-500 border border-blue-500/20 px-3 py-1.5 text-xs font-bold hover:bg-blue-500 hover:text-white transition-all"
                             >
-                                Xử lý
+                                <span className="material-symbols-outlined text-[16px]">play_arrow</span>
+                                <span className="hidden sm:inline">Xử lý</span>
                                 <span className="material-symbols-outlined text-[16px]">expand_more</span>
                             </button>
                             {activeProcessId === o.id && (
-                                <div className="absolute right-0 mt-2 w-48 bg-surface-dark border border-border-dark rounded-xl shadow-2xl z-50 overflow-hidden">
+                                <div className="absolute right-0 mt-2 w-56 bg-surface-dark border border-border-dark rounded-xl shadow-2xl z-50 overflow-hidden p-2">
                                     <button
                                         onClick={() => handleProcessOrder(o.id, o.status)}
-                                        className="w-full text-left px-4 py-3 hover:bg-white/10 text-xs text-white font-bold flex items-center gap-2"
+                                        className="w-full text-left px-4 py-2 hover:bg-white/5 text-sm text-white font-medium flex items-center gap-3 rounded-md"
                                     >
-                                        <span className="material-symbols-outlined text-sm">fast_forward</span>
-                                        Chuyển trạng thái tiếp theo
+                                        <span className="material-symbols-outlined text-base">fast_forward</span>
+                                        <span>Chuyển trạng thái tiếp theo</span>
                                     </button>
                                     <button
                                         onClick={() => {
                                             setOrders(prev => prev.map(item => item.id === o.id ? {...item, status: 'Đã hủy', variant: 'danger'} : item));
                                             setActiveProcessId(null);
                                         }}
-                                        className="w-full text-left px-4 py-3 hover:bg-red-500/20 text-xs text-red-500 font-bold flex items-center gap-2 border-t border-border-dark"
+                                        className="w-full text-left px-4 py-2 hover:bg-red-500/10 text-sm text-red-500 font-medium flex items-center gap-3 rounded-md border-t border-border-dark mt-1"
                                     >
-                                        <span className="material-symbols-outlined text-sm">cancel</span>
-                                        Hủy đơn hàng
+                                        <span className="material-symbols-outlined text-base">cancel</span>
+                                        <span>Hủy đơn hàng</span>
                                     </button>
                                 </div>
                             )}

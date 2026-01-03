@@ -28,7 +28,13 @@ export default function AdminLayout({
   const [dateRange, setDateRange] = useState<DateRangeOption>('all');
 
   // Feature States
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    try {
+      return document.documentElement.classList.contains('dark');
+    } catch (e) {
+      return false;
+    }
+  });
   const [lang, setLang] = useState<'vi' | 'en'>('vi');
 
   // Dropdown States
@@ -44,13 +50,6 @@ export default function AdminLayout({
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Initialize Theme
-    if (document.documentElement.classList.contains('dark')) {
-      setIsDark(true);
-    } else {
-      setIsDark(false);
-    }
-
     const handleClickOutside = (event: MouseEvent) => {
       if (notifRef.current && !notifRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
@@ -201,30 +200,8 @@ export default function AdminLayout({
           </div>
 
           <div className="flex items-center gap-6">
-            <div className="hidden md:flex relative group">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <span className="material-symbols-outlined text-gray-500 group-focus-within:text-primary transition-colors text-[18px]">search</span>
-              </div>
-              <input className="block w-64 rounded-xl border border-border-dark bg-surface-dark py-2 pl-10 pr-4 text-xs text-white placeholder-gray-600 focus:ring-1 focus:ring-primary transition-all" placeholder={t('admin.search', { defaultValue: 'Tìm nhanh...' })} />
-            </div>
 
-            {/* Global Date Filter */}
-            <div className="hidden md:flex items-center gap-2 bg-surface-dark border border-border-dark rounded-full px-2 py-1 hover:border-primary/50 transition-colors">
-              <span className="material-symbols-outlined text-gray-400 text-[18px]">calendar_today</span>
-              <div className="relative">
-                <select
-                  value={dateRange}
-                  onChange={(e) => setDateRange(e.target.value as DateRangeOption)}
-                  className="bg-transparent border-none text-sm font-medium text-white focus:ring-0 cursor-pointer outline-none min-w-[130px] pl-1 pr-6 py-1 appearance-none"
-                >
-                  <option className="bg-surface-dark text-white" value="all">{t('admin.allTime', { defaultValue: 'Tất cả thời gian' })}</option>
-                  <option className="bg-surface-dark text-white" value="today">{t('admin.today', { defaultValue: 'Hôm nay' })}</option>
-                  <option className="bg-surface-dark text-white" value="week">{t('admin.week', { defaultValue: '7 ngày qua' })}</option>
-                  <option className="bg-surface-dark text-white" value="month">{t('admin.month', { defaultValue: 'Tháng này' })}</option>
-                </select>
-                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">expand_more</span>
-              </div>
-            </div>
+            {/* Global Date Filter removed — use per-page filters where needed */}
 
             <div className="flex items-center gap-3 border-l border-border-dark pl-6">
               {/* Language & Theme Toggles */}

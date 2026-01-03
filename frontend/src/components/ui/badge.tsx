@@ -34,9 +34,29 @@ const Badge: React.FC<BadgeProps> = ({
     lg: 'px-3 py-1 text-sm'
   }
 
+  // If the user supplies explicit color utilities (bg-, text-, border-, hover:bg-, or *-foreground),
+  // prefer the user's classes and omit the color-related parts of the variant to avoid conflicting styles.
+  const userProvidesColorUtilities = /\b(bg-[^\s]+|text-[^\s]+|border-[^\s]+|hover:bg-[^\s]+|[^\s]+-foreground)\b/.test(className)
+
+  const variantClasses = userProvidesColorUtilities
+    ? variants[variant]
+        .split(' ')
+        .filter(
+          (tok) =>
+            !tok.startsWith('bg-') &&
+            !tok.startsWith('text-') &&
+            !tok.startsWith('border') &&
+            !tok.startsWith('hover:bg') &&
+            !tok.includes('-foreground') &&
+            !tok.startsWith('hover:text') &&
+            !tok.startsWith('hover:border')
+        )
+        .join(' ')
+    : variants[variant]
+
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border font-medium transition-colors ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border font-medium transition-colors ${variantClasses} ${sizes[size]} ${className}`}
       {...props}
     >
       {dot && <span className="h-1 w-1 rounded-full bg-current"></span>}
