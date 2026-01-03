@@ -35,6 +35,11 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+  const imageRef = React.useRef<HTMLDivElement | null>(null);
   const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'reviews'>('description');
   // Mock reviews data
   const [reviews] = useState<Review[]>([
@@ -142,8 +147,19 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
     );
   }
 
-  const images = product.images || [];
-  const displayImages = images.length > 0 ? images : [{ url: '/api/placeholder/400/400', name: 'placeholder' }];
+  // Ensure images is an array of objects with { url, name? }
+  const images = Array.isArray((product as any)?.images) ? (product as any).images : [];
+  // If backend doesn't provide enough images, pad with distinct placeholders so UI shows 4 thumbnails like the sample
+  const displayImages = (() => {
+    const imgs = images.length > 0 ? images.map((p: any) => (typeof p === 'string' ? { url: p } : p)) : [];
+    const padded = [...imgs];
+    const needed = 4 - padded.length;
+    for (let i = 0; i < Math.max(0, needed); i++) {
+      const seed = encodeURIComponent(((product as any).id || (product as any)._id || 'placeholder') + `-${i}`);
+      padded.push({ url: `https://picsum.photos/800/800?random=${seed}`, name: `placeholder-${i}` });
+    }
+    return padded;
+  })();
   const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
 
   return (
@@ -170,11 +186,27 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           {/* Enhanced Product Images Gallery */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-square bg-muted rounded-2xl overflow-hidden group shadow-xl">
+            <div
+              ref={imageRef}
+              className="relative aspect-square bg-muted rounded-2xl overflow-hidden group shadow-xl cursor-zoom-in"
+              onMouseMove={(e) => {
+                if (!imageRef.current) return;
+                const rect = imageRef.current.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                setZoomPos({ x, y });
+              }}
+              onMouseEnter={() => setIsZooming(true)}
+              onMouseLeave={() => setIsZooming(false)}
+            >
               <img
                 src={displayImages[selectedImage]?.url || '/api/placeholder/400/400'}
                 alt={product.name}
-                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500"
+                style={{
+                  transform: isZooming ? 'scale(2.5)' : 'scale(1)',
+                  transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`
+                }}
               />
 
               {/* Stock Status Badge */}
@@ -193,10 +225,10 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
               </div>
             </div>
 
-            {/* Thumbnail Gallery */}
-            {displayImages.length > 1 && (
+            {/* Thumbnail Gallery (limit to 4 thumbnails) */}
+            {displayImages.length > 0 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
-                {displayImages.map((image, index) => (
+                {displayImages.slice(0, 4).map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
@@ -221,10 +253,14 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
           <div className="space-y-8">
             {/* Header */}
             <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="bg-primary/10 text-primary text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-primary/20 inline-block">Flagship</span>
+                <span className="bg-emerald-500/10 text-emerald-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-emerald-500/20 inline-block">Sẵn hàng</span>
+              </div>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h1 className="text-3xl lg:text-4xl font-black text-foreground mb-3 leading-tight">
-                    {product.name}
+                    {product.name} #{(product as any).id || (product as any)._id}
                   </h1>
 
                   {/* Rating */}
@@ -249,15 +285,10 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
               </div>
 
               {/* Price */}
-              <div className="flex items-center gap-4">
-                <div className="text-4xl font-black text-primary tracking-tight">
-                  {product.price.toLocaleString('vi-VN')}₫
-                </div>
-                {product.category?.name && (
-                  <div className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                    {product.category.name}
-                  </div>
-                )}
+              <div className="flex items-baseline gap-4 border-y border-border-dark py-6">
+                <span className="text-4xl font-black text-primary">{(product.price || 0).toLocaleString('vi-VN')}₫</span>
+                <span className="text-lg text-text-muted line-through">{(((product as any).originalPrice || (product as any).listPrice || (product.price || 0) + 15000000)).toLocaleString('vi-VN')}₫</span>
+                <span className="ml-2 text-emerald-500 font-bold text-sm">Tiết kiệm {Math.round(((((product as any).originalPrice || (product as any).listPrice || (product.price || 0) + 15000000) - (product.price || 0)) / 1000000))}tr</span>
               </div>
 
               {/* Quick Info */}
@@ -311,37 +342,43 @@ export default function ProductDetailPage({ id }: ProductDetailPageProps) {
               </div>
 
               {/* Action Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Button
-                  onClick={handleAddToCart}
-                  disabled={!user || product.stock === 0 || addingToCart}
-                  size="lg"
-                  variant="outline"
-                  className="h-14 text-lg font-semibold"
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <div className="flex items-center bg-background-dark border border-border-dark rounded-2xl p-1 h-14">
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="size-12 flex items-center justify-center text-text-muted hover:text-text-main transition-colors">
+                    <span className="material-symbols-outlined">remove</span>
+                  </button>
+                  <span className="w-12 text-center font-bold text-text-main text-lg">{quantity}</span>
+                  <button onClick={() => setQuantity(Math.min(product.stock || 999, quantity + 1))} className="size-12 flex items-center justify-center text-text-muted hover:text-text-main transition-colors">
+                    <span className="material-symbols-outlined">add</span>
+                  </button>
+                </div>
+                <button 
+                  onClick={async () => {
+                    await handleAddToCart();
+                    setIsAdded(true);
+                    setTimeout(() => setIsAdded(false), 2000);
+                  }}
+                  className={`flex-1 h-14 font-black rounded-2xl transition-all flex items-center justify-center gap-3 active:scale-95 group ${
+                    isAdded 
+                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' 
+                    : 'bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-[0_0_30px_rgba(239,68,68,0.3)]'
+                  }`}
                 >
-                  {addingToCart ? (
-                    <div className="flex items-center gap-2">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
-                      {t('product.adding', { defaultValue: 'Đang thêm...' })}
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined">add_shopping_cart</span>
-                      {t('product.addToCart', { defaultValue: 'Thêm vào giỏ hàng' })}
-                    </div>
-                  )}
-                </Button>
-                <Button
-                  onClick={handleBuyNow}
-                  disabled={!user || product.stock === 0}
-                  size="lg"
-                  className="h-14 text-lg font-semibold bg-primary hover:bg-primary/90"
+                  <span className={`material-symbols-outlined ${!isAdded && 'group-hover:rotate-12'} transition-transform`}>
+                    {isAdded ? 'check_circle' : 'shopping_cart'}
+                  </span>
+                  {isAdded ? 'ĐÃ THÊM VÀO GIỎ' : 'THÊM VÀO GIỎ HÀNG'}
+                </button>
+                <button 
+                  onClick={() => setIsFavorite(!isFavorite)}
+                  className={`size-14 rounded-2xl border flex items-center justify-center transition-all active:scale-90 bg-surface-dark ${
+                    isFavorite 
+                    ? 'border-red-500 text-red-500 bg-red-500/10' 
+                    : 'border-border-dark text-text-muted hover:text-red-500 hover:border-red-500/50'
+                  }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined">bolt</span>
-                    {t('product.buyNow', { defaultValue: 'Mua ngay' })}
-                  </div>
-                </Button>
+                  <span className={`material-symbols-outlined ${isFavorite ? 'fill' : ''}`}>favorite</span>
+                </button>
               </div>
 
               {!user && (

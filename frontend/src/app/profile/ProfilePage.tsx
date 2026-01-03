@@ -84,12 +84,17 @@ const ProfilePage: React.FC = () => {
 
                     if (result.success) {
                         const data = result.data;
+                        // Normalize possible response shapes and defensively extract orders
+                        const ordersRaw: any[] = Array.isArray(data)
+                            ? data
+                            : (data && (data.orders || data.data?.orders)) || [];
+
                         // Transform API response to match component interface
-                        const transformedOrders = (data.orders || []).slice(0, 2).map((order: any) => ({
-                            id: order.code || order.id,
-                            date: order.createdAt ? new Date(order.createdAt).toLocaleDateString('vi-VN') : new Date().toLocaleDateString('vi-VN'),
-                            total: order.total ? order.total.toLocaleString('vi-VN') + '₫' : '0₫',
-                            status: order.status || 'PENDING'
+                        const transformedOrders = (ordersRaw || []).slice(0, 2).map((order: any) => ({
+                            id: order?.code || order?.id || String(order?._id || order),
+                            date: order?.createdAt ? new Date(order.createdAt).toLocaleDateString('vi-VN') : new Date().toLocaleDateString('vi-VN'),
+                            total: order?.total ? order.total.toLocaleString('vi-VN') + '₫' : '0₫',
+                            status: order?.status || 'PENDING'
                         }));
                         setRecentOrders(transformedOrders);
                     } else {
