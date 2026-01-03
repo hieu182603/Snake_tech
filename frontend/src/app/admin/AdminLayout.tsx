@@ -209,18 +209,21 @@ export default function AdminLayout({
             </div>
 
             {/* Global Date Filter */}
-            <div className="hidden md:flex items-center gap-2 bg-surface-dark border border-border-dark rounded-xl px-3 py-2 hover:border-primary/50 transition-colors">
+            <div className="hidden md:flex items-center gap-2 bg-surface-dark border border-border-dark rounded-full px-2 py-1 hover:border-primary/50 transition-colors">
               <span className="material-symbols-outlined text-gray-400 text-[18px]">calendar_today</span>
-              <select
-                value={dateRange}
-                onChange={(e) => setDateRange(e.target.value as DateRangeOption)}
-                className="bg-transparent border-none text-xs font-bold text-white focus:ring-0 cursor-pointer outline-none min-w-[100px]"
-              >
-                <option value="all">{t('admin.allTime', { defaultValue: 'Tất cả thời gian' })}</option>
-                <option value="today">{t('admin.today', { defaultValue: 'Hôm nay' })}</option>
-                <option value="week">{t('admin.week', { defaultValue: '7 ngày qua' })}</option>
-                <option value="month">{t('admin.month', { defaultValue: 'Tháng này' })}</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={dateRange}
+                  onChange={(e) => setDateRange(e.target.value as DateRangeOption)}
+                  className="bg-transparent border-none text-sm font-medium text-white focus:ring-0 cursor-pointer outline-none min-w-[130px] pl-1 pr-6 py-1 appearance-none"
+                >
+                  <option className="bg-surface-dark text-white" value="all">{t('admin.allTime', { defaultValue: 'Tất cả thời gian' })}</option>
+                  <option className="bg-surface-dark text-white" value="today">{t('admin.today', { defaultValue: 'Hôm nay' })}</option>
+                  <option className="bg-surface-dark text-white" value="week">{t('admin.week', { defaultValue: '7 ngày qua' })}</option>
+                  <option className="bg-surface-dark text-white" value="month">{t('admin.month', { defaultValue: 'Tháng này' })}</option>
+                </select>
+                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">expand_more</span>
+              </div>
             </div>
 
             <div className="flex items-center gap-3 border-l border-border-dark pl-6">
@@ -228,10 +231,10 @@ export default function AdminLayout({
               <div className="hidden md:flex items-center gap-2">
                   <button
                     onClick={toggleLang}
-                    className="size-9 rounded-lg border border-border-dark bg-surface-dark text-text-muted hover:text-text-main hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
+                    className="size-9 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-text-main hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
                     title={lang === 'vi' ? "Switch to English" : "Chuyển sang Tiếng Việt"}
                   >
-                    {lang === 'vi' ? 'VN' : 'EN'}
+                    <span className="text-xs font-bold">{lang === 'vi' ? 'VN' : 'EN'}</span>
                   </button>
                   <button
                     onClick={toggleTheme}
@@ -248,7 +251,7 @@ export default function AdminLayout({
               <div className="relative" ref={notifRef}>
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="relative rounded-xl p-2 text-text-muted hover:bg-surface-accent hover:text-text-main transition-all"
+                  className="relative size-9 rounded-full border border-border-dark bg-surface-dark text-text-muted hover:text-text-main hover:border-primary hover:bg-primary/5 flex items-center justify-center transition-all"
                   title="Thông báo"
                 >
                   <span className="material-symbols-outlined text-[20px]">notifications</span>

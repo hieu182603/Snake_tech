@@ -66,9 +66,9 @@ export default function AdminAccountsPage() {
       }
 
       const data = result.data
-      setAccounts(data.accounts || [])
-      setTotalPages(data.pagination?.pages || 1)
-      setTotalAccounts(data.pagination?.total || 0)
+      setAccounts(data?.accounts || [])
+      setTotalPages(data?.pagination?.pages || 1)
+      setTotalAccounts(data?.pagination?.total || 0)
     } catch (error) {
       console.error('Load accounts error:', error)
       // Mock data for now

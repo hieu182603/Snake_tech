@@ -2,6 +2,7 @@
 
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Cell, PieChart, Pie
@@ -71,7 +72,7 @@ export default function AdminDashboard() {
       {/* 2. Action Center (New Feature) - Quick access to operations */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {pendingActions.map((action) => (
-          <div key={action.id} className="bg-surface-dark border border-border-dark p-4 rounded-2xl flex items-center justify-between hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group">
+          <Link key={action.id} href={action.link || '#'} className="bg-surface-dark border border-border-dark p-4 rounded-2xl flex items-center justify-between hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all group">
              <div className="flex items-center gap-3">
                 <div className={`size-10 rounded-full bg-background-dark flex items-center justify-center border border-border-dark group-hover:border-transparent transition-colors ${action.color.replace('text-', 'bg-')}/10`}>
                    <span className={`material-symbols-outlined ${action.color}`}>{action.icon}</span>
@@ -82,7 +83,7 @@ export default function AdminDashboard() {
                 </div>
              </div>
              <span className="material-symbols-outlined text-text-muted text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </div>
+          </Link>
         ))}
       </div>
 
