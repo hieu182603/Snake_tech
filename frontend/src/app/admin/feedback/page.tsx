@@ -63,7 +63,7 @@ export default function AdminFeedbackPage() {
       }
 
       const data = result.data
-      setFeedbacks(data.feedbacks || [])
+      setFeedbacks(data?.feedbacks || [])
     } catch (error) {
       console.error('Load feedbacks error:', error)
       // Fallback to mock data only when all authentication attempts fail
